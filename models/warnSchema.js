@@ -5,7 +5,7 @@ const warnSchema = mongoose.Schema({
     Tag: String,
     UserID: String,
     Logs: [],
-    DelLogs: [],
+    DelLogs: []
 });
 
 module.exports = mongoose.model("Warning", warnSchema);
