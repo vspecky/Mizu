@@ -6,11 +6,9 @@ const bot = new discord.Client({ disableEveryone: true });
 bot.commands = new discord.Collection();
 const xp = JSON.parse(fs.readFileSync("./JSON/xp.json", "utf8"));
 let cooldown = new Set();
-let oofchestUser = new Set();
 let oofchestSet = [];
 let vcPerks = new Map();
 let custvcadmin = new Map();
-let cdseconds = 60000;
 
 
 // {START} Functions when bot is ready.
@@ -155,7 +153,6 @@ fs.readdir("./Commands/Custom Voice/", (err, files) => {
 });
 
 
-// {START} on_message Event
 bot.on("message", async message => {
     // Commands Initiator
 
@@ -203,11 +200,10 @@ bot.on("message", async message => {
 
     setTimeout(() => {
         cooldown.delete(message.author.id);
-    }, cdseconds);
+    }, 60000);
 
 });
 // {END} Universal Command Handler
-// {END} on_message Event
 
 bot.on("messageDelete", async message => {
 
@@ -239,45 +235,31 @@ bot.on("messageDelete", async message => {
 
 bot.on("messageReactionAdd", async (messageReaction, user) => {
 
-    if (messageReaction._emoji.name == `😏` && messageReaction._emoji.reaction.count == 2 && !oofchestSet.includes(messageReaction.message.id)) {
-        let oofImg = messageReaction.message.attachments.map((u) => { return u.url; })[0];
-        oofChan = messageReaction.message.guild.channels.find(`name`, "oof-chest2");
-        let oofEmbed;
+    let rCount = 0;
+    if(messageReaction._emoji.name == `😏` && user.id != messageReaction.message.author.id) rCount++;
+
+    if (rCount == 2 && !oofchestSet.includes(messageReaction.message.id)) {
+        oofChan = messageReaction.message.guild.channels.find(`name`, "privtest");
+        let oofEmbed = new discord.RichEmbed()
+            .setColor(`${messageReaction.message.member.displayHexColor}`)
+            .setAuthor(`${messageReaction.message.author.username}`, `${messageReaction.message.author.displayAvatarURL}`)
+            .addField('Message Link:', `Click [Here](https://discordapp.com/channels/${messageReaction.message.guild.id}/${messageReaction.message.channel.id}/${messageReaction.message.id}) to Go to the Message`)
+            .setFooter(`${messageReaction.message.guild.name} | #${messageReaction.message.channel.name}`)
+            .setTimestamp();
+        
+        if(messageReaction.message.content) oofEmbed.setDescription(`${messageReaction.message.content}`);
 
         if (messageReaction.message.embeds.length > 0 && messageReaction.message.embeds[0].type == 'image') {
-            oofEmbed = new discord.RichEmbed()
-                .setColor(`${messageReaction.message.member.displayHexColor}`)
-                .setAuthor(`${messageReaction.message.author.username}`, `${messageReaction.message.author.displayAvatarURL}`)
-                .setDescription(`${messageReaction.message.content}\n`)
-                .setImage(`${messageReaction.message.embeds[0].url}`)
-                .addField('Message Link:', `Click [Here](https://discordapp.com/channels/${messageReaction.message.guild.id}/${messageReaction.message.channel.id}/${messageReaction.message.id}) to Go to the Message`)
-                .setFooter(`${messageReaction.message.guild.name} | #${messageReaction.message.channel.name}`)
-                .setTimestamp();
-        } else if (!oofImg) {
-            oofEmbed = new discord.RichEmbed()
-                .setColor(`${messageReaction.message.member.displayHexColor}`)
-                .setAuthor(`${messageReaction.message.author.username}`, `${messageReaction.message.author.displayAvatarURL}`)
-                .setDescription(`${messageReaction.message.content}\n`)
-                .addField('Message Link:', `Click [Here](https://discordapp.com/channels/${messageReaction.message.guild.id}/${messageReaction.message.channel.id}/${messageReaction.message.id}) to Go to the Message`)
-                .setFooter(`${messageReaction.message.guild.name} | #${messageReaction.message.channel.name}`)
-                .setTimestamp();
-        } else {
-            oofEmbed = new discord.RichEmbed()
-                .setColor(`${messageReaction.message.member.displayHexColor}`)
-                .setAuthor(`${messageReaction.message.author.username}`, `${messageReaction.message.author.displayAvatarURL}`)
-                .setDescription(`${messageReaction.message.content}\n`)
-                .setImage(`${messageReaction.message.attachments.map((u) => { return u.url; })[0]}`)
-                .addField('Message Link:', `Click [Here](https://discordapp.com/channels/${messageReaction.message.guild.id}/${messageReaction.message.channel.id}/${messageReaction.message.id}) to Go to the Message`)
-                .setFooter(`${messageReaction.message.guild.name} | #${messageReaction.message.channel.name}`)
-                .setTimestamp();
+            oofEmbed.setImage(`${messageReaction.message.embeds[0].url}`);
+                
+        } else if (messageReaction.message.attachments.size > 0) {
+            oofEmbed.setImage(`${messageReaction.message.attachments.map((u) => { return u.url; })[0]}`);
+
         }
-
-
 
         oofchestSet.push(messageReaction.message.id);
 
-
-        if (oofchestSet.length >= 200) {
+        if (oofchestSet.length >= 50) {
             oofchestSet.shift();
         }
 
@@ -285,8 +267,8 @@ bot.on("messageReactionAdd", async (messageReaction, user) => {
     }
 });
 
-
-
+        
+        
 bot.on("voiceStateUpdate", async (oldMember, newMember) => {
 
     if (newMember.voiceChannelID == 607592608641974324) {

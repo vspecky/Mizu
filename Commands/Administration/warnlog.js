@@ -39,7 +39,8 @@ module.exports.run = async (bot,message,args) => {
                 for(let i = 0; i< warn.DelLogs.length; i++){
                     wClears = wClears + `${i+1}. ${warn.DelLogs[i].time}:\n${warn.DelLogs[i].reason}\n`;
                 }
-                logEmbed.addField('Recent Cleared Warns:', `~~${wClears}~~`);
+                wClears = wClears.replace(/\n$/, '');
+                logEmbed.addField('Cleared Warnings:', `~~${wClears}~~`);
             }
 
             message.channel.send(logEmbed);
