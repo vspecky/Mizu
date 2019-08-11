@@ -1,9 +1,9 @@
 const discord = require('discord.js');
-const vcmap = require('F:\\BotCode\\Jun\\index.js');
+const { vcinfo } = require('../../Events/Guild/voiceStateUpdate.js');
 
 module.exports.run = async (bot,message,args) =>{
 
-    let vChannelID = vcmap.vcPerks.get(`${message.author.id}`);
+    let vChannelID = vcinfo.vcPerks.get(`${message.author.id}`);
 
     if(!vChannelID) return;
 

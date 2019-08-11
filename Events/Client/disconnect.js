@@ -1,0 +1,1 @@
+module.exports = async bot => console.log('Jun Watarase has disconnected.');
