@@ -7,11 +7,11 @@ module.exports = async (bot) => {
     let index = 0;
 
     setInterval(() => {
-        bot.user.setActivity(`${playArr[index]}`, { type: "Playing" });
         index++;
-        if(index >= 4) index = 0;
-    }, 30000);
-    
-    
+        if (index >= 4) index = 0;
+        bot.user.setActivity(`${playArr[index]}`, { type: "Playing" });
+    }, 60000);
+
+
 
 }

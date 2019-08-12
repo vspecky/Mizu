@@ -36,7 +36,7 @@ module.exports = async (bot, message) => {
     }
 
     let prefix = botprefix.prefix;
-    let messageArray = message.content.split(" ");
+    let messageArray = message.content.split(/ +/g);
     let cmd = messageArray[0].slice(prefix.length).toLowerCase();
     let args = messageArray.slice(1);
 

@@ -7,21 +7,18 @@ module.exports.run = async(bot, message, args) =>{
     let rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
     if(!rMember) return message.channel.send("Couldn't find that user.");
 
-    let role = args.join(" ").slice(22);
+
+    let role = args.slice(1).join(" ");
     if(!role) return message.channel.send("Please specify a role.");
 
-    let gRole = message.guild.roles.find(`name`, role);
+    let gRole = message.guild.roles.find(r => r.name.toLowerCase() == role.toLowerCase());
+
     if(!gRole) return message.channel.send("That role does not exist.");
 
     if(!rMember.roles.has(gRole.id)) return message.channel.send("The user already doesn't have that role.");
-    await(rMember.removeRole(gRole.id));
+    rMember.removeRole(gRole.id);
 
-    try{
-        await rMember.send(`The role ${gRole.name} has been removed from you in ${message.guild.name}.`);
-        message.channel.send(`The role ${gRole.name} has been removed from <@${rMember.id}>.`);
-    }catch(e){
-        console.log(e.stack);
-    }
+    message.channel.send(`The role ${gRole.name} has been removed from <@${rMember.id}>.`);
 
 }
 

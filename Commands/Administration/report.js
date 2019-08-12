@@ -13,7 +13,7 @@ module.exports.run = async(bot, message, args) => {
 
         if(args.length == 0){
             message.delete();
-            message.channel.send("I have DM'ed you to collect the report. You may also use `j!report @User Reason` to make a report.");
+            message.channel.send("I have DM'ed you to collect the report. You may also use `j!report @User <reason>` to make a report.");
             message.author.send("Please send your report here in a single message below 1000 characters in length. Provide the tag of the User, Reason and Evidence(optional). This instance shall expire in 120 seconds")
             .then((rMsg) => {
                 rMsg.channel.awaitMessages(res => {
