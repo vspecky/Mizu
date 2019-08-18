@@ -10,8 +10,7 @@ module.exports = async (bot, oldMember, newMember) => {
             parent: '592207697701634062'
         }).then(async (newVC) => {
             newMember.setVoiceChannel(newVC.id);
-            let name = newMember.user.username;
-            if (newMember.nickname) { name = newMember.nickname; }
+            let name = newMember.nickname || newMember.user.username;
             if (newMember.presence.game) {
                 newVC.setName(`${name}'s ${newMember.presence.game} Room`);
             } else {
@@ -33,7 +32,7 @@ module.exports = async (bot, oldMember, newMember) => {
         if (!oldMember.voiceChannel.members.first() && oldMember.voiceChannelID != 607592608641974324) {
             oldMember.voiceChannel.delete();
 
-            let vchannel = oldMember.guild.channels.find('id', '607592608641974324');
+            let vchannel = oldMember.guild.channels.find(c => c.id == '607592608641974324');
 
             vchannel.overwritePermissions(custvcadmin.get(oldMember.voiceChannel.id), {
                 VIEW_CHANNEL: true
@@ -41,7 +40,7 @@ module.exports = async (bot, oldMember, newMember) => {
 
             vcPerks.delete(`${custvcadmin.get(oldMember.voiceChannel.id)}`);
 
-            if (oldMember.guild.channels.find(`id`, `592207697701634062`).children.map(c => c.type).filter(x => x === 'voice').length == 1) {
+            if (oldMember.guild.channels.find(c => c.id == '592207697701634062').children.map(c => c.type).filter(x => x === 'voice').length == 1) {
                 vcPerks.clear();
                 custvcadmin.clear();
             }
