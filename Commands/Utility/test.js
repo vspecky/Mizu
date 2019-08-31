@@ -6,6 +6,7 @@ let test;
 let testVar = require('../../Events/Guild/message.js')
 const { connect } = require('mongoose');
 let testing = new Map();
+let testarr = [1, 0, 2];
 
 module.exports.run = async (bot, message, args) => {
 
@@ -34,7 +35,8 @@ module.exports.run = async (bot, message, args) => {
 
     */
 
-    console.log(message.reactions);
+    testtt = testarr[1] || 5;
+    console.log(testtt);
 }
 
 

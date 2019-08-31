@@ -2,7 +2,6 @@ const discord = require("discord.js");
 const nekos = require("nekos.life");
 const fs = require("fs");
 const neko = new nekos();
-const category = JSON.parse(fs.readFileSync("./JSON/logchannels.json", "utf8"));
 
 module.exports.run = async(bot, message, args) =>{
 

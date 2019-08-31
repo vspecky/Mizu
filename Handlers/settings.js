@@ -1,9 +1,7 @@
 const { connect } = require('mongoose');
 const setschema = require('../models/settingsSchema.js');
 const expschema = require('../models/expSchema.js');
-let ASmsgs;
-let AStime;
-let EXPmult;
+let setObj = {};
 let exparr = [];
 let weeklyarr = [];
 let expswitch = 0;
@@ -27,10 +25,7 @@ module.exports = async () => {
                 console.log('settings created');
                 newSets.save().catch(err => console.log(err));
             } else {
-                ASmsgs = res.antiSpamMsgs;
-                AStime = res.antiSpamTime;
-                EXPmult = res.expMultiplier;
-                return;
+                setObj = res;
             }
         });
 
@@ -66,11 +61,7 @@ module.exports = async () => {
 }
 
 module.exports.settings = () => {
-    return {
-        expmultiplier: EXPmult,
-        aspammsgs: ASmsgs,
-        aspamtime: AStime
-    };
+    return setObj;
 }
 
 module.exports.experience = () => {
