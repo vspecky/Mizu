@@ -2,7 +2,7 @@ const { RichEmbed } = require('discord.js');
 
 module.exports = async (bot, message) => {
 
-    let logch = message.guild.channels.find(`name`, "moderation");
+    let logch = message.guild.channels.find(c => c.name == 'moderation');
     if (!logch) return message.channel.send("Couldn't find channel for msg delete logs");
 
     let dUser = message.member;

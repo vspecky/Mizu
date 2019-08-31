@@ -2,7 +2,10 @@ const discord = require('discord.js');
 const superagent = require('superagent');
 const Canvas = require('canvas');
 const experience = require('../../models/expSchema.js');
-const mongoose = require('mongoose');
+let test;
+let testVar = require('../../Events/Guild/message.js')
+const { connect } = require('mongoose');
+let testing = new Map();
 
 module.exports.run = async (bot, message, args) => {
 
@@ -29,22 +32,12 @@ module.exports.run = async (bot, message, args) => {
         //console.log(lvlnxt);
     })
 
-    message.channel.send('works');
-
-    //console.log(message.createdTimestamp);
-    //console.log(message.member.lastMessage);
-
-    
-
-    //console.log(g);
     */
 
-   let rety = message.guild.members.find(user => user.id === '371576327872184320');
-
-   console.log(rety);
-
+    console.log(message.reactions);
 }
 
-module.exports.help = {
+
+module.exports.config = {
     name: "test"
 }

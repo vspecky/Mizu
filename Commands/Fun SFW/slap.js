@@ -33,7 +33,7 @@ module.exports.run = async(bot, message, args) =>{
 
 }
 
-module.exports.help = {
+module.exports.config = {
     name: "slap",
     usage: "j!slap || j!slap @user"
 }

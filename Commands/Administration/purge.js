@@ -12,7 +12,7 @@ module.exports.run = async(bot,message,args) =>{
 
 }
 
-module.exports.help = {
+module.exports.config = {
     name: "purge",
     usage:"j!purge <No. of msgs to be deleted>."
 }

@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const expSchema = mongoose.Schema({
+const expSchema = Schema({
     UUID: Number,
     '277888888838815744': {
         EXPERIENCE: Number,
@@ -14,4 +14,4 @@ const expSchema = mongoose.Schema({
     collection: 'EXP_USERS'
 });
 
-module.exports = mongoose.model('EXP_USERS', expSchema);
+module.exports = model('EXP_USERS', expSchema);

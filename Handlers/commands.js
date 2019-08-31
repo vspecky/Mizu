@@ -5,7 +5,8 @@ module.exports = bot => {
         const commands = readdirSync(`./Commands/${dir}/`).filter(c => c.endsWith('.js'));
         for (let file of commands) {
             const pull = require(`../Commands/${dir}/${file}`);
-            bot.commands.set(pull.help.name, pull); 
+            bot.commands.set(pull.config.name, pull); 
+            if(pull.config.aliases) pull.config.aliases.forEach(alias => bot.aliases.set(alias, pull.config.name));
         }
         console.log(`${dir} modules functional.`);
     }

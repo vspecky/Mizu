@@ -18,7 +18,7 @@ module.exports.run = async(bot,message,args) =>{
 }
 
 
-module.exports.help = {
+module.exports.config = {
     name: "8ball",
     usage: "j!8ball question"
 }

@@ -77,6 +77,6 @@ module.exports.run = async(bot, message, args) => {
 
 }
 
-module.exports.help = {
+module.exports.config = {
     name: "report"
 }

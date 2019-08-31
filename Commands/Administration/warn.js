@@ -1,6 +1,6 @@
 const discord = require("discord.js");
 const Warning = require('../../models/warnSchema.js');
-const mongoose = require('mongoose');
+const { connect } = require('mongoose');
 
 
 module.exports.run = async (bot, message, args) => {
@@ -50,7 +50,7 @@ module.exports.run = async (bot, message, args) => {
     rChannel.send(infoEmbed);
     wUser.send(userNotif);
 
-    mongoose.connect('mongodb://localhost/Warnings', {
+    connect('mongodb://localhost/RATHMABOT', {
         useNewUrlParser: true
     });
 
@@ -75,7 +75,7 @@ module.exports.run = async (bot, message, args) => {
                 time: `${message.createdAt}`
             });
 
-            let muteRole = message.guild.roles.find('name', 'muted').id;
+            let muteRole = message.guild.roles.find(r => r.name == 'muted').id;
 
             if (warn.Logs.length >= 3) {
                 switch (warn.Logs.length) {
@@ -105,10 +105,13 @@ module.exports.run = async (bot, message, args) => {
                         setTimeout(() => {
                             message.guild.unban(warn.UserID);
                         }, 604800000);
+
+                        message.channel.send('User has been banned for 1 week. (Reason: 5 strikes)');
                         break;
             
                     case 6:
                         message.guild.ban(warn.UserID);
+                        message.channel.send('User has been permabanned. (Reason: 6 strikes)');
             
                 }
             }
@@ -123,6 +126,6 @@ module.exports.run = async (bot, message, args) => {
 }
 
 
-module.exports.help = {
+module.exports.config = {
     name: "warn"
 }

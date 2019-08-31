@@ -6,6 +6,8 @@ const warnSchema = mongoose.Schema({
     UserID: String,
     Logs: [],
     DelLogs: []
+}, {
+    collection: "Warnlogs"
 });
 
 module.exports = mongoose.model("Warning", warnSchema);

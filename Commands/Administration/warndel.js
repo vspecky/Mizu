@@ -1,6 +1,6 @@
 const discord = require('discord.js');
 const Warning = require('../../models/warnSchema.js');
-const mongoose = require('mongoose');
+const { connect } = require('mongoose');
 
 module.exports.run = async (bot,message,args) => {
 
@@ -15,7 +15,7 @@ module.exports.run = async (bot,message,args) => {
 
     let wIndex = args[1];
 
-    mongoose.connect('mongodb://localhost/Warnings', {
+    connect('mongodb://localhost/RATHMABOT', {
         useNewUrlParser: true
     });
 
@@ -38,6 +38,6 @@ module.exports.run = async (bot,message,args) => {
 
 }
 
-module.exports.help = {
+module.exports.config = {
     name: 'warndel'
 }

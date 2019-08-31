@@ -41,7 +41,7 @@ module.exports.run = async(bot, message, args) =>{
 
 }
 
-module.exports.help = {
+module.exports.config = {
     name: "hug",
     usage: "j!hug || j!hug @user"
 }

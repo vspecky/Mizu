@@ -73,7 +73,7 @@ module.exports.run = async(bot,message,args) =>{
 
 }
 
-module.exports.help = {
+module.exports.config = {
     name: "sbooru",
     usage: "j!sbooru || j!sbooru tag+tag_name"
 }

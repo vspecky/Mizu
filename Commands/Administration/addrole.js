@@ -14,7 +14,7 @@ module.exports.run = async(bot, message, args) =>{
     if(!gRole) return message.channel.send("That role does not exist.");
 
     if(rMember.roles.has(gRole.id)) return message.channel.send("The user already has that role.");
-    await(rMember.addRole(gRole.id));
+    await rMember.addRole(gRole.id); 
 
     try{
         await rMember.send(`You have been assigned the role ${gRole.name} in ${message.guild.name}.`);
@@ -26,6 +26,7 @@ module.exports.run = async(bot, message, args) =>{
 }
 
 
-module.exports.help = {
-    name: "addrole"
+module.exports.config = {
+    name: "addrole",
+    aliases: ['ar']
 }

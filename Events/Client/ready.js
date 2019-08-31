@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const expschema = require('../../models/expSchema.js');
+
 module.exports = async (bot) => {
 
     console.log(`${bot.user.username} is online.`);
@@ -11,6 +14,8 @@ module.exports = async (bot) => {
         if (index >= 4) index = 0;
         bot.user.setActivity(`${playArr[index]}`, { type: "Playing" });
     }, 60000);
+
+    
 
 
 

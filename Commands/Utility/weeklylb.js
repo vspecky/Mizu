@@ -2,7 +2,6 @@ const { RichEmbed } = require('discord.js');
 let exparr;
 let expObject = require('../../Handlers/settings.js').experience;
 
-
 module.exports.run = async (bot, message, args) => {
 
     if(isNaN(args[0]) && args[0]) return message.reply('Bad Usage.');
@@ -11,7 +10,7 @@ module.exports.run = async (bot, message, args) => {
 
     let pageNo = args[0] || 1;
 
-    message.channel.send(getLeaderboardEmbed(pageNo))
+    message.channel.send(getWeeklyEmbed(pageNo))
     .then(async msg => {
 
         await msg.react(`⬅`);
@@ -27,12 +26,12 @@ module.exports.run = async (bot, message, args) => {
             else if(reaction.emoji.name === `➡`) {
                 pageNo++;
                 reaction.remove(message.author);
-                msg.edit(new RichEmbed(getLeaderboardEmbed(pageNo)));
+                msg.edit(new RichEmbed(getWeeklyEmbed(pageNo)));
             }
             else if(reaction.emoji.name === `⬅`) {
                 pageNo--;
                 reaction.remove(message.author);
-                msg.edit(new RichEmbed(getLeaderboardEmbed(pageNo)));
+                msg.edit(new RichEmbed(getWeeklyEmbed(pageNo)));
             }
         });
 
@@ -44,27 +43,20 @@ module.exports.run = async (bot, message, args) => {
 
     });
 
-
 }
 
-const getLeaderboardEmbed = pageNumber => {
+const getWeeklyEmbed = pageNumber => {
 
     let hdr = pageNumber * 10; // Highest Displayed Rank
 
     let xpembed = new RichEmbed()
-        .setTitle('OtakuOnsen Exp Leaderboard')
+        .setTitle('OtakuOnsen Weekly Leaderboard')
         .setColor('#8E5BC5')
         .setFooter(`Page ${pageNumber}/${Math.floor(exparr.length/10)}`);
 
-    for (let i = (hdr - 10); i < hdr; i++)  {
-        let lvl = 0;
-        let userexp = exparr[i]['277888888838815744'].EXPERIENCE || 0;
-        while (userexp >= 0) {
-            userexp -= (5 * lvl * lvl) + (50 * lvl) + 100;
-            lvl++
-        }
+    for (let i = (hdr - 10); i < hdr; i++) {
         xpembed.addField(`Rank ${i+1} - ${exparr[i]['LAST KNOWN USERNAME'] || exparr[i].UUID}`,
-        `Level ${lvl-1} - ${exparr[i]['277888888838815744'].EXPERIENCE || 0}xp`);
+        `Weekly Experience - ${exparr[i]['277888888838815744']['WEEKLY EXPERIENCE'] || 0}xp`);
     }
 
     return xpembed;
@@ -72,10 +64,10 @@ const getLeaderboardEmbed = pageNumber => {
 }
 
 setInterval(() => {
-    exparr = expObject().expArray;
+    exparr = expObject().weeklyArray;
 }, 10000);
 
 module.exports.config = {
-    name: 'leaderboard',
-    aliases: ['lb']
+    name: 'weeklylb',
+    aliases: ['lbw']
 }
