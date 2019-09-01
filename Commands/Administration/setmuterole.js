@@ -1,4 +1,5 @@
 const { connect } = require('mongoose');
+const { RichEmbed } = require('discord.js');
 const setschema = require('../../models/settingsSchema.js');
 let setsObj = require('../../Handlers/settings.js').settings;
 
@@ -7,26 +8,31 @@ module.exports.run = async (bot, message, args) => {
     const settings = setsObj();
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    if(!args[0] || isNaN(args[0])) return message.reply(usageEmbed);
+    if(!args[0]) return message.reply(usageEmbed);
 
+    const role = message.guild.roles.get(args[0]);
+
+    if(!role) return message.reply("That role doesn't exist");
+    
     connect('mongodb://localhost/RATHMABOT', {
         useNewUrlParser: true
     });
 
     setschema.findOne({ serverID: settings.serverID }, (err, res) => {
-        if(err) console.log(err);
-
-        res.expMultiplier = Number(args[0]);
+        res.muteRole = args[0];
 
         res.save().catch(err => console.log(err));
 
-        return message.reply(`Guild Experience Multiplier was set to ${args[0]}`);
-
+        let embed = new RichEmbed()
+        .setColor(settings.defaultEmbedColor)
+        .setDescription(`Guild mute role has been set to ${role.name} (${role.id})`);
+        return message.channel.send(embed);
     });
+
 }
 
 module.exports.config = {
-    name: 'setexpmult',
-    usage: '```.setexpmult <Number>```',
-    desc: 'Sets the guild exp multiplier. (Default: 1)'
+    name: 'setmuterole',
+    usage: '```.setmuterole <channelID>```',
+    desc: 'Sets the default mute role for the guild.'
 }

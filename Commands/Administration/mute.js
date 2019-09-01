@@ -1,95 +1,62 @@
-const discord = require("discord.js");
+const { RichEmbed } = require("discord.js");
+let setsObj = require('../../Handlers/settings.js').settings;
+const ms = require('ms');
 
-module.exports.run = async(bot, message, args) =>{
+module.exports.run = async(bot, message, args) => {
 
-    // j!mute @user reason
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name));
 
-    let toMute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    const settings = setsObj() || {};
+    const muteRole = message.guild.roles.get(settings.muteRole);
+    const mChannel = message.guild.channels.get(settings.logChannels.muteChannel);
+    usageEmbed.setColor(settings.defaultEmbedColor);
+    if(!muteRole) return message.reply("The mute role for the guild doesn't exist");
+
+    if(!message.member.hasPermission("MUTE_MEMBERS")) return;
+
+    const toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
     if(!toMute || `${toMute}` == `${message.author}`){
-        message.delete().catch(O_o=>{});
-        return message.channel.send("Invalid user argument.");
-    }
-    
-   
-
-    if(!message.member.hasPermission("MUTE_MEMBERS")){
-        return message.channel.send(`${message.author} You aren't Mod-sama! :flushed:`);
+        return message.reply(usageEmbed);
     }
 
-    if(toMute.hasPermission("MUTE_MEMBERS")){
-        return message.channel.send(`${message.author} Why u wanna mute Mod-sama? :pensive:`);
-    }
+    if(toMute.hasPermission("MUTE_MEMBERS")) return message.reply(`Why u wanna mute Mod-sama? :pensive:`);
 
-    let mIcon = toMute.user.displayAvatarURL;
-
-    let muteRole = message.guild.roles.find(`name`, "muted");
-
-    //start of create role
-    if(!muteRole){
-        try{
-            muteRole = await message.guild.createRole({
-                name: "muted",
-                color: "#8B0000",
-                permissions: []
-            });
-
-            message.guild.channels.forEach(async (channel, id) =>{
-                await channel.overwritePermissions(muteRole, {
-                    SEND_MESSAGES: false,
-                    ADD_REACTIONS: false,
-                    ATTACH_FILES: false
-                });
-                
-            });
-
-        }catch(e){
-            console.log(e.stack);
-        }
-    }
-    //end of create role 
-
-
-    let mReason = args.join(" ").slice(22);
-    if(!mReason){
-        message.delete().catch(O_o=>{});
-        return message.channel.send("Please specify a reason.");
-    }
-
-
-    if(toMute.roles.has(muteRole.id)){
-        message.delete().catch(O_o=>{});
-        message.channel.send("That user is already muted");
-        return;
-    }
-    else{
-        toMute.addRole(muteRole.id);
-        message.channel.send(`<@${toMute.id}> has been muted.`);
-    }
-   
-
-
-    let muteEmbed = new discord.RichEmbed()
-    .setDescription("User Mute")
+    let muteEmbed = new RichEmbed()
+    .setDescription(`🔇 User Mute:`)
     .setColor("#8E5BC5")
-    .setThumbnail(mIcon)
+    .setThumbnail(toMute.user.displayAvatarURL)
     .addField("Muted User :", `<@${toMute.id}> ID: ${toMute.id}`)
     .addField("Muted By :", `${message.author} ID: ${message.author.id}`)
-    .addField("In Channel :", message.channel)
-    .addField("Time :", message.createdAt)
-    .addField("Reason :", mReason);
+    .setTimestamp();
 
-    let mChannel = message.guild.channels.find(`name`, "moderation");
-    if(!mChannel){
-        return message.channel.send("Couldn't find the moderation channel.");
+    toMute.addRole(muteRole.id);
+
+    if(args[1]) {
+        if(ms(args[1])) {
+            setTimeout(() => {
+                toMute.removeRole(muteRole.id);
+            }, ms(args[0]));
+
+            muteEmbed.addField('Time:', `${ms(ms(args[1]), { long: true })}`);
+
+            if(args[2]) {
+                const mReason = args.slice(2).join(' ');
+                muteEmbed.addField('Reason:', `${mReason}`);
+            }
+
+        } else {
+            const mReason = args.slice(1).join(' ');
+            muteEmbed.addField('Reason:', `${mReason}`);
+        }
     }
-
     
-    message.delete().catch(O_o=>{});
-    mChannel.send(muteEmbed);
-    return;
+    if(mChannel) mChannel.send(muteEmbed);
 
 }
 
 module.exports.config = {
-    name: "mute"
+    name: "mute",
+    usage: "```.mute @User <time(optional)> <reason(optional)>```",
+    note: 'Make sure a mute role has been set and it exists.',
+    desc: 'Mutes the specified user with options.'
 }

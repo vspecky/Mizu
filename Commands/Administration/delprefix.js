@@ -4,29 +4,30 @@ let setsObj = require('../../Handlers/settings.js').settings;
 
 module.exports.run = async (bot, message, args) => {
 
-    const settings = setsObj();
+    settings = setsObj();
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    if(!args[0] || isNaN(args[0])) return message.reply(usageEmbed);
+    if(!args[0]) return message.reply(usageEmbed);
 
     connect('mongodb://localhost/RATHMABOT', {
         useNewUrlParser: true
     });
 
     setschema.findOne({ serverID: settings.serverID }, (err, res) => {
-        if(err) console.log(err);
 
-        res.expMultiplier = Number(args[0]);
+        if(!res.prefixes.includes(args[0])) return message.reply("That prefix already doesn't exist.");
+        res.prefixes.splice(res.prefixes.indexOf(args[0]));
 
         res.save().catch(err => console.log(err));
 
-        return message.reply(`Guild Experience Multiplier was set to ${args[0]}`);
-
+        return message.reply(`\`${args[0]}\` has been removed as a prefix`);
     });
+
 }
 
 module.exports.config = {
-    name: 'setexpmult',
-    usage: '```.setexpmult <Number>```',
-    desc: 'Sets the guild exp multiplier. (Default: 1)'
+    name: 'delprefix',
+    usage: "```.delprefix <prefix>```",
+    note: 'Default prefix is "."',
+    desc: 'Removes the given prefix from the list of bot prefixes.'
 }

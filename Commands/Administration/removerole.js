@@ -1,21 +1,25 @@
-const discord = require("discord.js");
+let setsObj = require('../../Handlers/settings.js').settings;
 
 module.exports.run = async(bot, message, args) =>{
     
-    if(!message.member.hasPermission("MANAGE_ROLES")) return message.channel.send("You do not have the permissions to do that.");
+    if(!message.member.hasPermission("MANAGE_ROLES")) return;
 
-    let rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-    if(!rMember) return message.channel.send("Couldn't find that user.");
+    const settings = setsObj();
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
+    if(!args[0] || !args[1]) return message.reply(usageEmbed);
 
-    let role = args.slice(1).join(" ");
-    if(!role) return message.channel.send("Please specify a role.");
+    const rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    if(!rMember) return message.reply("Couldn't find that user.");
 
-    let gRole = message.guild.roles.find(r => r.name.toLowerCase() == role.toLowerCase());
+    const role = args.slice(1).join(" ");
+    if(!role) return message.reply("Please specify a role.");
 
-    if(!gRole) return message.channel.send("That role does not exist.");
+    const gRole = message.guild.roles.find(r => r.name.toLowerCase() == role.toLowerCase());
 
-    if(!rMember.roles.has(gRole.id)) return message.channel.send("The user already doesn't have that role.");
+    if(!gRole) return message.reply("That role does not exist.");
+
+    if(!rMember.roles.has(gRole.id)) return message.reply("The user already doesn't have that role.");
     rMember.removeRole(gRole.id);
 
     message.channel.send(`The role ${gRole.name} has been removed from <@${rMember.id}>.`);
@@ -25,5 +29,7 @@ module.exports.run = async(bot, message, args) =>{
 
 module.exports.config = {
     name: "removerole",
+    usage: "```.removerole <@User/UserID> <RoleName>```",
+    desc: "Removes the specified role from the specified user.",
     aliases: ['rr']
 }

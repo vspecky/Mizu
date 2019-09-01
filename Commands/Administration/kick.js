@@ -1,52 +1,44 @@
-const discord = require("discord.js");
+const { RichEmbed } = require("discord.js"); 
+let setsObj = require('../../Handlers/settings.js').settings;
 
 module.exports.run = async(bot, message, args) =>{
      // j!kick @user reason
 
-     let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-     if(!kUser || `${kUser}` == `${message.author}`){
-         message.delete().catch(O_o=>{});
-         return message.channel.send("You cannot kick non-existent users or yourself.");
-     }
+    if(!message.member.hasPermission("KICK_MEMBERS")) return;
+
+    const settings = setsObj();
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+
+    if(!args[0] || !args[1]) return message.reply(usageEmbed);
+
+    const kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    if(!kUser || `${kUser}` == `${message.author}`) return message.reply("You cannot kick non-existent users or yourself.");
+
+    if(kUser.hasPermission("KICK_MEMBERS")) return message.reply(`Why u wanna kick Mod-sama? :pensive:`);
      
-     let kReason = args.join(" ").slice(22);
-     if(!kReason){
-         message.delete().catch(O_o=>{});
-         return message.channel.send("Please specify a reason.");
-     }
+    const kReason = args.slice(1).join(' ');
+    if(!kReason) return message.reply("Please specify a reason.");
 
-     if(!message.member.hasPermission("KICK_MEMBERS")){
-         return message.channel.send(`${message.author} You aren't Mod-sama! :flushed:`);
-     }
-
-     if(kUser.hasPermission("KICK_MEMBERS")){
-         return message.channel.send(`${message.author} Why u wanna kick Mod-sama? :pensive:`);
-     }
-
-     let kIcon = kUser.user.displayAvatarURL;
-
-     let kickEmbed = new discord.RichEmbed()
+    const kickEmbed = new RichEmbed()
      .setDescription("User Kick")
-     .setColor("#8E5BC5")
-     .setThumbnail(kIcon)
+     .setColor(settings.defaultEmbedColor)
+     .setTimestamp()
+     .setThumbnail(kUser.user.displayAvatarURL)
      .addField("Kicked User :", `<@${kUser}> ID: ${kUser.id}`)
      .addField("Kicked By :", `${message.author} ID: ${message.author.id}`)
-     .addField("In Channel :", message.channel)
-     .setFooter(message.createdAt)
      .addField("Reason :", kReason);
 
-     let kChannel = message.guild.channels.find(`name`, "moderation");
-     if(!kChannel){
-         return message.channel.send("Couldn't find the moderation channel.");
-     }
+    const kChannel = message.guild.channels.get(settings.logChannels.kickChannel);
 
-     message.guild.member(kUser).kick(kReason);
+    message.guild.member(kUser).kick(kReason);
      
-     message.delete().catch(O_o=>{});
-     kChannel.send(kickEmbed);
+    if(kChannel) kChannel.send(kickEmbed);
 
 }
 
 module.exports.config = {
-    name: "kick"
+    name: "kick",
+    usage: "```.kick <@User/UserID> <Reason>```",
+    desc: 'Kicks the specified user for the specified reason.',
+    note: 'Make sure a kick logs channel has been set to acquire the logs.'
 }

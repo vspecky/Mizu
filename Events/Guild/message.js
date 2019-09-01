@@ -1,13 +1,13 @@
 const { RichEmbed } = require('discord.js');
-const botprefix = { prefix: 'j!' };
 const { connect } = require('mongoose');
 const expschema = require('../../models/expSchema.js');
 let settingsObject = require('../../Handlers/settings.js').settings;
-let settings = {};
+let settings = settingsObject();
 let expcooldown = new Set();
 let sameSpamSet = new Map();
 let genSpamSet = new Map();
 let commandcooldown = new Set();
+let prefix;
 
 module.exports = async (bot, message) => {
 
@@ -16,14 +16,12 @@ module.exports = async (bot, message) => {
 
     if(antiSpamCheck(message)) return;
 
-    let prefix = botprefix.prefix;
-
-    if(message.content.startsWith(prefix)) {
+    if(prefixCheck(bot, message)) {
         let messageArray = message.content.split(/ +/g);
         let cmd = messageArray[0].slice(prefix.length).toLowerCase();
         let args = messageArray.slice(1);
         let commandFile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd));
-        if(profanityFilter(message.content) && commandFile !== 'blacklistadd' && commandFile !== 'blacklistdel') return message.delete();
+        if(profanityFilter(message.content) && (commandFile !== 'blacklistadd' && commandFile !== 'blacklistdel')) return message.delete();
 
         if (commandFile && !commandcooldown.has(message.author.id)) {
             commandcooldown.add(message.author.id);
@@ -150,7 +148,6 @@ const antiSpamCheck = message => {
 
 }
 
-
 const profanityFilter = content => {
 
     const blacklist = settings.blacklist || [];
@@ -160,6 +157,24 @@ const profanityFilter = content => {
 
 }
 
+const prefixCheck = (bot, message) => {
+    let prefixFlag = false;
+
+    if(message.content.startsWith('.')) {
+        prefix = '.';
+        prefixFlag = true;
+    }
+
+    settings.prefixes.forEach(botprefix => {
+        if(message.content.startsWith(botprefix)) {
+            prefix = botprefix;
+            return prefixFlag = true;
+        }
+    });
+
+    return prefixFlag;
+}
+
 setInterval(() => {
     settings = settingsObject();
-}, 10000);
+}, 60000);

@@ -10,13 +10,17 @@ const settingsSchema = Schema({
         sameSpamBuffer: Number
     },
     logChannels: {
-        muteChannel: Number,
-        kickChannel: Number,
-        banChannel: Number,
-        msgdelChannel: Number,
-        userUpdateChannel: Number
+        muteChannel: String,
+        kickChannel: String,
+        banChannel: String,
+        msgdelChannel: String,
+        userUpdateChannel: String,
+        reportsChannel: String
     },
     expMultiplier: Number,
+    muteRole: String,
+    defaultEmbedColor: String,
+    prefixes: [],
     blacklist: []
 }, {
     collection: 'OOSettings'

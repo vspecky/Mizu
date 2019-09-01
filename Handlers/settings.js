@@ -1,25 +1,26 @@
 const { connect } = require('mongoose');
+const { readFileSync } = require('fs');
 const setschema = require('../models/settingsSchema.js');
 const expschema = require('../models/expSchema.js');
-let setObj = {};
+let setObj = { antiSpamSettings: {}, logChannels: {}, prefixes: [] };
 let exparr = [];
 let weeklyarr = [];
 let expswitch = 0;
+const serverid = JSON.parse(readFileSync('./Handlers/serverid.json', 'utf8'))["serverID"]
 
-
-module.exports = async () => {
+module.exports = bot => {
     
     setInterval(() => {
         connect('mongodb://localhost/RATHMABOT', {
             useNewUrlParser: true
         });
 
-        setschema.findOne({ serverID: 277888888838815744 }, (err, res) => {
+        setschema.findOne({ serverID: serverid }, (err, res) => {
             if(err) console.log(err);
 
             if(!res) {
                 const newSets = new setschema({
-                    serverID: 277888888838815744
+                    serverID: serverid
                 });
 
                 console.log('settings created');
@@ -61,6 +62,7 @@ module.exports = async () => {
 }
 
 module.exports.settings = () => {
+    setObj.serverID = serverid;
     return setObj;
 }
 

@@ -77,5 +77,9 @@ setInterval(() => {
 
 module.exports.config = {
     name: 'leaderboard',
+    usage: '`.leaderboard <PageNumber(optional)>`',
+    desc: 'Posts the <PageNumber>\'th page of the server exp leaderboard. (Page 1 if page number is not provided)',
+    note: '', // Here goes some important information regarding the command
+    module: 'experience',
     aliases: ['lb']
 }

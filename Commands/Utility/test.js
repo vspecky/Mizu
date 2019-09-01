@@ -7,6 +7,9 @@ let testVar = require('../../Events/Guild/message.js')
 const { connect } = require('mongoose');
 let testing = new Map();
 let testarr = [1, 0, 2];
+let usageEmbed = require('../../Handlers/usageinfo.js');
+const setsObj = require('../../Handlers/settings.js').settings;
+const ms = require('ms');
 
 module.exports.run = async (bot, message, args) => {
 
@@ -34,12 +37,18 @@ module.exports.run = async (bot, message, args) => {
     })
 
     */
+    let arr = [1,2,3];
+    testembed = new discord.RichEmbed()
+    .setTitle('testing')
+    .addField('testing', `<@${message.author.id}>`)
+    .setColor(setsObj().defaultEmbedColor);
 
-    testtt = testarr[1] || 5;
-    console.log(testtt);
+    message.channel.send(testembed);
 }
 
 
 module.exports.config = {
-    name: "test"
+    name: "test",
+    usage: 'testUsage',
+    notes: 'testNote'
 }

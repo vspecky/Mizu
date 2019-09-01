@@ -1,17 +1,20 @@
 const { connect } = require('mongoose');
 const setschema = require('../../models/settingsSchema.js');
 const { RichEmbed } = require('discord.js');
-const reply = 'Usage: `.spamsettings general/similar x y`\nx = No. of messages\ny = Time buffer in seconds'
+let setsObj = require('../../Handlers/settings.js').settings;
 
 module.exports.run = async (bot, message, args) => {
 
-    if(!isNaN(args[0]) || !args[2] || isNaN(args[1]) || isNaN(args[2])) return message.reply(reply);
+    const settings = setsObj();
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+
+    if(!isNaN(args[0]) || !args[2] || isNaN(args[1]) || isNaN(args[2])) return message.reply(usageEmbed);
 
     connect('mongodb://localhost/RATHMABOT', {
         useNewUrlParser: true
     });
 
-    setschema.findOne({ serverID: 277888888838815744 }, (err, res) => {
+    setschema.findOne({ serverID: settings.serverID }, (err, res) => {
         if(err) console.log(err);
 
         if(args[0].toLowerCase() == 'general'){
@@ -28,16 +31,15 @@ module.exports.run = async (bot, message, args) => {
 
         let ssetEmbed = new RichEmbed()
         .setTitle(`${args[0].toUpperCase()} Spam Settings Changed:`)
+        .setColor(settings.defaultEmbedColor)
         .setDescription(`Messages: ${args[1]}\nTime Buffer: ${args[2]} seconds`);
 
         return message.channel.send(ssetEmbed);
 
-    });
-
-    
-
+    });   
 }
 
 module.exports.config = {
-    name: 'spamsettings'
+    name: 'spamsettings',
+    usage: "```.spamsettings <'general'/'similar'> <msgAmount> <bufferTime>```"
 }
