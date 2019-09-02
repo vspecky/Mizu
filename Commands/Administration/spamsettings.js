@@ -5,6 +5,8 @@ let setsObj = require('../../Handlers/settings.js').settings;
 
 module.exports.run = async (bot, message, args) => {
 
+    if(!message.member.hasPermission('ADMINISTRATOR')) return;
+
     const settings = setsObj();
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
@@ -32,7 +34,7 @@ module.exports.run = async (bot, message, args) => {
         let ssetEmbed = new RichEmbed()
         .setTitle(`${args[0].toUpperCase()} Spam Settings Changed:`)
         .setColor(settings.defaultEmbedColor)
-        .setDescription(`Messages: ${args[1]}\nTime Buffer: ${args[2]} seconds`);
+        .setDescription(`**Messages:** ${args[1]}\n**Time Buffer:** ${args[2]} seconds`);
 
         return message.channel.send(ssetEmbed);
 
@@ -41,5 +43,6 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.config = {
     name: 'spamsettings',
-    usage: "```.spamsettings <'general'/'similar'> <msgAmount> <bufferTime>```"
+    usage: "```.spamsettings <'general'/'similar'> <msgAmount> <bufferTime>```",
+    desc: "Changes the Anti-Spam settings (General or Similar) of the guild."
 }

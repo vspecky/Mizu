@@ -1,13 +1,12 @@
-let setsObj = require('./settings.js').settings;
 const { RichEmbed } = require('discord.js');
 
-module.exports = ({ name, usage, note, desc }) => {
+module.exports = ({ name, usage, note, desc, aliases }) => {
     let usageEmbed = new RichEmbed()
-    .setTitle(`Usage for ${name}`)
-    //.setColor(setsObj().defaultEmbedColor)
-    if(usage) usageEmbed.setDescription(usage);
-    if(desc) usageEmbed.addField('Description', `${desc}`);
+    .setTitle(`Command: ${name}`)
+    if(usage) usageEmbed.addField('Usage', usage);
+    if(desc) usageEmbed.addField('Description', desc);
     if(note) usageEmbed.setFooter(note);
+    if(aliases) usageEmbed.setDescription(`Aliases: ${aliases.join(', ')}`);
 
     return usageEmbed;
 }

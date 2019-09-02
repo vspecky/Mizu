@@ -28,6 +28,7 @@ module.exports = async (bot, message) => {
             setTimeout(() => {
                 commandcooldown.delete(message.author.id);
             }, 5000);
+            
             commandFile.run(bot, message, args);
         }
     } else {

@@ -1,28 +1,36 @@
-const discord = require('discord.js');
+const { RichEmbed } = require('discord.js');
 const Warning = require('../../models/warnSchema.js');
 const { connect } = require('mongoose');
+let setsObj = require('../../Handlers/settings.js').settings;
 
 module.exports.run = async (bot,message,args) => {
 
-    connect('mongodb://localhost/RATHMABOT', {
-        useNewUrlParser: true
-    });
+    const settings = setsObj();
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     let wUser;
 
     if(args[0]){
         wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-        if(!wUser) return message.channel.send("Invalid user argument.");
+        if(!wUser) return message.channel.send(new RichEmbed({ 
+            description: 'That user does not exist.' 
+        }).setColor(settings.defaultEmbedColor));
     }else{
         wUser = message.member;
     }
 
+    connect('mongodb://localhost/RATHMABOT', {
+        useNewUrlParser: true
+    });
+
     Warning.findOne({ UserID: wUser.id }, (err, warn) => {
         if(err) console.log(err);
-        if(warn.Logs.length == 0 && warn.DelLogs.length == 0){
-            return message.channel.send('That user has no warns.');
+        if((warn.Logs.length == 0 && warn.DelLogs.length == 0) || !warn){
+            return message.channel.send(new RichEmbed({
+                description: 'That user has no warn logs.'
+            }).setColor(settings.defaultEmbedColor));
         }else{
-            let logEmbed = new discord.RichEmbed()
+            let logEmbed = new RichEmbed()
             .setColor(wUser.displayHexColor)
             .setAuthor(`Warn Logs: ${wUser.user.tag}`, `${wUser.user.displayAvatarURL}`)
             .setFooter(`Active Warnings = ${warn.Logs.length}`);
@@ -53,5 +61,7 @@ module.exports.run = async (bot,message,args) => {
 }
 
 module.exports.config = {
-    name: 'warnlog'
+    name: 'warnlog',
+    usage: "```.warnlog <@User/UserID(optional)>```",
+    desc: 'Displays the warn logs of the specified user. (Command user if no specifications)'
 }

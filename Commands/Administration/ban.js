@@ -13,12 +13,18 @@ module.exports.run = async(bot, message, args) =>{
 
     const bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     
-    if(!bUser || `${bUser}` == `${message.author}`) return message.reply("You cannot ban non-existent users or yourself.");
+    if(!bUser || `${bUser}` == `${message.author}`) return message.reply(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: 'You cannot ban non-existent users or yourself.'
+    }));
 
     if(bUser.hasPermission("BAN_MEMBERS")) return message.channel.send(`${message.author} Why u wanna ban Mod-sama? :pensive:`);
      
-    const bReason = args.join(" ").slice(22);
-    if(!bReason) return message.reply("Please specify a reason.");
+    const bReason = args.slice(1).join(' ');
+    if(!bReason) return message.reply(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: 'Please provide a reason.'
+    }));
 
     const bIcon = bUser.user.displayAvatarURL;
 

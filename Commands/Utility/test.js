@@ -10,6 +10,7 @@ let testarr = [1, 0, 2];
 let usageEmbed = require('../../Handlers/usageinfo.js');
 const setsObj = require('../../Handlers/settings.js').settings;
 const ms = require('ms');
+const setsschema = require('../../models/settingsSchema.js');
 
 module.exports.run = async (bot, message, args) => {
 
@@ -37,13 +38,9 @@ module.exports.run = async (bot, message, args) => {
     })
 
     */
-    let arr = [1,2,3];
-    testembed = new discord.RichEmbed()
-    .setTitle('testing')
-    .addField('testing', `<@${message.author.id}>`)
-    .setColor(setsObj().defaultEmbedColor);
-
-    message.channel.send(testembed);
+    console.log(bot.usages.get(args[0]));
+    message.channel.send(new discord.RichEmbed(bot.usages.get(args[0])));
+    //message.channel.send(embed);
 }
 
 

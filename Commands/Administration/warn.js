@@ -1,54 +1,49 @@
-const discord = require("discord.js");
+const { RichEmbed } = require("discord.js");
 const Warning = require('../../models/warnSchema.js');
 const { connect } = require('mongoose');
-
+let setsObj = require('../../Handlers/settings.js').settings;
+const ms = require('ms');
 
 module.exports.run = async (bot, message, args) => {
 
-    // j!warn @user reason
-
-
-    let rChannel = message.guild.channels.find(`name`, 'moderation');
-    if (!rChannel) {
-        return message.channel.send("Please set up a channel for warnlogs first using `j!warnlogch #channel`.");
-    }
-
     if (!message.member.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS"])) return;
+
+    const settings = setsObj();
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+
+    if(!args[0]) return message.reply(usageEmbed);
+
+    let wChannel = message.guild.channels.get(settings.logChannels.warnChannel);
 
     let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
     if (!wUser) return message.channel.send("Invalid user argument.");
 
     if (wUser.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS"])) return;
 
-    let wReason = args.join(" ").slice(22);
+    let wReason = args.slice(1).join(' ');
 
+    let date = new Date().toUTCString();
 
-    let rIcon = wUser.user.displayAvatarURL;
-
-
-    let infoEmbed = new discord.RichEmbed()
-        .setTitle("User Warning :")
-        .setColor("#8E5BC5")
+    let infoEmbed = new RichEmbed()
+        .setTitle(`❗User Warning :`)
+        .setColor(settings.defaultEmbedColor)
         .addField("Warned User :", `${wUser} ID: ${wUser.id}`)
         .addField("Reason :", wReason)
-        .setFooter(message.createdAt);
+        .setFooter(date);
 
-    let userNotif = new discord.RichEmbed()
-        .setColor("#8E5BC5")
-        .addField(`You have been warned in ${message.guild.name} for the following reason :`, wReason)
-        .setFooter(message.createdAt);
+    let userNotif = new RichEmbed()
+        .setColor(settings.defaultEmbedColor)
+        .addField(`You have been warned❗ in ${message.guild.name} for the following reason :`, wReason)
+        .setFooter(date);
 
-
-
-    message.delete().catch(O_o => { });
     message.channel.send(infoEmbed);
 
     infoEmbed.addField("Warned By :", `${message.author} ID: ${message.author.id}`)
     .addField("In Channel :", message.channel)
-    .setThumbnail(rIcon);
+    .setThumbnail(wUser.user.displayAvatarURL);
 
-    rChannel.send(infoEmbed);
-    wUser.send(userNotif);
+    if(wChannel) wChannel.send(infoEmbed);
+    try { wUser.send(userNotif); } catch(err) { console.log(err); }
 
     connect('mongodb://localhost/RATHMABOT', {
         useNewUrlParser: true
@@ -68,6 +63,8 @@ module.exports.run = async (bot, message, args) => {
                 }]
             });
 
+            issueAction(message, settings, wUser, warning, date);
+
             warning.save().catch(err => console.log(err));
         }else{
             warn.Logs.push({
@@ -75,49 +72,12 @@ module.exports.run = async (bot, message, args) => {
                 time: `${message.createdAt}`
             });
 
-            let muteRole = message.guild.roles.find(r => r.name == 'muted').id;
-
-            if (warn.Logs.length >= 3) {
-                switch (warn.Logs.length) {
-                    case 3:
-                        wUser.addRole(muteRole);
-            
-                        setTimeout(() => {
-                            wUser.removeRole(muteRole);
-                        }, 3600000);
-            
-                        message.channel.send('User has been muted for 1 hour. (Reason: 3 strikes)');
-                        break;
-            
-                    case 4:
-                        wUser.addRole(muteRole);
-            
-                        setTimeout(() => {
-                            wUser.removeRole(muteRole);
-                        }, 86400000);
-            
-                        message.channel.send('User has been muted for 24 hours. (Reason: 4 strikes)');
-                        break;
-            
-                    case 5:
-                        message.guild.ban(warn.UserID);
-            
-                        setTimeout(() => {
-                            message.guild.unban(warn.UserID);
-                        }, 604800000);
-
-                        message.channel.send('User has been banned for 1 week. (Reason: 5 strikes)');
-                        break;
-            
-                    case 6:
-                        message.guild.ban(warn.UserID);
-                        message.channel.send('User has been permabanned. (Reason: 6 strikes)');
-            
-                }
-            }
+            issueAction(message, settings, wUser, warn, date);
 
             warn.save().catch(err => console.log(err));
         }
+
+
     });
 
     return;
@@ -125,6 +85,63 @@ module.exports.run = async (bot, message, args) => {
 
 }
 
+const issueAction = (message, settings, wUser, warn, date) => {
+    if(settings.warnPunishments) {
+        if (settings.warnPunishments[`${warn.Logs.length}warn`]) {
+
+            const actionobj = settings.warnPunishments[`${warn.Logs.length}warn`];
+            let actionEmbed = new RichEmbed()
+            .setColor(settings.defaultEmbedColor)
+            .setTitle(`Warn Action: (Strikes: ${warn.Logs.length})`)
+            .addField('User:', `${wUser.user.tag} ID: ${wUser.id}`)
+            .setThumbnail(wUser.user.displayAvatarURL)
+            .setFooter(date);
+
+            if(actionobj.action == 'mute') {
+                const muteRole = message.guild.roles.get(settings.muteRole).id;
+                const muteChannel = message.guild.channels.get(settings.logChannels.muteChannel);
+                let action = `🔇Muted`
+                wUser.addRole(muteRole);
+                if (actionobj.timeout && actionobj.timeout != 'permanent') {
+                    setTimeout(() => {
+                        wUser.removeRole(muteRole);
+                    }, actionobj.timeout);
+                    action = action + ` (Timeout: ${ms(actionobj.timeout, { long: true })})`;
+                } else {
+                    action = action + ' (Timeout: Permanent)'
+                }
+                actionEmbed.addField('Action:', action);
+                message.channel.send(actionEmbed);
+                if(muteChannel) muteChannel.send(actionEmbed);
+
+            } else if(actionobj.action == 'ban') {
+                let action = `⛔Banned`;
+                const banChannel = message.guild.channels.get(settings.logChannels.banChannel);
+                message.guild.ban(wUser.user);
+                if(actionobj.timeout && actionobj.timeout != 'permanent') {
+                    setTimeout(() => {
+                        message.guild.unban(wUser.user);
+                    }, actionobj.timeout);
+                    action = action + ` (Timeout: ${ms(actionobj.timeout, { long: true })})`;
+                } else {
+                    action = action + ' (Timeout: Permanent)';
+                }
+                actionEmbed.addField('Action:', action);
+                message.channel.send(actionEmbed);
+                if(banChannel) banChannel.send(actionEmbed);
+
+            } else if(actionobj.action == 'kick') {
+                let action = `👢Kicked`;
+                const kickChannel = message.guild.channels.get(settings.logChannels.kickChannel);
+                message.guild.kick(wUser.user);
+                actionEmbed.addField('Action:', action);
+                message.channel.send(actionEmbed);
+                if(kickChannel) kickChannel.send(actionEmbed);
+            }
+
+        }
+    }
+}
 
 module.exports.config = {
     name: "warn"

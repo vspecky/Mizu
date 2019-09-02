@@ -13,13 +13,15 @@ const settingsSchema = Schema({
         muteChannel: String,
         kickChannel: String,
         banChannel: String,
+        warnChannel: String,
         msgdelChannel: String,
-        userUpdateChannel: String,
+        userupdateChannel: String,
         reportsChannel: String
     },
+    warnPunishments: {},
     expMultiplier: Number,
     muteRole: String,
-    defaultEmbedColor: String,
+    defaultEmbedColor: Number,
     prefixes: [],
     blacklist: []
 }, {

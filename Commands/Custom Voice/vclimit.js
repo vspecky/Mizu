@@ -1,5 +1,6 @@
-const discord = require('discord.js');
-const { vcinfo } = require('../../Events/Guild/voiceStateUpdate.js');
+const { RichEmbed } = require('discord.js');
+let setsObj = require('../../Handlers/settings.js').settings;
+let { vcinfo } = require('../../Events/Guild/voiceStateUpdate.js');
 
 module.exports.run = async (bot,message,args) =>{
 
@@ -7,20 +8,30 @@ module.exports.run = async (bot,message,args) =>{
 
     if(!vChannelID) return;
 
-    if(message.member.voiceChannelID != vChannelID) return message.channel.send(`<@${message.author.id}> You need to be in your custom room to use this command.`)
+    const settings = setsObj();
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    if(!args[0]) return message.channel.send(`<@${message.author.id}> Please specify a new limit.`);
+    if(message.member.voiceChannelID != vChannelID) return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: 'You need to be in your custom VC to use this command.'
+    }));
 
-    if(isNaN(args[0])) return message.channel.send(`<@${message.author.id}> Please specify a number.`);
+    if(!args[0]) return message.reply(usageEmbed);
 
-    if(args[0] > 99 || args[0] < 1) return message.channel.send(`<@${message.author.id}> Please specify a number between 1 and 99.`)
+    if(isNaN(args[0]) || args[0] > 99 || args[0] < 1) return message.reply(usageEmbed);
 
-    message.guild.channels.find('id', vChannelID).setUserLimit(args[0]);
+    message.guild.channels.find(vc => vc.id == vChannelID).setUserLimit(args[0]);
 
-    return message.channel.send(`<@${message.author.id}> The user limit of your custom room was changed to ${args[0]}.`);
+    return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: `The userlimit for <@${message.author.id}>'s custom VC was set to ${args[0]}.`
+    }));
 
 }
 
 module.exports.config = {
-    name: 'vclimit'
+    name: 'vclimit',
+    usage: "```.vclimit <Number>```",
+    desc: 'Sets a userlimit for a custom VC from 1-99 depending on the amount specified.',
+    note: 'Limit argument should be in the range 1-99 (Including 1 and 99).'
 }

@@ -1,4 +1,5 @@
 const { connect } = require('mongoose');
+const { RichEmbed } = require('discord.js');
 const setschema = require('../../models/settingsSchema.js');
 let setsObj = require('../../Handlers/settings.js').settings;
 
@@ -15,11 +16,14 @@ module.exports.run = async (bot, message, args) => {
 
     setschema.findOne({ serverID: settings.serverID }, (err, res) => {
         if(args[0] == 'default') res.defaultEmbedColor = undefined;
-        else res.defaultEmbedColor = `${args[0]}`;
+        else res.defaultEmbedColor = parseInt(`0x${args[0].match(/\w+/)[0]}`);
 
         res.save().catch(err => console.log(err));
 
-        return message.reply(`The default embed color has been set to ${args[0]}`);
+        return message.channel.send(new RichEmbed({
+            title: 'Default Embed Color Update:',
+            description: `The default embed color has been changed to ${args[0]}`,
+        }).setColor(args[0]));
     })
 
 }
