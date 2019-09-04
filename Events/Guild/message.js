@@ -1,27 +1,28 @@
 const { RichEmbed } = require('discord.js');
 const { connect } = require('mongoose');
 const expschema = require('../../models/expSchema.js');
-let settingsObject = require('../../Handlers/settings.js').settings;
-let settings = settingsObject();
 let expcooldown = new Set();
 let sameSpamSet = new Map();
 let genSpamSet = new Map();
 let commandcooldown = new Set();
 let prefix;
 
+
 module.exports = async (bot, message) => {
 
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
 
-    if(antiSpamCheck(message)) return;
+    let settings = bot.sets;
 
-    if(prefixCheck(bot, message)) {
+    if(antiSpamCheck(message, settings)) return;
+
+    if(prefixCheck(message, settings)) {
         let messageArray = message.content.split(/ +/g);
         let cmd = messageArray[0].slice(prefix.length).toLowerCase();
         let args = messageArray.slice(1);
         let commandFile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd));
-        if(profanityFilter(message.content) && (commandFile !== 'blacklistadd' && commandFile !== 'blacklistdel')) return message.delete();
+        if(profanityFilter(message.content, settings) && (commandFile !== 'blacklistadd' && commandFile !== 'blacklistdel')) return message.delete();
 
         if (commandFile && !commandcooldown.has(message.author.id)) {
             commandcooldown.add(message.author.id);
@@ -32,14 +33,14 @@ module.exports = async (bot, message) => {
             commandFile.run(bot, message, args);
         }
     } else {
-        if(profanityFilter(message.content)) return message.delete();
-        if (!expcooldown.has(message.author.id)) addExperienceToUser(message.author);
+        if(profanityFilter(message.content, settings)) return message.delete();
+        if (!expcooldown.has(message.author.id)) addExperienceToUser(message.author, settings);
     }
 
 }
 
 
-const addExperienceToUser = user => {
+const addExperienceToUser = (user, settings) => {
 
     connect('mongodb://localhost/RATHMABOT', {
         useNewUrlParser: true
@@ -90,7 +91,7 @@ const addExperienceToUser = user => {
 }
 
 
-const antiSpamCheck = message => {
+const antiSpamCheck = (message, settings) => {
 
     let muteRole = message.guild.roles.find(r => r.name == 'muted');
     let muteTime = settings.antiSpamSettings.antiSpamMuteTime || 5;
@@ -149,7 +150,7 @@ const antiSpamCheck = message => {
 
 }
 
-const profanityFilter = content => {
+const profanityFilter = (content, settings) => {
 
     const blacklist = settings.blacklist || [];
     const deserialized = content.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -158,7 +159,7 @@ const profanityFilter = content => {
 
 }
 
-const prefixCheck = (bot, message) => {
+const prefixCheck = (message, settings) => {
     let prefixFlag = false;
 
     if(message.content.startsWith('.')) {
@@ -175,7 +176,3 @@ const prefixCheck = (bot, message) => {
 
     return prefixFlag;
 }
-
-setInterval(() => {
-    settings = settingsObject();
-}, 60000);

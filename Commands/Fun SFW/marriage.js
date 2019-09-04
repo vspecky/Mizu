@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const marriageSchema = require('../../models/marriageSchema.js');
 
-
 module.exports.run = async (bot, message, args) => {
 
     mongoose.connect('mongodb://localhost/RATHMABOT', {

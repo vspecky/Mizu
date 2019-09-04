@@ -1,12 +1,11 @@
 const { connect } = require('mongoose');
 const setschema = require('../../models/settingsSchema.js');
-negReply = 'That string is not blacklisted. To blacklist a string, use the command `j!blacklistadd <string>`.';
-let setsObj = require('../../Handlers/settings.js').settings;
+const { RichEmbed } = require('discord.js');
 const possArr = ['.blacklistdel', ' ']; 
 
 module.exports.run = async (bot, message, args) => {
 
-    settings = setsObj();
+    settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     let blacklisted = message.content.slice(message.content.indexOf(" ") + 1);
@@ -18,13 +17,19 @@ module.exports.run = async (bot, message, args) => {
     });
 
     setschema.findOne({ serverID: settings.serverID }, (err, res) => {
-        if(!res.blacklist || !res.blacklist.includes(blacklisted)) return message.channel.send(negReply);
+        if(!res.blacklist || !res.blacklist.includes(blacklisted)) return message.channel.send(new RichEmbed({
+            color: settings.defaultEmbedColor,
+            description: "That string is not blacklisted."
+        }))
         else {
             res.blacklist.splice(res.blacklist.indexOf(blacklisted));
 
             res.save().catch(err => console.log(err));
 
-            return message.channel.send(`'${blacklisted}' was removed from the list of blacklisted strings.`);
+            return message.channel.send(new RichEmbed({
+                color: settings.defaultEmbedColor,
+                description: `'${blacklisted}' was removed from the list of blacklisted strings.`
+            }));
         }
         
     });  

@@ -1,14 +1,18 @@
-const discord = require('discord.js');
-const superagent = require('superagent');
+const { RichEmbed } = require('discord.js');
+const fetch = require('node-fetch');
 
 module.exports.run = async (bot,message,args) => {
 
-    if(!args[0]) return message.channel.send('Please specify the name of a Pokémon');
+    const settings = bot.sets;
+    
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    let {body} = await superagent.get(`https://some-random-api.ml/pokedex?pokemon=${args[0]}`);
+    if(!args.length || !isNaN(args[0])) return message.channel.send(usageEmbed);
+
+    let {body} = await fetch(`https://some-random-api.ml/pokedex?pokemon=${args[0]}`).then(res => res.json());
 
 
-    let pokeEmbed = new discord.RichEmbed()
+    let pokeEmbed = new RichEmbed()
     .setTitle(`Pokédex: ${body.name.toUpperCase()}`)
     .setURL(`https://pokedex.org/#/pokemon/${body.id}`)
     .setColor('#FF0000')
@@ -25,5 +29,7 @@ module.exports.run = async (bot,message,args) => {
 }
 
 module.exports.config = {
-    name: 'pokedex'
+    name: 'pokedex',
+    usage: "```.pokedex <NameOfPokemon>```",
+    desc: 'Gets information about the specified pokemon.'
 }

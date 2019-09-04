@@ -1,4 +1,4 @@
-const discord = require("discord.js");
+const { RichEmbed } = require("discord.js");
 const nekos = require("nekos.life");
 const neko = new nekos();
 
@@ -6,39 +6,22 @@ module.exports.run = async(bot, message, args) =>{
 
     let body = await neko.sfw.baka();
 
-    
-    let bakaEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`Baka!!`)
-    .setImage(body.url);
+    const settings = bot.sets;
 
-    let sBakaEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`${message.author.tag} calls themself a baka!`)
-    .setImage(body.url);
-
-    let bBakaEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`${message.author.tag} No u!`)
+    let bakaEmbed = new RichEmbed()
+    .setColor(settings.defaultEmbedColor)
     .setImage(body.url);
 
     let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-    if(!wUser) return message.channel.send(bakaEmbed);
-    if(message.author.id == wUser.id) return message.channel.send(sBakaEmbed);
-    if(wUser.id == bot.user.id) return message.channel.send(bBakaEmbed);
-
-    let uBakaEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`${message.author.tag} calls ${wUser.user.tag} a baka!!`)
-    .setImage(body.url);
-
-    return message.channel.send(uBakaEmbed);
-
-
+    if(!wUser) return message.channel.send(bakaEmbed.setTitle('Baka!!'));
+    if(message.author.id == wUser.id) return message.channel.send(bakaEmbed.setTitle(`${message.author.tag} calls themself a baka!`));
+    if(wUser.id == bot.user.id) return message.channel.send(bakaEmbed.setTitle(`${message.author.tag} No u!`));
+    return message.channel.send(bakaEmbed.setTitle(`${message.author.tag} calls ${wUser.user.tag} a baka!!`));
 
 }
 
 module.exports.config = {
     name: "baka",
-    usage: "j!baka || j!baka @user"
+    usage: "```.baka <@User(optional)>```",
+    desc: "Posts a 'baka' themed image/gif"
 }

@@ -26,7 +26,7 @@ module.exports = bot => {
                 console.log('settings created');
                 newSets.save().catch(err => console.log(err));
             } else {
-                setObj = res;
+                bot.sets = res;
             }
         });
 
@@ -35,6 +35,7 @@ module.exports = bot => {
                 "277888888838815744.EXPERIENCE": 1, 
                 "UUID": 1,
                 'LAST KNOWN USERNAME': 1,
+                "277888888838815744.COMBO": 1,
                 _id: 0
             }).sort({
                 "277888888838815744.EXPERIENCE": -1
@@ -59,11 +60,6 @@ module.exports = bot => {
 
     }, 10000);
 
-}
-
-module.exports.settings = () => {
-    setObj.serverID = serverid;
-    return setObj;
 }
 
 module.exports.experience = () => {

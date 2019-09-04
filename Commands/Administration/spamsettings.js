@@ -1,13 +1,13 @@
 const { connect } = require('mongoose');
 const setschema = require('../../models/settingsSchema.js');
 const { RichEmbed } = require('discord.js');
-let setsObj = require('../../Handlers/settings.js').settings;
+
 
 module.exports.run = async (bot, message, args) => {
 
     if(!message.member.hasPermission('ADMINISTRATOR')) return;
 
-    const settings = setsObj();
+    const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!isNaN(args[0]) || !args[2] || isNaN(args[1]) || isNaN(args[2])) return message.reply(usageEmbed);

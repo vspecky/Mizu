@@ -1,28 +1,28 @@
-const discord = require("discord.js");
+const { RichEmbed } = require("discord.js");
 const nekos = require("nekos.life");
-const fs = require("fs");
 const neko = new nekos();
 
 module.exports.run = async(bot, message, args) =>{
 
-    if(message.channel.parentID != category.nsfw) return;
+    if(!message.channel.nsfw) return;
 
+    const settings = bot.sets;
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+
+    if(args.length) return message.reply(usageEmbed);
 
     let body = await neko.nsfw.yuri();
-
     
-    let yuriEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
+    let yuriEmbed = new RichEmbed()
+    .setColor(settings.defaultEmbedColor)
     .setTitle(`Enjoy your yuri!`)
     .setImage(body.url);
 
-
     return message.channel.send(yuriEmbed);
-
-
 }
 
 module.exports.config = {
     name: "yuri",
-    usage: "j!yuri"
+    usage: "```.yuri```",
+    desc: 'Posts a yuri image.'
 }

@@ -2,43 +2,26 @@ const discord = require("discord.js");
 const nekos = require("nekos.life");
 const neko = new nekos();
 
+
 module.exports.run = async(bot, message, args) =>{
 
-    let body = await neko.sfw.pat();
+    const settings = bot.sets;
 
+    const body = await neko.sfw.pat();
     
     let patEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`*pat pat* <3`)
+    .setColor(settings.defaultEmbedColor)
     .setImage(body.url);
 
-    let sPatEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`${message.author.tag} pats themself.`)
-    .setImage(body.url);
-
-    let bPatEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`${message.author.tag} yay pats!!`)
-    .setImage(body.url);
-
-    let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-    if(!wUser) return message.channel.send(patEmbed);
-    if(message.author.id == wUser.id) return message.channel.send(sPatEmbed);
-    if(wUser.id == bot.user.id) return message.channel.send(bPatEmbed);
-
-    let uPatEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`${message.author.tag} pats ${wUser.user.tag} <3`)
-    .setImage(body.url);
-
-    return message.channel.send(uPatEmbed);
-
-
-
+    const wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    if(!wUser) return message.channel.send(patEmbed.setTitle(`*pat pat* <3`));
+    if(message.author.id == wUser.id) return message.channel.send(patEmbed.setTitle(`${message.author.tag} pats themself.`));
+    if(wUser.id == bot.user.id) return message.channel.send(patEmbed.setTitle(`${message.author.tag} yay pats!!`));
+    return message.channel.send(patEmbed.setTitle(`${message.author.tag} pats ${wUser.user.tag} <3`));
 }
 
 module.exports.config = {
     name: "pat",
-    usage: "j!pat || j!pat @user"
+    usage: "```.pat <@User(optional)>```",
+    desc: 'Posts a patting image/gif.'
 }

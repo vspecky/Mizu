@@ -1,16 +1,19 @@
 const { RichEmbed } = require("discord.js");
-let setsObj = require('../../Handlers/settings.js').settings;
+
 const ms = require('ms');
 
 module.exports.run = async(bot, message, args) => {
 
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name));
 
-    const settings = setsObj() || {};
+    const settings = bot.sets || {};
     const muteRole = message.guild.roles.get(settings.muteRole);
     const mChannel = message.guild.channels.get(settings.logChannels.muteChannel);
     usageEmbed.setColor(settings.defaultEmbedColor);
-    if(!muteRole) return message.reply("The mute role for the guild doesn't exist");
+    if(!muteRole) return message.reply(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: "The mute role for the guild doesn't exist."
+    }));
 
     if(!message.member.hasPermission("MUTE_MEMBERS")) return;
 
@@ -51,6 +54,10 @@ module.exports.run = async(bot, message, args) => {
     }
     
     if(mChannel) mChannel.send(muteEmbed);
+    return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: `${toMute.user.tag} has been muted.`
+    }))
 
 }
 

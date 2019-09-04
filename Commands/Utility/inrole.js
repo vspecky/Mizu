@@ -4,11 +4,11 @@ module.exports.run = async (bot, message, args) => {
 
     if(!args[0]) return message.reply('Please specify a role.')
 
-    let role = message.guild.roles.find(r => r.name.toLowerCase() == `${args.join(" ").toLowerCase()}`);
+    const role = message.guild.roles.find(r => r.name.toLowerCase() == `${args.join(" ").toLowerCase()}`);
     roleID = role.id;
     if(!roleID) return message.reply('That role does not exist.');
 
-    let roleMems = message.guild.members.filter(m => m._roles.includes(roleID)).map(u => u.user.tag);
+    const roleMems = message.guild.members.filter(m => m._roles.includes(roleID)).map(u => u.user.tag);
 
     if(!roleMems) return message.reply('That role has no members.');
 
@@ -42,7 +42,7 @@ module.exports.run = async (bot, message, args) => {
         });
 
         collector.on('end', collected => {
-            collected.forEach(reaction => {
+            msg.reactions.forEach(reaction => {
                 reaction.remove(bot.user);
             });
         });
@@ -76,5 +76,7 @@ const getRoleEmbed = (roleMembers, role, pageNumber) => {
 }
 
 module.exports.config = {
-    name: "inrole"
+    name: "inrole",
+    usage: "```.inrole <RoleName>```",
+    desc: "Displays members having the specified role."
 }

@@ -16,11 +16,14 @@ const settingsSchema = Schema({
         warnChannel: String,
         msgdelChannel: String,
         userupdateChannel: String,
-        reportsChannel: String
+        reportsChannel: String,
+        suggestChannel: String,
+        oofchestChannel: String
     },
     warnPunishments: {},
     expMultiplier: Number,
     muteRole: String,
+    eventsRole: String,
     defaultEmbedColor: Number,
     prefixes: [],
     blacklist: []

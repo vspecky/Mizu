@@ -1,15 +1,17 @@
 const { RichEmbed } = require('discord.js');
-let setsObj = require('../../Handlers/settings.js').settings;
+
 let { vcinfo } = require('../../Events/Guild/voiceStateUpdate.js');
 
 module.exports.run = async (bot,message,args) =>{
 
-    let vChannelID = vcinfo.vcPerks.get(`${message.author.id}`);
+    const vChannelID = vcinfo.vcPerks.get(`${message.author.id}`);
 
     if(!vChannelID) return;
 
-    const settings = setsObj();
+    const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+
+    if(args.length) return message.reply(usageEmbed);
 
     if(message.member.voiceChannelID != vChannelID) return message.channel.send(new RichEmbed({
         color: settings.defaultEmbedColor,

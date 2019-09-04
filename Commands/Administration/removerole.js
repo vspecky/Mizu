@@ -1,28 +1,45 @@
-let setsObj = require('../../Handlers/settings.js').settings;
+const { RichEmbed } = require('discord.js');
 
 module.exports.run = async(bot, message, args) =>{
     
     if(!message.member.hasPermission("MANAGE_ROLES")) return;
 
-    const settings = setsObj();
+    const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0] || !args[1]) return message.reply(usageEmbed);
 
     const rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-    if(!rMember) return message.reply("Couldn't find that user.");
+    if(!rMember) return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: 'Couldn\'t find that user.'
+    }));
 
     const role = args.slice(1).join(" ");
-    if(!role) return message.reply("Please specify a role.");
+    if(!role) return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: 'Please specify a valid role.'
+    }));
 
     const gRole = message.guild.roles.find(r => r.name.toLowerCase() == role.toLowerCase());
 
-    if(!gRole) return message.reply("That role does not exist.");
+    if(gRole.hasPermission(['KICK_MEMBERS', 'BAN_MEMBERS']) && !message.member.hasPermission('ADMINISTRATOR')) return;
 
-    if(!rMember.roles.has(gRole.id)) return message.reply("The user already doesn't have that role.");
+    if(!gRole) return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: "That role does not exist."
+    }));
+
+    if(!rMember.roles.has(gRole.id)) return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: "The user already doesn't have that role."
+    }));
     rMember.removeRole(gRole.id);
 
-    message.channel.send(`The role ${gRole.name} has been removed from <@${rMember.id}>.`);
+    message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: `The role ${gRole.name} has been removed from <@${rMember.id}>.`
+    }));
 
 }
 

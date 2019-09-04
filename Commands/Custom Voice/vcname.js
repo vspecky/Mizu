@@ -1,24 +1,36 @@
-const discord = require('discord.js');
 const { vcinfo } = require('../../Events/Guild/voiceStateUpdate.js');
+const { RichEmbed } = require('discord.js');
+
 
 module.exports.run = async (bot,message,args) =>{
 
-    let vChannelID = vcinfo.vcPerks.get(`${message.author.id}`);
+    const vChannelID = vcinfo.vcPerks.get(`${message.author.id}`);
 
     if(!vChannelID) return;
 
-    if(message.member.voiceChannelID != vChannelID) return message.channel.send(`<@${message.author.id}> You need to be in your custom room to use this command.`)
+    const settings = bot.sets;
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    if(!args[0]) return message.channel.send(`<@${message.author.id}> Please specify a new name.`);
+    if(message.member.voiceChannelID != vChannelID) return message.channel.send(new RichEmbed({
+        description: 'You need to be in a custom VC to use this command.',
+        color: settings.defaultEmbedColor
+    }));
 
-    let name = args.join(' ');
+    if(!args[0]) return message.reply(usageEmbed);
 
-    message.guild.channels.find('id', vChannelID).setName(`${name}`);
+    const name = args.join(' ');
 
-    return message.channel.send(`<@${message.author.id}> The name of your custom room was changed successfully!`);
+    message.guild.channels.find(vc => vc.id == vChannelID).setName(`${name}`);
+
+    return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: `The name of <@${message.author.id}>'s custom VC was changed to ${name}.`
+    }));
 
 }
 
 module.exports.config = {
-    name: 'vcname'
+    name: 'vcname',
+    usage: "```.vcname <NewName>```",
+    desc: 'Changes the name of the command user\'s custom VC.',
 }

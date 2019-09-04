@@ -1,47 +1,27 @@
-const discord = require("discord.js");
+const { RichEmbed } = require("discord.js");
 const nekos = require("nekos.life");
 const neko = new nekos();
+
 
 module.exports.run = async(bot, message, args) =>{
 
     let body = await neko.sfw.feed();
 
+    const settings = bot.sets;
     
-    let feedEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`Food!`)
+    let feedEmbed = new RichEmbed()
+    .setColor(settings.defaultEmbedColor)
     .setImage(body.url);
 
-    let sFeedEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`${message.author.tag} feeds themself. Yum!`)
-    .setImage(body.url);
-
-    let specFeedEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle("Om nom nom nom~")
-    .setImage(body.url);
-
-    let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-    if(!wUser) return message.channel.send(feedEmbed);
-    if(message.author.id == wUser.id) return message.channel.send(sFeedEmbed);
-    if(message.author.id == 375922007969366016 && wUser.id == bot.user.id) return message.channel.send(specFeedEmbed);
-    if(wUser.id == bot.user.id) return message.channel.send(`<@${message.author.id}> No! Only Spec may feed me!`);
-    
-
-
-    let uFeedEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
-    .setTitle(`${message.author.tag} feeds ${wUser.user.tag}. Cute!`)
-    .setImage(body.url);
-
-    return message.channel.send(uFeedEmbed);
-
-
-
+    const wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    if(!wUser) return message.channel.send(feedEmbed.setTitle('Food!'));
+    if(message.author.id == wUser.id) return message.channel.send(feedEmbed.setTitle(`${message.author.tag} feeds themself. Yum!`));
+    if(wUser.id == bot.user.id) return message.channel.send(feedEmbed.setTitle("Om nom nom nom~"));
+    return message.channel.send(feedEmbed.setTitle(`${message.author.tag} feeds ${wUser.user.tag}. Cute!`));
 }
 
 module.exports.config = {
     name: "feed",
-    usage: "j!feed || j!feed @user"
+    usage: "```.feed <@User(optional)>```",
+    desc: 'Posts an image/gif about food.'
 }

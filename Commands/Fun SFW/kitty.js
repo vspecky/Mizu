@@ -1,22 +1,27 @@
-const discord = require("discord.js");
-const superagent = require("superagent");
+const { RichEmbed } = require("discord.js");
+const fetch = require('node-fetch');
+
 
 module.exports.run = async(bot,message,args) =>{
 
-    let {body} = await superagent
-    .get(`http://aws.random.cat/meow`);
+    const settings = bot.sets;
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    let catEmbed = new discord.RichEmbed()
-    .setColor("#8E5BC5")
+    if(args.length) return message.reply(usageEmbed)
+
+    let image = await fetch(`http://aws.random.cat/meow`).then(res => res.json());
+
+    let catEmbed = new RichEmbed()
+    .setColor(settings.defaultEmbedColor)
     .setTitle("Kitty! :cat:")
-    .setImage(body.file);
+    .setImage(image.file);
 
-    message.channel.send(catEmbed);
-
-    return;
+    return message.channel.send(catEmbed);
 
 }
 
 module.exports.config = {
-    name: "kitty"
+    name: "kitty",
+    usage: "```.kitty```",
+    desc: "Posts an image of a cat."
 }

@@ -1,13 +1,13 @@
 const { RichEmbed } = require('discord.js');
 const Warning = require('../../models/warnSchema.js');
 const { connect } = require('mongoose');
-let setsObj = require('../../Handlers/settings.js').settings;
+
 
 module.exports.run = async (bot,message,args) => {
 
     if(!message.member.hasPermission(['BAN_MEMBERS'])) return;
 
-    const settings = setsObj();
+    const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0] || !args[1] || isNaN(args[1])) return message.reply(usageEmbed);

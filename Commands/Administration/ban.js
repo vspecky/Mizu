@@ -1,12 +1,11 @@
 const { RichEmbed } = require("discord.js");
-let setsObject = require('../../Handlers/settings.js').settings;
 
 module.exports.run = async(bot, message, args) =>{
      // j!ban @user reason
 
     if(!message.member.hasPermission("BAN_MEMBERS")) return;
     
-    const settings = setsObject();
+    const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0] || !args[1]) return message.reply(usageEmbed);
@@ -42,7 +41,6 @@ module.exports.run = async(bot, message, args) =>{
 
     message.guild.member(bUser).ban(bReason);
      
-    message.delete().catch(O_o=>{});
     if(bChannel) bChannel.send(banEmbed);
 
 }

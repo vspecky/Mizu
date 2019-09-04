@@ -1,14 +1,14 @@
 const { RichEmbed } = require('discord.js');
 const { connect } = require('mongoose');
 const setschema = require('../../models/settingsSchema.js');
-let setsObj = require('../../Handlers/settings.js').settings;
-const options = ['warn', 'kick', 'ban', 'mute', 'msgdel', 'userupdate', 'reports'];
+
+const options = ['warn', 'kick', 'ban', 'mute', 'msgdel', 'userupdate', 'reports', 'suggest', 'oofchest'];
 
 module.exports.run = async (bot, message, args) => {
 
     if(!message.member.hasPermission(['ADMINISTRATOR'])) return;
 
-    const settings = setsObj();
+    const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0] || args[2] || !options.includes(args[0].toLowerCase())) return message.reply(usageEmbed);

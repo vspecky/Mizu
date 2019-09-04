@@ -1,11 +1,11 @@
 const { connect } = require('mongoose');
 const { RichEmbed } = require('discord.js');
 const setschema = require('../../models/settingsSchema.js');
-let setsObj = require('../../Handlers/settings.js').settings;
+
 
 module.exports.run = async (bot, message, args) => {
 
-    const settings = setsObj();
+    const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0]) return message.reply(usageEmbed);

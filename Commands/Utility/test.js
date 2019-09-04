@@ -11,6 +11,7 @@ let usageEmbed = require('../../Handlers/usageinfo.js');
 const setsObj = require('../../Handlers/settings.js').settings;
 const ms = require('ms');
 const setsschema = require('../../models/settingsSchema.js');
+const marriage = require('../../models/marriageSchema.js');
 
 module.exports.run = async (bot, message, args) => {
 
@@ -38,8 +39,11 @@ module.exports.run = async (bot, message, args) => {
     })
 
     */
-    console.log(bot.usages.get(args[0]));
-    message.channel.send(new discord.RichEmbed(bot.usages.get(args[0])));
+   
+
+    const role = message.guild.roles.get('592604877855784971');
+
+    if (role.hasPermission(['ADMINISTRATOR', 'BAN_MEMBERS', 'KICK_MEMBERS'])) console.log('success');
     //message.channel.send(embed);
 }
 

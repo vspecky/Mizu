@@ -1,16 +1,16 @@
 const { connect } = require('mongoose');
 const setschema = require('../../models/settingsSchema.js');
-let setsObj = require('../../Handlers/settings.js').settings;
+const { RichEmbed } = require('discord.js');
 
 module.exports.run = async (bot, message, args) => {
 
-    settings = setsObj() || {};
+    settings = bot.sets || {};
 
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!message.member.hasPermission('ADMINISTRATOR')) return;
 
-    if(!args[0]) return message.reply(usageEmbed);
+    if(!args[0] || args.length > 1) return message.reply(usageEmbed);
 
     connect('mongodb://localhost/RATHMABOT', {
         useNewUrlParser: true
@@ -18,12 +18,18 @@ module.exports.run = async (bot, message, args) => {
 
     setschema.findOne({ serverID: settings.serverID }, (err, res) => {
 
-        if(res.prefixes.includes(args[0])) return message.reply('That prefix already exists.');
+        if(res.prefixes.includes(args[0])) return message.channel.send(new RichEmbed({
+            description: `The prefix \`${args[0]}\` already exists.`,
+            color: settings.defaultEmbedColor
+        }));
         res.prefixes.push(args[0]);
 
         res.save().catch(err => console.log(err));
 
-        return message.reply(`\`${args[0]}\` has been added as a prefix`);
+        return message.channel.send(new RichEmbed({
+            description: `\`${args[0]}\` has been added as a prefix.`,
+            color: settings.defaultEmbedColor
+        }));
     });
 
 }

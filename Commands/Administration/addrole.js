@@ -1,9 +1,8 @@
 const { RichEmbed } = require("discord.js");
-const setsObj = require('../../Handlers/settings.js').settings;
 
 module.exports.run = async(bot, message, args) =>{
 
-    const settings = setsObj();
+    const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
     
     if(!message.member.hasPermission("MANAGE_ROLES")) return;
@@ -11,17 +10,29 @@ module.exports.run = async(bot, message, args) =>{
     if(args[0] || args[1]) return message.reply(usageEmbed);
 
     let rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-    if(!rMember) return message.reply('That user does not exist.');
+    if(!rMember) return message.channel.send(new RichEmbed({
+        description: "That user does not exist.",
+        color: settings.defaultEmbedColor
+    }));
 
     let role = args.slice(1).join(" ");
 
     let gRole = message.guild.roles.find(r => r.name.toLowerCase() == role.toLowerCase()) || message.guild.roles.find(r => r.id == role);
-    if(!gRole) return message.channel.send('That role does not exist.');
+    if(!gRole) return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: 'That role does not exist.'
+    }));
 
-    if(rMember.roles.has(gRole.id)) return message.channel.send("The user already has that role.");
+    if(rMember.roles.has(gRole.id)) return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: "The user already has that role."
+    }));
     await rMember.addRole(gRole.id); 
 
-    message.channel.send(`<@${rMember.id}> has been assigned the role ${gRole.name}.`);
+    return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: `<@${rMember.id}> has been assigned the role ${gRole.name}.`
+    }));
 
 }
 

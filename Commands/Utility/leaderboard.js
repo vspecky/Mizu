@@ -2,12 +2,16 @@ const { RichEmbed } = require('discord.js');
 let exparr;
 let expObject = require('../../Handlers/settings.js').experience;
 
-
 module.exports.run = async (bot, message, args) => {
 
-    if(isNaN(args[0]) && args[0]) return message.reply('Bad Usage.');
+    const settings = bot.sets;
 
-    if(args[0] && !exparr[args[0] * 10]) return message.reply(`Please provide a page number between 1-${Math.floor(exparr.length/10)}.`);
+    if(isNaN(args[0]) && args.length) return message.reply(new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor));
+
+    if(args[0] && !exparr[args[0] * 10]) return message.channel.send(new RichEmbed({
+        color: settings.defaultEmbedColor,
+        description: `Please provide a page number between 1-${Math.floor(exparr.length/10)}.`
+    }));
 
     let pageNo = args[0] || 1;
 

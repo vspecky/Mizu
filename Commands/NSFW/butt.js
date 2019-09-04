@@ -1,9 +1,13 @@
-const discord = require("discord.js");
-const fs = require("fs");
+const { RichEmbed } = require("discord.js");
 
 module.exports.run = async(bot,message,args) =>{
 
-    if(message.channel.parentID != category.nsfw) return;
+    if(!message.channel.nsfw) return;
+
+    const settings = bot.sets;
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+
+    if(args.length) return message.reply(usageEmbed);
 
     let imgNo = Math.ceil(Math.random() * 6730);
 
@@ -13,8 +17,8 @@ module.exports.run = async(bot,message,args) =>{
         imgQuery = '0' + imgQuery;
     }
 
-    let buttEmbed = new discord.RichEmbed()
-    .setColor('#8E5BC5')
+    let buttEmbed = new RichEmbed()
+    .setColor(settings.defaultEmbedColor)
     .setTitle('Enjoy the butt!')
     .setImage(`http://media.obutts.ru/butts_preview/${imgQuery}.jpg`)
 
@@ -24,5 +28,7 @@ module.exports.run = async(bot,message,args) =>{
 
 
 module.exports.config = {
-    name: "butt"
+    name: "butt",
+    usage: "```.butt```",
+    desc: 'Posts an image with a butt.'
 }

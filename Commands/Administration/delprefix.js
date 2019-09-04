@@ -1,10 +1,10 @@
 const { connect } = require('mongoose');
 const setschema = require('../../models/settingsSchema.js');
-let setsObj = require('../../Handlers/settings.js').settings;
+const { RichEmbed } = require('discord.js');
 
 module.exports.run = async (bot, message, args) => {
 
-    settings = setsObj();
+    settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0]) return message.reply(usageEmbed);
@@ -15,12 +15,18 @@ module.exports.run = async (bot, message, args) => {
 
     setschema.findOne({ serverID: settings.serverID }, (err, res) => {
 
-        if(!res.prefixes.includes(args[0])) return message.reply("That prefix already doesn't exist.");
+        if(!res.prefixes.includes(args[0])) return message.channel.send(new RichEmbed({
+            color: settings.defaultEmbedColor,
+            description: "That prefix already doesn't exist."
+        }));
         res.prefixes.splice(res.prefixes.indexOf(args[0]));
 
         res.save().catch(err => console.log(err));
 
-        return message.reply(`\`${args[0]}\` has been removed as a prefix`);
+        return message.channel.send(new RichEmbed({
+            color: settings.defaultEmbedColor,
+            description: `\`${args[0]}\` has been removed as a prefix.`
+        }));
     });
 
 }

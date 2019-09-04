@@ -1,4 +1,4 @@
-const discord = require("discord.js");
+const { RichEmbed } = require("discord.js");
 const fetch = require("node-fetch");
 var urlExists = require("url-exists");
 
@@ -35,13 +35,17 @@ module.exports.run = async(bot,message,args) =>{
         return [sampleCatcher, imageCatcher];
       }
 
-      
+    const settings = bot.sets;
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
     
-    if(!args[0]) return message.channel.send("Please specify some tag(s)");
+    if(!args[0]) return message.channel.send(usageEmbed);
 
     let body = await search(args[0]);
 
-    if(!body) return message.channel.send("Invalid Tags");
+    if(!body) return message.channel.send(new RichEmbed({
+      color: settings.defaultEmbedColor,
+      description: 'Invalid Tag(s).'
+    }));
 
     let tagArray = args[0].split("+");
 
@@ -50,10 +54,10 @@ module.exports.run = async(bot,message,args) =>{
     let imgno = Math.floor(Math.random() * body[0].length);
 
 
-    urlExists(`${body[0][imgno].url}`, function(err, exists){
+    urlExists(`${body[0][imgno].url}`, (err, exists) => {
       if(exists){
         let imgEmbed = new discord.RichEmbed()
-        .setColor("#8E5BC5")
+        .setColor(settings.defaultEmbedColor)
         .setTitle(`Safebooru: ${tags}`)
         .setImage(body[0][imgno].url);
 
@@ -61,7 +65,7 @@ module.exports.run = async(bot,message,args) =>{
 
       }else{
         let imgEmbed = new discord.RichEmbed()
-        .setColor("#8E5BC5")
+        .setColor(settings.defaultEmbedColor)
         .setTitle(`Safebooru: ${tags}`)
         .setImage(body[1][imgno].url);
 
@@ -75,5 +79,7 @@ module.exports.run = async(bot,message,args) =>{
 
 module.exports.config = {
     name: "sbooru",
-    usage: "j!sbooru || j!sbooru tag+tag_name"
+    usage: "```.sbooru <Tag(s)>```",
+    desc: 'Returns a random image from safebooru based on the provided tags.',
+    note: "Separate the tags with '+' and use '_' for spaces."
 }

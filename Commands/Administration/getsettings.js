@@ -1,12 +1,12 @@
 const { RichEmbed } = require('discord.js');
-let setsObj = require('../../Handlers/settings.js').settings;
+
 const settingvalues = ['general', 'logchannels', 'antispam', 'warnactions'];
 
 module.exports.run = async (bot, message, args) => {
 
     if(!message.member.hasPermission(['ADMINISTRATOR'])) return;
 
-    const settings = setsObj();
+    const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0] || !settingvalues.includes(args[0].toLowerCase()) || args.length > 1) return message.reply(usageEmbed);
@@ -45,7 +45,7 @@ const setObject = {
     kickChannel: 'Kick',
     banChannel: 'Ban',
     warnChannel: 'Warn',
-    reportChannel: 'Report',
+    reportsChannel: 'Report',
     userupdateChannel: 'Userupdate',
     msgdelChannel: 'Msgdel'
 }

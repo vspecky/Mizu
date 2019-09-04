@@ -1,13 +1,19 @@
-const discord = require("discord.js");
+const { RichEmbed } = require("discord.js");
 const scraper = require("mangascraper");
 
 module.exports.run = async(bot,message,args) =>{
+
+    const settings = bot.sets;
+    
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+
+    if(!args.length) return message.reply(usageEmbed);
     
     body = await scraper.searchManga(`${args}`);
 
     manga = await scraper.getManga(`${body[0].alink}`)
 
-    let mangaEmbed = new discord.RichEmbed()
+    let mangaEmbed = new RichEmbed()
     .setColor("#8E5BC5")
     .setTitle(`Manga: ${manga.title}`)
     .setURL(`${scraper.mangaUrl}${body[0].link}`)
@@ -26,5 +32,7 @@ module.exports.run = async(bot,message,args) =>{
 }
 
 module.exports.config = {
-    name: "manga"
+    name: "manga",
+    usage: "```.manga <NameOfMange>```",
+    desc: 'Posts information about the specified manga.'
 }

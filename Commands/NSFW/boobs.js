@@ -1,34 +1,33 @@
-const discord = require("discord.js");
-const fs = require("fs");
+const { RichEmbed } = require("discord.js");
 
 module.exports.run = async(bot,message,args) =>{
 
+    if(!message.channel.nsfw) return;
 
-    setInterval(() => {
-        if(message.channel.parentID != category.nsfw) return;
+    const settings = bot.sets;
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-        let imgNo = Math.ceil(Math.random() * 13990);
+    if(args.length) return message.reply(usageEmbed);
 
-        let imgQuery = imgNo.toString();
+    let imgNo = Math.ceil(Math.random() * 13990);
 
-        while(imgQuery.length < 5){
-            imgQuery = '0' + imgQuery;
-        }
+    let imgQuery = imgNo.toString();
 
+    while(imgQuery.length < 5){
+        imgQuery = '0' + imgQuery;
+    }
 
-        let boobEmbed = new discord.RichEmbed()
-        .setColor('#8E5BC5')
-        .setTitle('Enjoy the boobs!')
-        .setImage(`http://media.oboobs.ru/boobs_preview/${imgQuery}.jpg`)
+    let boobEmbed = new RichEmbed()
+    .setColor(settings.defaultEmbedColor)
+    .setTitle('Enjoy the boobs!')
+    .setImage(`http://media.oboobs.ru/boobs_preview/${imgQuery}.jpg`)
 
-        message.channel.send(boobEmbed);   
-    }, 5000);
-
-    
-
+    message.channel.send(boobEmbed);    
 }
 
 
 module.exports.config = {
-    name: "boobs"
+    name: "boobs",
+    usage: "```.boobs```",
+    desc: 'Posts an image with boobs.'
 }

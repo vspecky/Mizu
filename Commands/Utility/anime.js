@@ -1,13 +1,19 @@
-const discord = require("discord.js");
+const { RichEmbed } = require("discord.js");
 const scraper = require("animescraper");
 
 module.exports.run = async(bot,message,args) =>{
+
+    const settings = bot.sets;
     
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+
+    if(!args.length) return message.reply(usageEmbed);
+
     body = await scraper.searchAnime(`${args}`);
 
     anime = await scraper.getAnime(`${body[0].link}`)
 
-    let animeEmbed = new discord.RichEmbed()
+    let animeEmbed = new RichEmbed()
     .setColor("#8E5BC5")
     .setTitle(`Anime: ${anime.title}`)
     .setURL(`${scraper.animeUrl}${body[0].link}`)
@@ -20,11 +26,11 @@ module.exports.run = async(bot,message,args) =>{
     .setFooter('Click the title to view more on MAL')
     .setImage(anime.image);
 
-    message.channel.send(animeEmbed);
-
-    
+    return message.channel.send(animeEmbed); 
 }
 
 module.exports.config = {
-    name: "anime"
+    name: "anime",
+    usage: "```.anime <NameOfAnime>```",
+    desc: 'Gets information about the specified anime.'
 }
