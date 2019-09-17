@@ -2,26 +2,22 @@ const { RichEmbed } = require('discord.js');
 
 module.exports = async (bot, message) => {
 
-    let logch = message.guild.channels.find(c => c.name == 'moderation');
-    if (!logch) return message.channel.send("Couldn't find channel for msg delete logs");
+    const settings = bot.sets;
 
-    let dUser = message.member;
-    let dIcon = dUser.user.displayAvatarURL;
+    const logch = message.guild.channels.get(settings.logChannels.msgdelChannel);
 
-    let preslice = message.content.split(" ");
-    let prefix = preslice[0].slice(0, 2);
-
-    if (prefix === "j!") return;
+    const dUser = message.member;
+    const dIcon = dUser.user.displayAvatarURL;
 
     let logEmbed = new RichEmbed()
-        .setColor("#8E5BC5")
+        .setColor(settings.defaultEmbedColor)
         .setDescription("Deleted Message")
         .setThumbnail(dIcon)
         .addField("Deleted Message :", message)
         .addField("By User :", `<@${dUser.id}>`)
-        .setFooter(message.createdAt)
+        .setFooter(new Date().toUTCString())
         .addField("In Channel :", message.channel);
 
-    logch.send(logEmbed);
+    if(logch) return logch.send(logEmbed);
 
 }

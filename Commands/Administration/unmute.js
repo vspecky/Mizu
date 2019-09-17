@@ -33,7 +33,7 @@ module.exports.run = async(bot, message, args) =>{
     .addField("Unmuted User :", `<@${toMute.id}> ID: ${toMute.id}`)
     .addField("Unmuted By :", `${message.author} ID: ${message.author.id}`)
     .addField("In Channel :", message.channel)
-    .setTimestamp();
+    .setFooter(new Date().toUTCString());
 
     const umChannel = message.guild.channels.get(settings.logChannels.muteChannel);
     

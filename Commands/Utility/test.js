@@ -39,12 +39,11 @@ module.exports.run = async (bot, message, args) => {
     })
 
     */
-   
+    let testembed = new discord.RichEmbed()
+    .setImage(`${message.author.displayAvatarURL}?size=128`);
 
-    const role = message.guild.roles.get('592604877855784971');
+    message.channel.send(testembed);
 
-    if (role.hasPermission(['ADMINISTRATOR', 'BAN_MEMBERS', 'KICK_MEMBERS'])) console.log('success');
-    //message.channel.send(embed);
 }
 
 

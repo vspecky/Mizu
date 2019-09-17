@@ -26,8 +26,8 @@ module.exports.run = async(bot, message, args) =>{
 
     const kickEmbed = new RichEmbed()
      .setDescription("User Kick")
-     .setColor(settings.defaultEmbedColor)
-     .setTimestamp()
+     .setColor(settings.embCols.kickEmbedColor)
+     .setFooter(new Date().toUTCString())
      .setThumbnail(kUser.user.displayAvatarURL)
      .addField("Kicked User :", `<@${kUser}> ID: ${kUser.id}`)
      .addField("Kicked By :", `${message.author} ID: ${message.author.id}`)

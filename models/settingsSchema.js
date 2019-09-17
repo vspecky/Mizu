@@ -9,6 +9,16 @@ const settingsSchema = Schema({
         sameSpamMsgs: Number,
         sameSpamBuffer: Number
     },
+    antiRaidSettings: {
+        smjoinsNumber: Number,
+        smbuffer: Number,
+        mmjoinsNumber: Number,
+        mmbuffer: Number
+    },
+    welcomeSettings: {
+        welcomeChannel: String,
+        welcomeMsg: String
+    },
     logChannels: {
         muteChannel: String,
         kickChannel: String,
@@ -20,8 +30,15 @@ const settingsSchema = Schema({
         suggestChannel: String,
         oofchestChannel: String
     },
+    embCols: {
+        warnEmbedColor: Number,
+        muteEmbedColor: Number,
+        banEmbedColor: Number,
+        kickEmbedColor: Number
+    },
     warnPunishments: {},
     expMultiplier: Number,
+    welcomeChannel: String,
     muteRole: String,
     eventsRole: String,
     defaultEmbedColor: Number,

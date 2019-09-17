@@ -29,7 +29,7 @@ module.exports.run = async(bot, message, args) =>{
 
     const banEmbed = new RichEmbed()
      .setTitle(`⛔ User Banned:`)
-     .setColor(settings.defaultEmbedColor)
+     .setColor(settings.embCols.banEmbedColor)
      .setThumbnail(bIcon)
      .addField("Banned User :", `<@${bUser}> ID: ${bUser.id}`)
      .addField("Banned By :", `${message.author} ID: ${message.author.id}`)

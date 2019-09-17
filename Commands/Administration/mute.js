@@ -4,9 +4,9 @@ const ms = require('ms');
 
 module.exports.run = async(bot, message, args) => {
 
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name));
-
     const settings = bot.sets || {};
+    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name).setColor(settings.defaultEmbedColor));
+
     const muteRole = message.guild.roles.get(settings.muteRole);
     const mChannel = message.guild.channels.get(settings.logChannels.muteChannel);
     usageEmbed.setColor(settings.defaultEmbedColor);
@@ -30,7 +30,7 @@ module.exports.run = async(bot, message, args) => {
     .setThumbnail(toMute.user.displayAvatarURL)
     .addField("Muted User :", `<@${toMute.id}> ID: ${toMute.id}`)
     .addField("Muted By :", `${message.author} ID: ${message.author.id}`)
-    .setTimestamp();
+    .setFooter(new Date().toUTCString());
 
     toMute.addRole(muteRole.id);
 

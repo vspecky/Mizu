@@ -1,4 +1,3 @@
-const { RichEmbed } = require('discord.js');
 const { connect } = require('mongoose');
 const expschema = require('../../models/expSchema.js');
 let expcooldown = new Set();
@@ -6,7 +5,6 @@ let sameSpamSet = new Map();
 let genSpamSet = new Map();
 let commandcooldown = new Set();
 let prefix;
-
 
 module.exports = async (bot, message) => {
 

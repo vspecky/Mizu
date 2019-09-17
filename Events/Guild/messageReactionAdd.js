@@ -3,17 +3,18 @@ let oofchestSet = [];
 
 module.exports = async (bot, messageReaction, user) => {
 
+    if(!bot.sets.logChannels.oofchestChannel) return;
+
     let rCount = 0;
     if(messageReaction._emoji.name == `😏` && user.id != messageReaction.message.author.id) rCount++;
 
     if (rCount == 2 && !oofchestSet.includes(messageReaction.message.id)) {
-        oofChan = messageReaction.message.guild.channels.find(`name`, "privtest");
         let oofEmbed = new RichEmbed()
             .setColor(`${messageReaction.message.member.displayHexColor}`)
             .setAuthor(`${messageReaction.message.author.username}`, `${messageReaction.message.author.displayAvatarURL}`)
             .addField('Message Link:', `Click [Here](https://discordapp.com/channels/${messageReaction.message.guild.id}/${messageReaction.message.channel.id}/${messageReaction.message.id}) to Go to the Message`)
             .setFooter(`${messageReaction.message.guild.name} | #${messageReaction.message.channel.name}`)
-            .setTimestamp();
+            .setFooter(new Date().toUTCString());
         
         if(messageReaction.message.content) oofEmbed.setDescription(`${messageReaction.message.content}`);
 
@@ -31,7 +32,9 @@ module.exports = async (bot, messageReaction, user) => {
             oofchestSet.shift();
         }
 
-        return oofChan.send(oofEmbed);
+        const oofChan = messageReaction.message.guild.channels.get(bot.sets.logChannels.oofchestChannel);
+
+        if(oofChan) return oofChan.send(oofEmbed);
     }
 
 }

@@ -2,19 +2,21 @@ const { RichEmbed } = require('discord.js');
 
 module.exports.run = async (bot, message, args) => {
 
-    if(!args[0]) {
-        return message.reply('Please provide a suggestion along with the command.');
+    const settings = bot.sets
+
+    if(!args.length) {
+        return message.reply(new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor));
     } else {
-        let sChannel = message.guild.channels.find(c => c.name == 'privtest');
-        let suggestion = args.join(" ");
+        const sChannel = message.guild.channels.get(settings.logChannels.suggestChannel);
+        const suggestion = args.join(" ");
 
         let sEmbed = new RichEmbed()
         .setAuthor(`Suggestion by ${message.member.nickname || message.author.username}`, message.author.displayAvatarURL)
         .setColor(message.member.displayHexColor)
         .setDescription(suggestion)
-        .setFooter(`Suggested by ${message.author.tag} (${message.author.id})`);
+        .setFooter(`User: ${message.author.tag} (${message.author.id})`);
 
-        return sChannel.send(sEmbed)
+        if(sChannel) return sChannel.send(sEmbed)
         .then(async msg => {
             await msg.react(`✅`);
             msg.react(`❎`);
@@ -25,5 +27,7 @@ module.exports.run = async (bot, message, args) => {
 }
 
 module.exports.config = {
-    name: 'suggest'
+    name: 'suggest',
+    usage: "```.suggest <Suggestion>```",
+    desc: "Takes a suggestion from the user and posts it in a suggestions channel."
 }

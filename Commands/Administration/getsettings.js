@@ -26,7 +26,7 @@ const getSettingsEmbed = (sets, query) => {
             let chanID = sets.logChannels[field];
             if(chanID) chanID = `<#${chanID}>`;
             else chanID = 'Not set';
-            if(field != '$init') logstr = logstr + `**${setObject.field}**: ${chanID}\n`;
+            if(field != '$init') logstr = logstr + `**${setObject[field]}**: ${chanID}\n`;
         }
         if(logstr.length) {
             logstr.replace(/\n$/, '');
@@ -41,13 +41,15 @@ const getSettingsEmbed = (sets, query) => {
 }
 
 const setObject = {
-    muteChannel: 'Mute',
-    kickChannel: 'Kick',
-    banChannel: 'Ban',
-    warnChannel: 'Warn',
-    reportsChannel: 'Report',
-    userupdateChannel: 'Userupdate',
-    msgdelChannel: 'Msgdel'
+    muteChannel: 'Mutes',
+    kickChannel: 'Kicks',
+    banChannel: 'Bans',
+    warnChannel: 'Warns',
+    reportsChannel: 'Reports',
+    userupdateChannel: 'User Update',
+    msgdelChannel: 'Deleted Msgs',
+    suggestChannel: 'Suggestions',
+    oofchestChannel: 'Oof-Chest'
 }
 
 module.exports.config = {

@@ -25,7 +25,7 @@ module.exports.run = async(bot, message, args) => {
                 .setTitle('User Report (Type: DM)')
                 .addField('Reporter :', `<@${message.author.id}> ID: ${message.author.id}`)
                 .addField('Report Content:', res.content)
-                .setTimestamp();
+                .setFooter(new Date().toUTCString());
 
                 rMsg.channel.send(new RichEmbed({
                     color: settings.defaultEmbedColor,
@@ -79,7 +79,7 @@ module.exports.run = async(bot, message, args) => {
     .addField("Reported User :", `${rUser} ID: ${rUser.id}`)
     .addField("Report Made By :", `${message.author} ID: ${message.author.id}`)
     .addField("In Channel :", message.channel)
-    .setTimestamp()
+    .setFooter(new Date().toUTCString())
     .addField("Reason :", rReason);
 
     

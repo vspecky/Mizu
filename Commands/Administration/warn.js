@@ -91,7 +91,7 @@ const issueAction = (message, settings, wUser, warn, date) => {
 
             const actionobj = settings.warnPunishments[`${warn.Logs.length}warn`];
             let actionEmbed = new RichEmbed()
-            .setColor(settings.defaultEmbedColor)
+            .setColor(settings.embCols.warnEmbedColor)
             .setTitle(`Warn Action: (Strikes: ${warn.Logs.length})`)
             .addField('User:', `${wUser.user.tag} ID: ${wUser.id}`)
             .setThumbnail(wUser.user.displayAvatarURL)
