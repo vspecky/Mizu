@@ -36,6 +36,7 @@ const settingsSchema = Schema({
         banEmbedColor: Number,
         kickEmbedColor: Number
     },
+    modBlockedChannels: {},
     warnPunishments: {},
     expMultiplier: Number,
     welcomeChannel: String,

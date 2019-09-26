@@ -8,15 +8,20 @@ module.exports.run = async (bot, message, args) => {
     const settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    if(!args[0]) return message.reply(usageEmbed);
+    if(!args.length || args.length > 1) return message.reply(usageEmbed);
 
-    const command = bot.commands.get(args[0].toLowerCase()) || bot.aliases.get(args[0].toLowerCase());
+    const command = bot.commands.get(args[0].toLowerCase()) || bot.commands.get(bot.aliases.get(args[0].toLowerCase()));
 
-    if(!command.config.name) return message.reply('That command does not exist or has been unloaded already.');
+    if(!bot.commands.has(args[0].toLowerCase()) && !bot.commands.has(bot.aliases.get(args[0].toLowerCase()))) return message.reply(new RichEmbed({
+        description: 'That command does not exist or has been unloaded already.',
+        color: settings.defaultEmbedColor
+    }));
     
-    message.reply(`The \`${command.config.name}\` command was unloaded.`);
-    bot.unloaded.set(command.config.name, command);
-    bot.commands.delete(command.config.name);
+    message.reply(new RichEmbed({
+        description: `The \`${command.config.name}\` command was unloaded.`,
+        color: settings.defaultEmbedColor
+    }));
+    bot.commands.get(command.config.name).config.enabled = false;
 
 }
 

@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
     settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    let blacklisted = message.content.slice(message.content.indexOf(" ") + 1);
+    let blacklisted = message.content.split(/ +/)[1];
 
     if(!blacklisted || possArr.includes(blacklisted)) return message.reply(usageEmbed);
 

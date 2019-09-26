@@ -29,7 +29,7 @@ module.exports.run = async(bot, message, args) =>{
     const unMuteEmbed = new RichEmbed()
     .setDescription("User Unmute")
     .setColor(settings.defaultEmbedColor)
-    .setThumbnail(umIcon)
+    .setThumbnail(toMute.user.displayAvatarURL)
     .addField("Unmuted User :", `<@${toMute.id}> ID: ${toMute.id}`)
     .addField("Unmuted By :", `${message.author} ID: ${message.author.id}`)
     .addField("In Channel :", message.channel)

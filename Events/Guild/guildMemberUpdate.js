@@ -1,4 +1,6 @@
 const { RichEmbed } = require('discord.js');
+const { connect } = require('mongoose');
+const nickschema = require('../../models/nicknameSchema.js');
 
 module.exports = async (bot, oldMember, newMember) => {
 
@@ -51,6 +53,28 @@ const sendNickUpdateEmbed = (oldnick, newnick, member, settings) => {
     const channel = member.guild.channels.get(settings.logChannels.userupdateChannel);
 
     if(channel) channel.send(nickUpdateEmbed);
+
+    connect('mongodb://localhost/RATHMABOT', {
+        useNewUrlParser: true
+    });
+
+    nickschema.findOne({ UUID: member.id }, (err, res) => {
+        
+        if(err) console.log(err);
+        if(!res) {
+            let newNick = new nickschema({
+                UUID: member.id,
+                nicknames: [newnick]
+            });
+
+            newNick.save().catch(err => console.log(err));
+        } else {
+            res.nicknames.push(newnick);
+            while(res.nicknames.length > 20) res.nicknames.shift();
+            res.save().catch(err => console.log(err));
+        }
+
+    });
 
 }
 

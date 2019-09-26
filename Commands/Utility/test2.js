@@ -12,6 +12,7 @@ const setsObj = require('../../Handlers/settings.js').settings;
 const ms = require('ms');
 const setsschema = require('../../models/settingsSchema.js');
 const marriage = require('../../models/marriageSchema.js');
+const testFunc = require('./test.js').test;
 
 module.exports.run = async (bot, message, args) => {
 
@@ -39,14 +40,14 @@ module.exports.run = async (bot, message, args) => {
     })
 
     */
-    bot.emit('testevent', message);
+    
+    console.log(testFunc());
+    
 }
 
 
 module.exports.config = {
-    name: "test",
+    name: "test2",
     usage: 'testUsage',
     notes: 'testNote'
 }
-
-module.exports.test = () => testing;

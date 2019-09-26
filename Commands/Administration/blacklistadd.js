@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
     settings = bot.sets;
     let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    let blacklisted = message.content.slice(message.content.indexOf(" ") + 1);
+    let blacklisted = message.content.split(' ').slice(1).join(' ');
 
     if(!blacklisted || possArr.includes(blacklisted)) return message.reply(usageEmbed);
 
@@ -30,7 +30,7 @@ module.exports.run = async (bot, message, args) => {
 
             return message.channel.send(new RichEmbed({
                 color: settings.defaultEmbedColor,
-                description: `'${blacklisted}' was added to the list of blacklisted strings.`
+                description: `'${blacklisted.replace(/ /g, '\t')}' was added to the list of blacklisted strings.`
             }));
         }
         

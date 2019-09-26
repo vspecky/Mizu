@@ -3,7 +3,7 @@ const expschema = require('../../models/expSchema.js');
 
 module.exports = async (bot) => {
 
-    console.log(`${bot.user.username} is online.`);
+    console.log(`${bot.user.username} has booted up.`);
 
     const playArr = ['with Spec', 'being tested', 'being awesome', 'with life']
 
@@ -14,9 +14,5 @@ module.exports = async (bot) => {
         if (index >= 4) index = 0;
         bot.user.setActivity(`${playArr[index]}`, { type: "Playing" });
     }, 60000);
-
-    
-
-
 
 }

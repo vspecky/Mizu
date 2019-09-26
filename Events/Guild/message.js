@@ -20,7 +20,15 @@ module.exports = async (bot, message) => {
         let cmd = messageArray[0].slice(prefix.length).toLowerCase();
         let args = messageArray.slice(1);
         let commandFile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd));
-        if(profanityFilter(message.content, settings) && (commandFile !== 'blacklistadd' && commandFile !== 'blacklistdel')) return message.delete();
+        if(profanityFilter(message.content, settings) && (commandFile.config.name !== 'blacklistadd' && commandFile.config.name !== 'blacklistdel')) return message.delete();
+
+        if(!commandFile.config.enabled || !bot.modules[commandFile.config.module]) return;
+
+        if(bot.sets.modBlockedChannels) {
+            if(bot.sets.modBlockedChannels[commandFile.config.module]) {
+                if(bot.sets.modBlockedChannels[commandFile.config.module].includes(message.channel.id)) return;
+            }
+        }
 
         if (commandFile && !commandcooldown.has(message.author.id)) {
             commandcooldown.add(message.author.id);
@@ -91,60 +99,71 @@ const addExperienceToUser = (user, settings) => {
 
 const antiSpamCheck = (message, settings) => {
 
-    let muteRole = message.guild.roles.find(r => r.name == 'muted');
-    let muteTime = settings.antiSpamSettings.antiSpamMuteTime || 5;
-    let spamAction = false;
+    try {
 
-    if(!sameSpamSet.has(message.author.id)) {
-        let sameSpamBuffer = settings.antiSpamSettings.sameSpamBuffer || 5;
-        sameSpamSet.set(message.author.id, [message.content]);
-        setTimeout(() => {
-            sameSpamSet.delete(message.author.id)
-        }, sameSpamBuffer * 1000);
+        let muteRole = settings.muteRole;
+        let muteTime = settings.antiSpamSettings.antiSpamMuteTime || 300000;
+        let spamAction = false;
 
-    } else {
-        let usermsgs = sameSpamSet.get(message.author.id);
-        usermsgs.push(message.content);
-        let sameSpamMsgAmt = settings.antiSpamSettings.sameSpamMsgs || 5;
-        while(usermsgs.length > sameSpamMsgAmt) usermsgs.shift();
-        sameSpamSet.set(message.author.id, usermsgs);
+        if(!sameSpamSet.has(message.author.id)) {
+            let sameSpamBuffer = settings.antiSpamSettings.sameSpamBuffer || 5000;
+            sameSpamSet.set(message.author.id, [message.content]);
+            setTimeout(() => {
+                sameSpamSet.delete(message.author.id)
+            }, sameSpamBuffer);
 
-        if(usermsgs.every(content => content == usermsgs[0]) && usermsgs.length >= sameSpamMsgAmt) {
-            message.member.addRole(muteRole.id);
-            spamAction = true;
-            if(muteTime != 99.013) {
-                setTimeout(() => {
-                    message.member.removeRole(muteRole.id);
-                }, muteTime * 60000);
-            }     
+        } else {
+            let usermsgs = sameSpamSet.get(message.author.id);
+            usermsgs.push(message.content);
+            let sameSpamMsgAmt = settings.antiSpamSettings.sameSpamMsgs || 5;
+            while(usermsgs.length > sameSpamMsgAmt) usermsgs.shift();
+            sameSpamSet.set(message.author.id, usermsgs);
+
+            if(usermsgs.every(content => content == usermsgs[0]) && usermsgs.length >= sameSpamMsgAmt) {
+                if(muteRole) {
+                    message.member.addRole(muteRole);
+                    spamAction = true;
+                    if(muteTime != 99.013) {
+                        setTimeout(() => {
+                            message.member.removeRole(muteRole);
+                        }, muteTime);
+                    }
+                }     
+            }
+        } 
+        
+
+        if(!genSpamSet.has(message.author.id)) {
+            let genSpamBuffer = settings.antiSpamSettings.genSpamBuffer || 5000;
+            genSpamSet.set(message.author.id, 1);
+            setTimeout(() => {
+                genSpamSet.delete(message.author.id);
+            }, genSpamBuffer);
+
+        } else {
+            msgAmt = genSpamSet.get(message.author.id);
+            genSpamSet.set(message.author.id, (msgAmt + 1));
+            let genSpamMsgAmt = settings.antiSpamSettings.genSpamMsgs || 5;
+
+            if(msgAmt >= genSpamMsgAmt) {
+                if(muteRole) {
+                    message.member.addRole(muteRole);
+                    spamAction = true;
+                    if(muteTime != 99.013) {
+                        setTimeout(() => {
+                            message.member.removeRole(muteRole);
+                        }, muteTime);
+                    }
+                }  
+            }
         }
-    } 
-    
 
-    if(!genSpamSet.has(message.author.id)) {
-        let genSpamBuffer = settings.antiSpamSettings.genSpamBuffer || 5;
-        genSpamSet.set(message.author.id, 1);
-        setTimeout(() => {
-            genSpamSet.delete(message.author.id);
-        }, genSpamBuffer * 1000);
+        return spamAction;
 
-    } else {
-        msgAmt = genSpamSet.get(message.author.id);
-        genSpamSet.set(message.author.id, (msgAmt + 1));
-        let genSpamMsgAmt = settings.antiSpamSettings.genSpamMsgs || 5;
-
-        if(msgAmt >= genSpamMsgAmt) {
-            message.member.addRole(muteRole.id);
-            spamAction = true;
-            if(muteTime != 99.013) {
-                setTimeout(() => {
-                    message.member.removeRole(muteRole.id);
-                }, muteTime * 60000);
-            }  
-        }
+    } catch(err) {
+        console.log(err);
     }
 
-    return spamAction;
 
 }
 
@@ -165,7 +184,9 @@ const prefixCheck = (message, settings) => {
         prefixFlag = true;
     }
 
-    settings.prefixes.forEach(botprefix => {
+    const possPrefixes = settings.prefixes || [];
+
+    possPrefixes.forEach(botprefix => {
         if(message.content.startsWith(botprefix)) {
             prefix = botprefix;
             return prefixFlag = true;

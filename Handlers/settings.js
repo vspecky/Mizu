@@ -10,7 +10,7 @@ const serverid = JSON.parse(readFileSync('./Handlers/serverid.json', 'utf8'))["s
 
 module.exports = bot => {
 
-    bot.sets = { antiSpamSettings: {}, logChannels: {} };
+    bot.sets = { antiSpamSettings: {}, logChannels: {}, modBlockedChannels: {} };
     
     setInterval(() => {
         connect('mongodb://localhost/RATHMABOT', {
@@ -64,9 +64,4 @@ module.exports = bot => {
 
 }
 
-module.exports.experience = () => {
-    return {
-        expArray: exparr,
-        weeklyArray: weeklyarr 
-    }
-}
+module.exports.experience = () => ({ expArray: exparr, weeklyArray: weeklyarr });

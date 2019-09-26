@@ -1,0 +1,545 @@
+{
+  "addprefix": {
+    "name": "addprefix",
+    "usage": "```.addprefix <prefix>```",
+    "note": "Default prefix is \".\"",
+    "desc": "Adds the provided prefix to the list of bot prefixes.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "addrole": {
+    "name": "addrole",
+    "aliases": [
+      "ar"
+    ],
+    "usage": "```.addrole <@User/UUID> <RoleName/ID>```",
+    "desc": "Adds the specified role to the specified user.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "ban": {
+    "name": "ban",
+    "usage": "```.ban <@User/UserID> <Reason>```",
+    "desc": "Bans a specified user for a specified reason.",
+    "note": "Make sure a ban logs channel has been set to acquire the logs.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "blacklistadd": {
+    "name": "blacklistadd",
+    "usage": "```.blacklistadd <Word(s)>```",
+    "desc": "Adds a word or a string of words to the chat filter.",
+    "note": "There should only be one space between the command and the Word(s)",
+    "module": "Administration",
+    "enabled": true
+  },
+  "blacklistdel": {
+    "name": "blacklistdel",
+    "usage": "```.blacklistdel <Word(s)>```",
+    "desc": "Removes a word or a string of words from the chat filter.",
+    "note": "There should only be one space between the command and the Word(s)",
+    "module": "Administration",
+    "enabled": true
+  },
+  "delprefix": {
+    "name": "delprefix",
+    "usage": "```.delprefix <prefix>```",
+    "note": "Default prefix is \".\"",
+    "desc": "Removes the given prefix from the list of bot prefixes.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "getsettings": {
+    "name": "getsettings",
+    "usage": "```.getsettings <Settings>```",
+    "desc": "Gets the specified settings for the Guild.\nSettings:\n1. general\n2. logchannels\n3. antispam\n4. warnactions",
+    "module": "Administration",
+    "enabled": true
+  },
+  "help": {
+    "name": "help",
+    "usage": "```.help <CommandName>```",
+    "desc": "Shows the usage of the specified command.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "kick": {
+    "name": "kick",
+    "usage": "```.kick <@User/UserID> <Reason>```",
+    "desc": "Kicks the specified user for the specified reason.",
+    "note": "Make sure a kick logs channel has been set to acquire the logs.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "load": {
+    "name": "load",
+    "usage": "```.load <CommandName>```",
+    "desc": "Loads the specified command, making it usable again.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "modload": {
+    "name": "modload",
+    "usage": "```.modload <ModuleName>```",
+    "desc": "Loads all commands in the specified module.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "modunload": {
+    "name": "modunload",
+    "usage": "```.modunload <ModuleName>```",
+    "desc": "Unloads all commands in the specified module.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "mute": {
+    "name": "mute",
+    "usage": "```.mute @User <time(optional)> <reason(optional)>```",
+    "note": "Make sure a mute role has been set and it exists.",
+    "desc": "Mutes the specified user with options.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "purge": {
+    "name": "purge",
+    "usage": "```.purge <Number>```",
+    "desc": "Deletes the specified amount of messages from the chat.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "removerole": {
+    "name": "removerole",
+    "usage": "```.removerole <@User/UserID> <RoleName>```",
+    "desc": "Removes the specified role from the specified user.",
+    "aliases": [
+      "rr"
+    ],
+    "module": "Administration",
+    "enabled": true
+  },
+  "report": {
+    "name": "report",
+    "usage": "```.report (Optional: <@User/UserID> <Reason>)```",
+    "desc": "Reports the specified user for the specified reason or DMs the command user for the report.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "setembcol": {
+    "name": "setembcol",
+    "usage": "```.defembedcolor <colorHex>```\n('colorHex = default' for the default color.)",
+    "desc": "Changes the default embed color for the bot.",
+    "note": "Default color is grey",
+    "module": "Administration",
+    "enabled": true
+  },
+  "setexpmult": {
+    "name": "setexpmult",
+    "usage": "```.setexpmult <Number>```",
+    "desc": "Sets the guild exp multiplier. (Default: 1)",
+    "module": "Administration",
+    "enabled": true
+  },
+  "setlogch": {
+    "name": "setlogch",
+    "usage": "```.setlogch <Type> <#Channel/ChannelID>```",
+    "desc": "Sets the log channel for the specified event.\nEvents:\n1. mute\n2. kick\n3. ban\n4. warn\n5. reports\n6. msgdel\n7. userupdate\n8. suggest\n9. oofchest",
+    "module": "Administration",
+    "enabled": true
+  },
+  "setmuterole": {
+    "name": "setmuterole",
+    "usage": "```.setmuterole <channelID>```",
+    "desc": "Sets the default mute role for the guild.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "spammutetime": {
+    "name": "spammutetime",
+    "usage": "```.spammutetime <Number>```",
+    "desc": "Sets the temporary mute time for spamming. (Default: 5 minutes)",
+    "note": "Set to 0 to make the mute permanent.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "spamsettings": {
+    "name": "spamsettings",
+    "usage": "```.spamsettings <'general'/'similar'> <msgAmount> <bufferTime>```",
+    "desc": "Changes the Anti-Spam settings (General or Similar) of the guild.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "unload": {
+    "name": "unload",
+    "usage": "```.unload <CommandName>```",
+    "desc": "Unloads the specified command, making it unusable until loaded again.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "unmute": {
+    "name": "unmute",
+    "usage": "```.unmute <@User/UserID>```",
+    "desc": "Unmutes the specified user.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "warn": {
+    "name": "warn",
+    "module": "Administration",
+    "enabled": true
+  },
+  "warnactionset": {
+    "name": "warnactionset",
+    "usage": "```.warnactionset <NoOfWarns> <Action> <Timeout(optional)>```",
+    "desc": "Allows customization of actions taken at different warning levels.",
+    "note": "Valid actions: Kick, Mute, Ban",
+    "module": "Administration",
+    "enabled": true
+  },
+  "warndel": {
+    "name": "warndel",
+    "usage": "```.warndel <@User/UserID> <Index>```",
+    "desc": "Clears a user's active warning corresponding to the specified index.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "warnlog": {
+    "name": "warnlog",
+    "usage": "```.warnlog <@User/UserID(optional)>```",
+    "desc": "Displays the warn logs of the specified user. (Command user if no specifications)",
+    "module": "Administration",
+    "enabled": true
+  },
+  "vclimit": {
+    "name": "vclimit",
+    "usage": "```.vclimit <Number>```",
+    "desc": "Sets a userlimit for a custom VC from 1-99 depending on the amount specified.",
+    "note": "Limit argument should be in the range 1-99 (Including 1 and 99).",
+    "module": "CustomVoice",
+    "enabled": true
+  },
+  "vclock": {
+    "name": "vclock",
+    "usage": "```.vclock```",
+    "desc": "Locks the command user's custom VC.",
+    "note": "Locking = setting the userlimit to the current amount of people in the VC.",
+    "module": "CustomVoice",
+    "enabled": true
+  },
+  "vcname": {
+    "name": "vcname",
+    "usage": "```.vcname <NewName>```",
+    "desc": "Changes the name of the command user's custom VC.",
+    "module": "CustomVoice",
+    "enabled": true
+  },
+  "vcnolimit": {
+    "name": "vcnolimit",
+    "usage": "```.vcnolimit```",
+    "desc": "Removes the user limit on the command user's custom VC.",
+    "module": "CustomVoice",
+    "enabled": true
+  },
+  "8ball": {
+    "name": "8ball",
+    "usage": "j!8ball question",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "asay": {
+    "name": "asay",
+    "usage": "j!asay #channel message",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "baka": {
+    "name": "baka",
+    "usage": "```.baka <@User(optional)>```",
+    "desc": "Posts a 'baka' themed image/gif",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "doggo": {
+    "name": "doggo",
+    "usage": "```.doggo```",
+    "desc": "Posts a dog picture.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "fact": {
+    "name": "fact",
+    "usage": "```.fact```",
+    "desc": "Posts a random fact.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "feed": {
+    "name": "feed",
+    "usage": "```.feed <@User(optional)>```",
+    "desc": "Posts an image/gif about food.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "foxgirl": {
+    "name": "foxgirl",
+    "usage": "```.foxgirl```",
+    "desc": "Posts an image/gif of a foxgirl.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "hug": {
+    "name": "hug",
+    "usage": "```.hug <@User(optional)>```",
+    "desc": "Posts a hug image/gif.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "kemonomimi": {
+    "name": "kemonomimi",
+    "usage": "```.kemonomimi```",
+    "desc": "Posts a kemonomimi image/gif.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "kiss": {
+    "name": "kiss",
+    "usage": "```.kiss <@User(optional)>```",
+    "desc": "Posts a kiss image/gif.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "kitty": {
+    "name": "kitty",
+    "usage": "```.kitty```",
+    "desc": "Posts an image of a cat.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "marriage": {
+    "name": "marriage",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "meme": {
+    "name": "meme",
+    "usage": "```.meme```",
+    "desc": "Posts a dank meme.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "nekog": {
+    "name": "nekog",
+    "usage": "```.nekog```",
+    "desc": "Posts a neko gif.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "nekoi": {
+    "name": "nekoi",
+    "usage": "```.nekoi```",
+    "desc": "Posts a cute neko image.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "pat": {
+    "name": "pat",
+    "usage": "```.pat <@User(optional)>```",
+    "desc": "Posts a patting image/gif.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "poke": {
+    "name": "poke",
+    "usage": "j!poke || j!poke @user",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "sbooru": {
+    "name": "sbooru",
+    "usage": "```.sbooru <Tag(s)>```",
+    "desc": "Returns a random image from safebooru based on the provided tags.",
+    "note": "Separate the tags with '+' and use '_' for spaces.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "slap": {
+    "name": "slap",
+    "usage": "```.slap <@User(optional)>```",
+    "desc": "Posts a slap image/gif.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "smug": {
+    "name": "smug",
+    "usage": "```.smug <@User(optional)>```",
+    "desc": "Posts a smug image/gif.",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "tickle": {
+    "name": "tickle",
+    "usage": "j!tickle || j!tickle @user",
+    "module": "FunSFW",
+    "enabled": true
+  },
+  "boobs": {
+    "name": "boobs",
+    "usage": "```.boobs```",
+    "desc": "Posts an image with boobs.",
+    "module": "NSFW",
+    "enabled": true
+  },
+  "butt": {
+    "name": "butt",
+    "usage": "```.butt```",
+    "desc": "Posts an image with a butt.",
+    "module": "NSFW",
+    "enabled": true
+  },
+  "hentai": {
+    "name": "hentai",
+    "usage": "```.hentai```",
+    "desc": "Posts a hentai image.",
+    "module": "NSFW",
+    "enabled": true
+  },
+  "nekoh": {
+    "name": "nekoh",
+    "usage": "```.nekoh```",
+    "desc": "Posts a lewd nekomimi image.",
+    "module": "NSFW",
+    "enabled": true
+  },
+  "trap": {
+    "name": "trap",
+    "usage": "```.trap```",
+    "desc": "Posts a lewd trap.",
+    "module": "NSFW",
+    "enabled": true
+  },
+  "yuri": {
+    "name": "yuri",
+    "usage": "```.yuri```",
+    "desc": "Posts a yuri image.",
+    "module": "NSFW",
+    "enabled": true
+  },
+  "anime": {
+    "name": "anime",
+    "usage": "```.anime <NameOfAnime>```",
+    "desc": "Gets information about the specified anime.",
+    "module": "Utility",
+    "enabled": true
+  },
+  "avatar": {
+    "name": "avatar",
+    "usage": "```.avatar <@User(optional)>```",
+    "desc": "Posts the avatar of the specified user or the command user.",
+    "module": "Utility",
+    "enabled": true
+  },
+  "botinfo": {
+    "name": "botinfo",
+    "usage": "```.botinfo```",
+    "desc": "Displays info bout me!",
+    "module": "Utility",
+    "enabled": true
+  },
+  "eval": {
+    "name": "eval",
+    "module": "Utility",
+    "enabled": true
+  },
+  "eventsping": {
+    "name": "eventsping",
+    "usage": "```.eventsping```",
+    "desc": "Mentions the events role.",
+    "note": "Make sure an events role has been set for the guild.",
+    "module": "Utility",
+    "enabled": true
+  },
+  "inrole": {
+    "name": "inrole",
+    "usage": "```.inrole <RoleName>```",
+    "desc": "Displays members having the specified role.",
+    "module": "Utility",
+    "enabled": true
+  },
+  "manga": {
+    "name": "manga",
+    "usage": "```.manga <NameOfMange>```",
+    "desc": "Posts information about the specified manga.",
+    "module": "Utility",
+    "enabled": true
+  },
+  "pokedex": {
+    "name": "pokedex",
+    "usage": "```.pokedex <NameOfPokemon>```",
+    "desc": "Gets information about the specified pokemon.",
+    "module": "Utility",
+    "enabled": true
+  },
+  "serverinfo": {
+    "name": "serverinfo",
+    "module": "Utility",
+    "enabled": true
+  },
+  "suggest": {
+    "name": "suggest",
+    "usage": "```.suggest <Suggestion>```",
+    "desc": "Takes a suggestion from the user and posts it in a suggestions channel.",
+    "module": "Utility",
+    "enabled": true
+  },
+  "test": {
+    "name": "test",
+    "usage": "testUsage",
+    "notes": "testNote",
+    "module": "Utility",
+    "enabled": true
+  },
+  "leaderboard": {
+    "name": "leaderboard",
+    "usage": "`.leaderboard <PageNumber(optional)>`",
+    "desc": "Posts the <PageNumber>'th page of the server exp leaderboard. (Page 1 if page number is not provided)",
+    "note": "",
+    "module": "Experience",
+    "aliases": [
+      "lb"
+    ],
+    "enabled": true
+  },
+  "rank": {
+    "name": "rank",
+    "usage": "```.rank <@User(optional)>```",
+    "desc": "Posts the guild exp and rank stats of the user.",
+    "module": "Experience",
+    "enabled": true
+  },
+  "weeklylb": {
+    "name": "weeklylb",
+    "aliases": [
+      "lbw"
+    ],
+    "module": "Experience"
+  },
+  "moduleblock": {
+    "name": "moduleblock",
+    "usage": "```.moduleblock <ModuleName> <#Channel/ChannelID>```",
+    "desc": "Blocks all the specified module commands in the specified channel.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "repeat": {
+    "name": "repeat",
+    "usage": "```.repeat <TimeInterval> <Content>```",
+    "module": "Utility",
+    "enabled": true
+  },
+  "test2": {
+    "name": "test2",
+    "usage": "testUsage",
+    "notes": "testNote",
+    "module": "Utility",
+    "enabled": true
+  }
+}
