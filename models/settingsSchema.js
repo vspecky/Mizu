@@ -36,10 +36,17 @@ const settingsSchema = Schema({
         banEmbedColor: Number,
         kickEmbedColor: Number
     },
+    modMailSettings: {
+        modMailChannel: String,
+        detailLimit: Number,
+        undetailedCooldown: Number,
+        modMailCooldown: Number
+    },
     modBlockedChannels: {},
     warnPunishments: {},
     expMultiplier: Number,
     welcomeChannel: String,
+    modMailChannel: String,
     muteRole: String,
     eventsRole: String,
     defaultEmbedColor: Number,

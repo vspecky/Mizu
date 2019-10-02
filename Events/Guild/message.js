@@ -1,197 +1,24 @@
-const { connect } = require('mongoose');
-const expschema = require('../../models/expSchema.js');
-let expcooldown = new Set();
-let sameSpamSet = new Map();
-let genSpamSet = new Map();
-let commandcooldown = new Set();
-let prefix;
+const MessageUtils = require('../../Utils/MessageUtils.js');
+const Utils = new MessageUtils();
 
+/**
+ * 'message' Event Callback
+ *
+ * @param {Client} bot
+ * @param {Message} message
+ * @returns
+ */
 module.exports = async (bot, message) => {
 
     if (message.author.bot) return;
-    if (message.channel.type === "dm") return;
+    if (message.channel.type === "dm") return Utils.ModMail(message, bot);
 
-    let settings = bot.sets;
+    if(Utils.AntiSpam(message, bot.sets)) return;
 
-    if(antiSpamCheck(message, settings)) return;
+    const prefix = Utils.PrefixCheck(message.content, bot.sets);
 
-    if(prefixCheck(message, settings)) {
-        let messageArray = message.content.split(/ +/g);
-        let cmd = messageArray[0].slice(prefix.length).toLowerCase();
-        let args = messageArray.slice(1);
-        let commandFile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd));
-        if(profanityFilter(message.content, settings) && (commandFile.config.name !== 'blacklistadd' && commandFile.config.name !== 'blacklistdel')) return message.delete();
+    if(prefix) return Utils.Command(message, bot, prefix);
+    else if(Utils.ProfanityFilter(message.content, bot.sets)) return message.delete();
+    else return Utils.Experience(message.author, bot.sets);
 
-        if(!commandFile.config.enabled || !bot.modules[commandFile.config.module]) return;
-
-        if(bot.sets.modBlockedChannels) {
-            if(bot.sets.modBlockedChannels[commandFile.config.module]) {
-                if(bot.sets.modBlockedChannels[commandFile.config.module].includes(message.channel.id)) return;
-            }
-        }
-
-        if (commandFile && !commandcooldown.has(message.author.id)) {
-            commandcooldown.add(message.author.id);
-            setTimeout(() => {
-                commandcooldown.delete(message.author.id);
-            }, 5000);
-            
-            commandFile.run(bot, message, args);
-        }
-    } else {
-        if(profanityFilter(message.content, settings)) return message.delete();
-        if (!expcooldown.has(message.author.id)) addExperienceToUser(message.author, settings);
-    }
-
-}
-
-
-const addExperienceToUser = (user, settings) => {
-
-    connect('mongodb://localhost/RATHMABOT', {
-        useNewUrlParser: true
-    });
-
-    expschema.findOne({ UUID: user.id }, (err, exp) => {
-        if (err) console.log(err);
-
-        let xpAdd = Math.ceil(Math.random() * 10) + 15;
-        let xpmult = settings.expMultiplier || 1;
-
-        if (!exp) {
-            const newexp = new expschema({
-                UUID: user.id,
-                'LAST KNOWN USERNAME': user.username,
-                '277888888838815744': {
-                    EXPERIENCE: xpAdd,
-                    'WEEKLY EXPERIENCE': xpAdd,
-                    COMBO: 0.04
-                }
-            });
-
-            newexp.save().catch(err => console.log(err));
-        } else {
-            if (Date.now() - exp['277888888838815744']['LAST MESSAGE'] <= 120000) {
-                if (exp['277888888838815744'].COMBO < 0.20) exp['277888888838815744'].COMBO += 0.04;
-                exp['277888888838815744']['LAST MESSAGE'] = Date.now();
-            } else {
-                exp['277888888838815744'].COMBO = 0;
-                exp['277888888838815744']['LAST MESSAGE'] = Date.now();
-            }
-
-            xpAdd += Math.ceil(xpAdd * exp['277888888838815744'].COMBO);
-            xpAdd = Math.ceil(xpAdd * xpmult);
-            exp['277888888838815744'].EXPERIENCE += xpAdd;
-            exp['277888888838815744']['WEEKLY EXPERIENCE'] += xpAdd;
-
-            exp.save().catch(err => console.log(err));
-        }
-
-    });
-
-    expcooldown.add(user.id);
-
-    setTimeout(() => {
-        expcooldown.delete(user.id);
-    }, 60000);
-}
-
-
-const antiSpamCheck = (message, settings) => {
-
-    try {
-
-        let muteRole = settings.muteRole;
-        let muteTime = settings.antiSpamSettings.antiSpamMuteTime || 300000;
-        let spamAction = false;
-
-        if(!sameSpamSet.has(message.author.id)) {
-            let sameSpamBuffer = settings.antiSpamSettings.sameSpamBuffer || 5000;
-            sameSpamSet.set(message.author.id, [message.content]);
-            setTimeout(() => {
-                sameSpamSet.delete(message.author.id)
-            }, sameSpamBuffer);
-
-        } else {
-            let usermsgs = sameSpamSet.get(message.author.id);
-            usermsgs.push(message.content);
-            let sameSpamMsgAmt = settings.antiSpamSettings.sameSpamMsgs || 5;
-            while(usermsgs.length > sameSpamMsgAmt) usermsgs.shift();
-            sameSpamSet.set(message.author.id, usermsgs);
-
-            if(usermsgs.every(content => content == usermsgs[0]) && usermsgs.length >= sameSpamMsgAmt) {
-                if(muteRole) {
-                    message.member.addRole(muteRole);
-                    spamAction = true;
-                    if(muteTime != 99.013) {
-                        setTimeout(() => {
-                            message.member.removeRole(muteRole);
-                        }, muteTime);
-                    }
-                }     
-            }
-        } 
-        
-
-        if(!genSpamSet.has(message.author.id)) {
-            let genSpamBuffer = settings.antiSpamSettings.genSpamBuffer || 5000;
-            genSpamSet.set(message.author.id, 1);
-            setTimeout(() => {
-                genSpamSet.delete(message.author.id);
-            }, genSpamBuffer);
-
-        } else {
-            msgAmt = genSpamSet.get(message.author.id);
-            genSpamSet.set(message.author.id, (msgAmt + 1));
-            let genSpamMsgAmt = settings.antiSpamSettings.genSpamMsgs || 5;
-
-            if(msgAmt >= genSpamMsgAmt) {
-                if(muteRole) {
-                    message.member.addRole(muteRole);
-                    spamAction = true;
-                    if(muteTime != 99.013) {
-                        setTimeout(() => {
-                            message.member.removeRole(muteRole);
-                        }, muteTime);
-                    }
-                }  
-            }
-        }
-
-        return spamAction;
-
-    } catch(err) {
-        console.log(err);
-    }
-
-
-}
-
-const profanityFilter = (content, settings) => {
-
-    const blacklist = settings.blacklist || [];
-    const deserialized = content.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    const contentArray = deserialized.split(/ +/g);
-    return contentArray.some(word => blacklist.includes(word)) || blacklist.some(profanity => content.includes(profanity));
-
-}
-
-const prefixCheck = (message, settings) => {
-    let prefixFlag = false;
-
-    if(message.content.startsWith('.')) {
-        prefix = '.';
-        prefixFlag = true;
-    }
-
-    const possPrefixes = settings.prefixes || [];
-
-    possPrefixes.forEach(botprefix => {
-        if(message.content.startsWith(botprefix)) {
-            prefix = botprefix;
-            return prefixFlag = true;
-        }
-    });
-
-    return prefixFlag;
 }

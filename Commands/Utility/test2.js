@@ -1,5 +1,4 @@
 const discord = require('discord.js');
-const superagent = require('superagent');
 const Canvas = require('canvas');
 const experience = require('../../models/expSchema.js');
 let test;
@@ -7,7 +6,6 @@ let testVar = require('../../Events/Guild/message.js')
 const { connect } = require('mongoose');
 let testing = new Map();
 let testarr = [1, 0, 2];
-let usageEmbed = require('../../Handlers/usageinfo.js');
 const setsObj = require('../../Handlers/settings.js').settings;
 const ms = require('ms');
 const setsschema = require('../../models/settingsSchema.js');

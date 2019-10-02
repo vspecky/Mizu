@@ -1,5 +1,5 @@
 const discord = require('discord.js');
-const superagent = require('superagent');
+const fetch = require('node-fetch');
 const Canvas = require('canvas');
 const experience = require('../../models/expSchema.js');
 let test;
@@ -7,11 +7,12 @@ let testVar = require('../../Events/Guild/message.js')
 const { connect } = require('mongoose');
 let testing = new Map();
 let testarr = [1, 0, 2];
-let usageEmbed = require('../../Handlers/usageinfo.js');
 const setsObj = require('../../Handlers/settings.js').settings;
 const ms = require('ms');
 const setsschema = require('../../models/settingsSchema.js');
 const marriage = require('../../models/marriageSchema.js');
+const repeatFunc = require('./repeat.js').intervals;
+const cheerio = require('cheerio');
 
 module.exports.run = async (bot, message, args) => {
 
@@ -39,7 +40,13 @@ module.exports.run = async (bot, message, args) => {
     })
 
     */
-    bot.emit('testevent', message);
+    
+    const roles = message.guild.roles.get(args[0]).members.map(m => m.user).join('\n') || 'none';
+    const embed = new discord.RichEmbed()
+    .setDescription(roles);
+
+    message.channel.send(embed);
+    
 }
 
 

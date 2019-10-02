@@ -1,14 +1,24 @@
 const { readdirSync, readFileSync, writeFileSync } = require('fs');
-const usageEmbed = require('./usageinfo.js');
+const usageEmbed = require('../Utils/usageinfo.js');
 let commandjson = JSON.parse(readFileSync('./commandsinfo.json', 'utf8'));
 const asciiTable = require('ascii-table');
 
+/**
+ * Command Handler for Mizu
+ *
+ * @param {*} bot
+ */
 module.exports = bot => {
 
     console.log(`Mizu is Booting`);
 
     bot.modules = {};
 
+    /**
+     * Goes into {dir} in ./Commands and loads the different modules and commands.
+     *
+     * @param {*} dir
+     */
     const load = dir => {
         const commands = readdirSync(`./Commands/${dir}/`).filter(c => c.endsWith('.js'));
         let table = new asciiTable(`${dir} Module Booting`)

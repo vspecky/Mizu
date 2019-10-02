@@ -18,19 +18,28 @@ module.exports.run = async (bot, message, args) => {
         msg.channel.send(content);
     }, ms(args[0]), message);
 
-    repeatmap.set(message.author.id, repeatInterval);
+    repeatmap.set(message.author.id, {
+        interval: repeatInterval,
+        torepeat: content,
+        time: ms(ms(args[0]), { long: true })
+    });
 
     const confirmationEmbed = new RichEmbed()
     .setColor(bot.sets.defaultEmbedColor)
-    .setTitle(`Repeating Content`)
-    .setDescription(`${content}`)
-    .setFooter(`User: ${message.author.username} (ID: ${message.author.id})`);
+    .setAuthor(`🔄Repeat Set`)
+    .setTitle(`${message.author.tag}`)
+    .addField('Content:', content)
+    .addField('Interval:', `${ms(ms(args[0]), { long: true })}`)
+    .setFooter(new Date().toUTCString());
 
     return message.channel.send(confirmationEmbed);
 
 }
 
+module.exports.intervals = () => repeatmap;
+
 module.exports.config = {
     name: 'repeat',
-    usage: "```.repeat <TimeInterval> <Content>```"
+    usage: "```.repeat <TimeInterval> <Content>```",
+    desc: "Sets a message repeater over the specified interval"
 }
