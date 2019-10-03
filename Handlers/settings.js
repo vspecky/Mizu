@@ -8,9 +8,9 @@ let weeklyarr = [];
 let expswitch = 0;
 const serverid = JSON.parse(readFileSync('./Handlers/serverid.json', 'utf8'))["serverID"]
 
-module.exports = bot => {
+module.exports = Mizu => {
 
-    bot.sets = { antiSpamSettings: {}, logChannels: {}, modBlockedChannels: {} };
+    Mizu.sets = { antiSpamSettings: {}, logChannels: {}, modBlockedChannels: {} };
     
     setInterval(() => {
         connect('mongodb://localhost/RATHMABOT', {
@@ -28,7 +28,7 @@ module.exports = bot => {
                 console.log('settings created');
                 newSets.save().catch(err => console.log(err));
             } else {
-                bot.sets = res;
+                Mizu.sets = res;
             }
         });
 

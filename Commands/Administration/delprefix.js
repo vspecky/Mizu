@@ -2,10 +2,10 @@ const { connect } = require('mongoose');
 const setschema = require('../../models/settingsSchema.js');
 const { RichEmbed } = require('discord.js');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
-    settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0]) return message.reply(usageEmbed);
 
@@ -35,5 +35,5 @@ module.exports.config = {
     name: 'delprefix',
     usage: "```.delprefix <prefix>```",
     note: 'Default prefix is "."',
-    desc: 'Removes the given prefix from the list of bot prefixes.'
+    desc: 'Removes the given prefix from the list of Mizu prefixes.'
 }

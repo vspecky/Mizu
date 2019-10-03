@@ -14,7 +14,7 @@ const marriage = require('../../models/marriageSchema.js');
 const repeatFunc = require('./repeat.js').intervals;
 const cheerio = require('cheerio');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     /*
     mongoose.connect('mongodb://localhost/RATHMABOT', {
@@ -41,11 +41,8 @@ module.exports.run = async (bot, message, args) => {
 
     */
     
-    const roles = message.guild.roles.get(args[0]).members.map(m => m.user).join('\n') || 'none';
-    const embed = new discord.RichEmbed()
-    .setDescription(roles);
-
-    message.channel.send(embed);
+    console.error('hello');
+    console.warn('Nello');
     
 }
 

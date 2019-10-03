@@ -2,12 +2,12 @@ const { RichEmbed } = require("discord.js");
 const nekos = require("nekos.life");
 const neko = new nekos();
 
-module.exports.run = async(bot, message, args) =>{
+module.exports.run = async(Mizu, message, args) =>{
 
     if(!message.channel.nsfw) return;
 
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(args.length) return message.reply(usageEmbed);
 

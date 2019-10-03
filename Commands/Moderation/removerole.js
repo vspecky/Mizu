@@ -1,15 +1,15 @@
 const { RichEmbed } = require('discord.js');
 
-module.exports.run = async(bot, message, args) =>{
+module.exports.run = async(Mizu, message, args) =>{
     
     if(!message.member.hasPermission("MANAGE_ROLES")) return;
 
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
-    if(!args[0] || !args[1]) return message.reply(usageEmbed);
+    if(!args[1]) return message.reply(usageEmbed);
 
-    const rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    const rMember = message.guild.fetchMember(message.mentions.users.first() || args[0]);
     if(!rMember) return message.channel.send(new RichEmbed({
         color: settings.defaultEmbedColor,
         description: 'Couldn\'t find that user.'

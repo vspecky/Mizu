@@ -1,16 +1,16 @@
 const { RichEmbed } = require("discord.js");
 
-module.exports.run = async(bot, message, args) =>{
+module.exports.run = async(Mizu, message, args) =>{
      // j!ban @user reason
 
     if(!message.member.hasPermission("BAN_MEMBERS")) return;
     
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0] || !args[1]) return message.reply(usageEmbed);
 
-    const bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    const bUser = message.guild.fetchMember(message.mentions.users.first() || args[0]);
     
     if(!bUser || `${bUser}` == `${message.author}`) return message.reply(new RichEmbed({
         color: settings.defaultEmbedColor,

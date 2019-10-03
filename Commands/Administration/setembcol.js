@@ -3,10 +3,10 @@ const { RichEmbed } = require('discord.js');
 const setschema = require('../../models/settingsSchema.js');
 const options = ['default', 'warn', 'mute', 'kick', 'ban'];
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
-    settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args.length || args.length > 2) return message.reply(usageEmbed);
 
@@ -34,6 +34,6 @@ module.exports.run = async (bot, message, args) => {
 exports.config = {
     name: 'setembcol',
     usage: "```.defembedcolor <colorHex>```\n('colorHex = default' for the default color.)",
-    desc: 'Changes the default embed color for the bot.',
+    desc: 'Changes the default embed color for the Mizu.',
     note: 'Default color is grey'
 }

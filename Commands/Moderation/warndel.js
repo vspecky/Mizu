@@ -3,16 +3,16 @@ const Warning = require('../../models/warnSchema.js');
 const { connect } = require('mongoose');
 
 
-module.exports.run = async (bot,message,args) => {
+module.exports.run = async (Mizu,message,args) => {
 
     if(!message.member.hasPermission(['BAN_MEMBERS'])) return;
 
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0] || !args[1] || isNaN(args[1])) return message.reply(usageEmbed);
 
-    wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    wUser = message.guild.fetchMember(message.mentions.users.first() || args[0]);
     if(!wUser) return message.channel.send(new RichEmbed({ description: 'Invalid user argument.' }));
 
     connect('mongodb://localhost/RATHMABOT', {

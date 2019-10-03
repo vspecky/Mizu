@@ -1,6 +1,6 @@
 const { RichEmbed } = require('discord.js');
 
-module.exports.run = async (bot, message, args) =>{
+module.exports.run = async (Mizu, message, args) =>{
 
     const aUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0])) || message.member;
 

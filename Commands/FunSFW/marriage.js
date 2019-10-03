@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const marriageSchema = require('../../models/marriageSchema.js');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     mongoose.connect('mongodb://localhost/RATHMABOT', {
         useNewUrlParser: true
@@ -9,7 +9,7 @@ module.exports.run = async (bot, message, args) => {
 
     let mUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
 
-    if(mUser.user.bot) return message.reply('You cannot marry a bot!');
+    if(mUser.user.Mizu) return message.reply('You cannot marry a Mizu!');
 
     message.channel.send(`${message.member} just proposed to ${mUser}! How sweet! Reply with \`yes\` or \`no\` please.`)
         .then(msg => {

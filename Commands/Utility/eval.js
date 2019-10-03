@@ -1,6 +1,6 @@
 const discord = require('discord.js');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     if (message.author.id != 375922007969366016) return;
 

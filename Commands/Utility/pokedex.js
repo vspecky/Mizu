@@ -1,11 +1,11 @@
 const { RichEmbed } = require('discord.js');
 const fetch = require('node-fetch');
 
-module.exports.run = async (bot,message,args) => {
+module.exports.run = async (Mizu,message,args) => {
 
-    const settings = bot.sets;
+    const settings = Mizu.sets;
     
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args.length || !isNaN(args[0])) return message.channel.send(usageEmbed);
 

@@ -4,12 +4,12 @@ const expschema = require('../../models/expSchema.js');
 let antiRaidMap = new Map();
 let antiRaidSet = new Set();
 
-module.exports = async (bot, member) => {
+module.exports = async (Mizu, member) => {
 
-    if(sRaidCheck(member, bot.sets.antiRaidSettings)) return informAboutSingleRaid(member, bot.sets);
-    if(mRaidCheck(member, bot.sets.antiRaidSettings)) return informAboutMultiRaid(bot.sets);
+    if(sRaidCheck(member, Mizu.sets.antiRaidSettings)) return informAboutSingleRaid(member, Mizu.sets);
+    if(mRaidCheck(member, Mizu.sets.antiRaidSettings)) return informAboutMultiRaid(Mizu.sets);
     else {
-        welcomeTheUser(member, bot.sets);
+        welcomeTheUser(member, Mizu.sets);
         checkIfOldUser(member);
     }
 

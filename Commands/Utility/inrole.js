@@ -1,6 +1,6 @@
 const { RichEmbed } = require('discord.js');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     if(!args[0]) return message.reply('Please specify a role.')
 
@@ -43,7 +43,7 @@ module.exports.run = async (bot, message, args) => {
 
         collector.on('end', collected => {
             msg.reactions.forEach(reaction => {
-                reaction.remove(bot.user);
+                reaction.remove(Mizu.user);
             });
         });
 

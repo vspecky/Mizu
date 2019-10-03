@@ -3,9 +3,9 @@ const nekos = require("nekos.life");
 const neko = new nekos();
 
 
-module.exports.run = async(bot, message, args) =>{
+module.exports.run = async(Mizu, message, args) =>{
 
-    const settings = bot.sets;
+    const settings = Mizu.sets;
 
     const body = await neko.sfw.pat();
     
@@ -16,7 +16,7 @@ module.exports.run = async(bot, message, args) =>{
     const wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
     if(!wUser) return message.channel.send(patEmbed.setTitle(`*pat pat* <3`));
     if(message.author.id == wUser.id) return message.channel.send(patEmbed.setTitle(`${message.author.tag} pats themself.`));
-    if(wUser.id == bot.user.id) return message.channel.send(patEmbed.setTitle(`${message.author.tag} yay pats!!`));
+    if(wUser.id == Mizu.user.id) return message.channel.send(patEmbed.setTitle(`${message.author.tag} yay pats!!`));
     return message.channel.send(patEmbed.setTitle(`${message.author.tag} pats ${wUser.user.tag} <3`));
 }
 

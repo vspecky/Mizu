@@ -1,7 +1,7 @@
 {
   "name": "mizu",
   "version": "0.5.0",
-  "description": "All purpose discord bot for OtakuOnsen",
+  "description": "All purpose discord Mizu for OtakuOnsen",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"

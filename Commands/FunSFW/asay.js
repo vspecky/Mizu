@@ -1,6 +1,6 @@
 const discord = require("discord.js");
 
-module.exports.run = async(bot,message,args) =>{
+module.exports.run = async(Mizu,message,args) =>{
 
     if(!message.member.hasPermission("MANAGE_SERVER")) return;
 

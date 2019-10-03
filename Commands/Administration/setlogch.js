@@ -4,12 +4,12 @@ const setschema = require('../../models/settingsSchema.js');
 
 const options = ['warn', 'kick', 'ban', 'mute', 'msgdel', 'userupdate', 'reports', 'suggest', 'oofchest'];
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     if(!message.member.hasPermission(['ADMINISTRATOR'])) return;
 
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0] || args[2] || !options.includes(args[0].toLowerCase())) return message.reply(usageEmbed);
 

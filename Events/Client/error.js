@@ -1,3 +1,1 @@
-module.exports = async (bot, err) => {
-    console.log(err);
-}
+module.exports = async (Mizu, err) => console.error(err);

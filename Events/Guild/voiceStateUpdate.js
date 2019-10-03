@@ -1,7 +1,7 @@
 let vcPerks = new Map();
 let custvcadmin = new Map();
 
-module.exports = async (bot, oldMember, newMember) => {
+module.exports = async (Mizu, oldMember, newMember) => {
 
     if (newMember.voiceChannelID == 607592608641974324) {
 

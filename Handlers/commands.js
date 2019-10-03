@@ -1,18 +1,18 @@
 const { readdirSync, readFileSync, writeFileSync } = require('fs');
-const usageEmbed = require('../Utils/usageinfo.js');
+const usageEmbed = require('../Utils/UsageInfo.js');
 let commandjson = JSON.parse(readFileSync('./commandsinfo.json', 'utf8'));
 const asciiTable = require('ascii-table');
 
 /**
  * Command Handler for Mizu
  *
- * @param {*} bot
+ * @param {*} Mizu
  */
-module.exports = bot => {
+module.exports = Mizu => {
 
     console.log(`Mizu is Booting`);
 
-    bot.modules = {};
+    Mizu.modules = {};
 
     /**
      * Goes into {dir} in ./Commands and loads the different modules and commands.
@@ -23,7 +23,7 @@ module.exports = bot => {
         const commands = readdirSync(`./Commands/${dir}/`).filter(c => c.endsWith('.js'));
         let table = new asciiTable(`${dir} Module Booting`)
         .setHeading('', 'Commands', 'Status');
-        bot.modules[`${dir}`] = true;
+        Mizu.modules[`${dir}`] = true;
         let count = 0;
         for (let file of commands) {
             const pull = require(`../Commands/${dir}/${file}`);
@@ -33,9 +33,9 @@ module.exports = bot => {
                 if(err) console.log(err);
             });
             pull.config.enabled = true;
-            bot.usages.set(pull.config.name, usageEmbed(pull.config));
-            bot.commands.set(pull.config.name, pull);
-            if(pull.config.aliases) pull.config.aliases.forEach(alias => bot.aliases.set(alias, pull.config.name));
+            Mizu.usages.set(pull.config.name, usageEmbed(pull.config));
+            Mizu.commands.set(pull.config.name, pull);
+            if(pull.config.aliases) pull.config.aliases.forEach(alias => Mizu.aliases.set(alias, pull.config.name));
             count++;
             table.addRow(count, pull.config.name, 'functional');
         }

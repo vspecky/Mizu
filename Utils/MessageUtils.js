@@ -24,9 +24,11 @@ module.exports = class MessageUtils {
     
         expschema.findOne({ UUID: user.id }, (err, exp) => {
             if (err) console.log(err);
-    
-            let xpAdd = Math.ceil(Math.random() * 10) + 15;
-            const xpmult = settings.expMultiplier || 1;
+
+            const low = settings.expSettings.lowestExp || 15;
+            const high = settings.expSettings.highestExp || 25;
+            let xpAdd = Math.ceil(Math.random() * (high - low)) + low;
+            const xpmult = settings.expSettings.expMultiplier || 1;
     
             if (!exp) {
                 const newexp = new expschema({
@@ -35,14 +37,14 @@ module.exports = class MessageUtils {
                     '277888888838815744': {
                         EXPERIENCE: xpAdd,
                         'WEEKLY EXPERIENCE': xpAdd,
-                        COMBO: 0.04
+                        COMBO: 0
                     }
                 });
     
                 newexp.save().catch(err => console.log(err));
             } else {
-                if (Date.now() - exp['277888888838815744']['LAST MESSAGE'] <= 120000) {
-                    if (exp['277888888838815744'].COMBO < 0.20) exp['277888888838815744'].COMBO += 0.04;
+                if (Date.now() - exp['277888888838815744']['LAST MESSAGE'] <= (settings.expSettings.comboInterval || 120000)) {
+                    if (exp['277888888838815744'].COMBO < ((settings.expSettings.maxCombo/100) || 0.20)) exp['277888888838815744'].COMBO += (settings.expSettings.comboIncrement || 0.04);
                     exp['277888888838815744']['LAST MESSAGE'] = Date.now();
                 } else {
                     exp['277888888838815744'].COMBO = 0;
@@ -63,7 +65,7 @@ module.exports = class MessageUtils {
     
         setTimeout(() => {
             expcooldown.delete(user.id);
-        }, 60000);
+        }, (settings.expSettings.expCooldown || 60000));
 
     }
 
@@ -83,8 +85,8 @@ module.exports = class MessageUtils {
         const possPrefixes = settings.prefixes || [];
         let prefix = false;
     
-        possPrefixes.forEach(botprefix => {
-            if(content.startsWith(botprefix)) return prefix = botprefix;
+        possPrefixes.forEach(Mizuprefix => {
+            if(content.startsWith(Mizuprefix)) return prefix = Mizuprefix;
         });
     
         return prefix;
@@ -240,7 +242,7 @@ module.exports = class MessageUtils {
         const cmd = messageArray[0].slice(prefix.length).toLowerCase();
         const args = messageArray.slice(1);
         const commandFile = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-        if(!commandFile) return;
+        if(!commandFile) return this.Experience(message.author, client.sets);
         if(this.ProfanityFilter(message.content, client.sets) && (commandFile.config.name !== 'blacklistadd' && commandFile.config.name !== 'blacklistdel')) return message.delete();
     
         if(!commandFile.config.enabled || !client.modules[commandFile.config.module]) return;

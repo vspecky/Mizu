@@ -1,14 +1,14 @@
 const { RichEmbed } = require('discord.js');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     if(!message.member.hasPermission(['ADMINISTRATOR'])) return;
 
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(bot.sets.defaultEmbedColor);
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(Mizu.sets.defaultEmbedColor);
 
     if(!args.length || args.length > 1) return message.reply(usageEmbed);
 
-    const keys = Object.keys(bot.modules);
+    const keys = Object.keys(Mizu.modules);
 
     if(!keys.includes(args[0])) {
         let infostr = '';
@@ -22,15 +22,15 @@ module.exports.run = async (bot, message, args) => {
         return message.channel.send(new RichEmbed({
             title: 'List of Modules :',
             description: infostr,
-            color: bot.sets.defaultEmbedColor
+            color: Mizu.sets.defaultEmbedColor
         }));
         
     } else {
-        bot.modules[args[0]] = true;
+        Mizu.modules[args[0]] = true;
 
         return message.channel.send(new RichEmbed({
             description: `The '${args[0]}' module was loaded.`,
-            color: bot.sets.defaultEmbedColor
+            color: Mizu.sets.defaultEmbedColor
         }));
     }
 

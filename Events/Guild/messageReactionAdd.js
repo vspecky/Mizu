@@ -1,9 +1,9 @@
 const { RichEmbed } = require('discord.js');
 let oofchestSet = [];
 
-module.exports = async (bot, messageReaction, user) => {
+module.exports = async (Mizu, messageReaction, user) => {
 
-    if(!bot.sets.logChannels.oofchestChannel) return;
+    if(!Mizu.sets.logChannels.oofchestChannel) return;
 
     let rCount = 0;
     if(messageReaction._emoji.name == `😏` && user.id != messageReaction.message.author.id) rCount++;
@@ -32,7 +32,7 @@ module.exports = async (bot, messageReaction, user) => {
             oofchestSet.shift();
         }
 
-        const oofChan = messageReaction.message.guild.channels.get(bot.sets.logChannels.oofchestChannel);
+        const oofChan = messageReaction.message.guild.channels.get(Mizu.sets.logChannels.oofchestChannel);
 
         if(oofChan) return oofChan.send(oofEmbed);
     }

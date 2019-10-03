@@ -1,1 +1,1 @@
-module.exports = async bot => console.log('Jun Watarase has disconnected.');
+module.exports = async Mizu => console.log('Mizu has disconnected.');

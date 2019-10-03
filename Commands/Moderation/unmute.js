@@ -1,16 +1,16 @@
 const { RichEmbed } = require("discord.js");
 
 
-module.exports.run = async(bot, message, args) =>{
+module.exports.run = async(Mizu, message, args) =>{
 
     if(!message.member.hasPermission("MUTE_MEMBERS")) return;
 
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0]) return message.reply(usageEmbed);
 
-    const toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    const toMute = message.guild.fetchMember(message.mentions.users.first() || args[0]);
     if(!toMute || `${toMute}` == `${message.author}`) return message.channel.send("Invalid user argument.");  
 
     const muteRole = message.guild.roles.get(settings.muteRole);

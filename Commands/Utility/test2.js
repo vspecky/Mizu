@@ -12,7 +12,7 @@ const setsschema = require('../../models/settingsSchema.js');
 const marriage = require('../../models/marriageSchema.js');
 const testFunc = require('./test.js').test;
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     /*
     mongoose.connect('mongodb://localhost/RATHMABOT', {

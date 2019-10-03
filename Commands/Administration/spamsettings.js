@@ -4,12 +4,12 @@ const { RichEmbed } = require('discord.js');
 const ms = require('ms');
 
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     if(!message.member.hasPermission('ADMINISTRATOR')) return;
 
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!isNaN(args[0]) || args.length < 3 || isNaN(args[1]) || !ms(args[2])) return message.reply(usageEmbed);
 

@@ -2,14 +2,14 @@ const { RichEmbed } = require('discord.js');
 const { vcinfo } = require('../../Events/Guild/voiceStateUpdate.js');
 
 
-module.exports.run = async (bot,message,args) =>{
+module.exports.run = async (Mizu,message,args) =>{
 
     let vChannelID = vcinfo.vcPerks.get(`${message.author.id}`);
 
     if(!vChannelID) return;
 
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(args.length) return message.reply(usageEmbed);
 

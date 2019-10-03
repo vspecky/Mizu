@@ -1,11 +1,11 @@
 const { RichEmbed } = require('discord.js');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
-    const settings = bot.sets
+    const settings = Mizu.sets
 
     if(!args.length) {
-        return message.reply(new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor));
+        return message.reply(new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor));
     } else {
         const sChannel = message.guild.channels.get(settings.logChannels.suggestChannel);
         const suggestion = args.join(" ");

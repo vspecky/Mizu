@@ -2,7 +2,7 @@ const { RichEmbed } = require('discord.js');
 let exparr;
 let expObject = require('../../Handlers/settings.js').experience;
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     if(isNaN(args[0]) && args[0]) return message.reply('Bad Usage.');
 
@@ -37,7 +37,7 @@ module.exports.run = async (bot, message, args) => {
 
         collector.on('end', collected => {
             msg.reactions.forEach(reaction => {
-                reaction.remove(bot.user);
+                reaction.remove(Mizu.user);
             });
         });
 

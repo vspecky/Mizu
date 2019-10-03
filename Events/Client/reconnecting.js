@@ -1,1 +1,1 @@
-module.exports = async bot => console.log(`${bot.user.username} is attempting to reconnect.`);
+module.exports = async Mizu => console.log(`${Mizu.user.username} is attempting to reconnect.`);

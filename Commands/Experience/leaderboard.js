@@ -2,11 +2,11 @@ const { RichEmbed } = require('discord.js');
 let exparr;
 let expObject = require('../../Handlers/settings.js').experience;
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
-    const settings = bot.sets;
+    const settings = Mizu.sets;
 
-    if(isNaN(args[0]) && args.length) return message.reply(new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor));
+    if(isNaN(args[0]) && args.length) return message.reply(new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor));
 
     if(args[0] && !exparr[args[0] * 10]) return message.channel.send(new RichEmbed({
         color: settings.defaultEmbedColor,
@@ -42,7 +42,7 @@ module.exports.run = async (bot, message, args) => {
 
         collector.on('end', collected => {
             msg.reactions.forEach(reaction => {
-                reaction.remove(bot.user);
+                reaction.remove(Mizu.user);
             });
         });
 

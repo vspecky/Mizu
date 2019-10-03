@@ -1,25 +1,25 @@
 const { RichEmbed } = require("discord.js");
 
-module.exports.run = async(bot, message, args) =>{
+module.exports.run = async(Mizu, message, args) =>{
 
-    const settings = bot.sets;
+    const settings = Mizu.sets;
 
-    if(args.length) return message.reply(new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor));
+    if(args.length) return message.reply(new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor));
 
-    let boticon = bot.user.displayAvatarURL;
+    let Mizuicon = Mizu.user.displayAvatarURL;
 
-    let botembed = new discord.RichEmbed()
-    .setDescription("Bot Information")
+    let Mizuembed = new discord.RichEmbed()
+    .setDescription("Mizu Information")
     .setColor(settings.defaultEmbedColor)
-    .setThumbnail(boticon)
-    .addField("Bot Name :", bot.user.username)
-    .addField("Created On :", bot.user.createdAt);
+    .setThumbnail(Mizuicon)
+    .addField("Mizu Name :", Mizu.user.username)
+    .addField("Created On :", Mizu.user.createdAt);
 
-    return message.channel.send(botembed);
+    return message.channel.send(Mizuembed);
 }
 
 module.exports.config = {
-    name: "botinfo",
-    usage: "```.botinfo```",
+    name: "Mizuinfo",
+    usage: "```.Mizuinfo```",
     desc: 'Displays info bout me!'
 }

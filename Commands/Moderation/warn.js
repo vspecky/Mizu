@@ -4,18 +4,18 @@ const { connect } = require('mongoose');
 
 const ms = require('ms');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     if (!message.member.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS"])) return;
 
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0]) return message.reply(usageEmbed);
 
     let wChannel = message.guild.channels.get(settings.logChannels.warnChannel);
 
-    let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+    let wUser = message.guild.fetchMember(message.mentions.users.first() || args[0]);
     if (!wUser) return message.channel.send("Invalid user argument.");
 
     if (wUser.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS"])) return;

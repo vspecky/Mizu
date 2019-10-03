@@ -5,10 +5,10 @@ const setsObj = require('../../Handlers/settings.js').settings;
 const ms = require('ms');
 const actions = ['mute', 'kick', 'ban', 'del'];
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
-    const settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    const settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!args[0] || !args[1] || isNaN(args[0]) || !isNaN(args[1]) || args.length > 3 || (args[2] && !ms(args[2]))) return message.reply(usageEmbed);
 

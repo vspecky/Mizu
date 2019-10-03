@@ -42,6 +42,15 @@ const settingsSchema = Schema({
         undetailedCooldown: Number,
         modMailCooldown: Number
     },
+    expSettings: {
+        comboIncrement: Number,
+        comboInterval: Number,
+        maxCombo: Number,
+        lowestExp: Number,
+        highestExp: Number,
+        expMultiplier: Number,
+        expCooldown: Number
+    },
     modBlockedChannels: {},
     warnPunishments: {},
     expMultiplier: Number,

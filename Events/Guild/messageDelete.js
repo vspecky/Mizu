@@ -1,8 +1,8 @@
 const { RichEmbed } = require('discord.js');
 
-module.exports = async (bot, message) => {
+module.exports = async (Mizu, message) => {
 
-    const settings = bot.sets;
+    const settings = Mizu.sets;
 
     const logch = message.guild.channels.get(settings.logChannels.msgdelChannel);
 

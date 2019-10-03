@@ -2,7 +2,7 @@ const discord = require("discord.js");
 const nekos = require("nekos.life");
 const neko = new nekos();
 
-module.exports.run = async(bot, message, args) =>{
+module.exports.run = async(Mizu, message, args) =>{
 
     let body = await neko.sfw.tickle();
 
@@ -20,7 +20,7 @@ module.exports.run = async(bot, message, args) =>{
     let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
     if(!wUser) return message.channel.send(tickleEmbed);
     if(message.author.id == wUser.id) return message.channel.send(sTickleEmbed);
-    if(wUser.id == bot.user.id) return message.channel.send(`<@${message.author.id}> can't touch this! :smirk:`);
+    if(wUser.id == Mizu.user.id) return message.channel.send(`<@${message.author.id}> can't touch this! :smirk:`);
 
     let uTickleEmbed = new discord.RichEmbed()
     .setColor("#8E5BC5")

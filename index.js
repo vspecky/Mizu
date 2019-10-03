@@ -1,6 +1,8 @@
 const { token } = require("../tokenc.json");
-const { Client, Collection } = require('discord.js');
-const bot = new Client({ disableEveryone: true });
-['commands', 'aliases', 'usages'].forEach(field => bot[field] = new Collection());
-["commands", "events", "settings"].forEach(handler => require(`./Handlers/${handler}`)(bot));
-bot.login(token);
+const MizuClient = require('./Utils/MizuClient.js');
+const path = require('path');
+
+const Mizu = new MizuClient({ disableEveryone: true });
+Mizu.initCollections(['commands', 'aliases', 'usages']);
+Mizu.initHandlers(['commands', 'events', 'settings'], path.join(__dirname, 'Handlers'));
+Mizu.login(token);

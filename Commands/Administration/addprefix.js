@@ -2,11 +2,11 @@ const { connect } = require('mongoose');
 const setschema = require('../../models/settingsSchema.js');
 const { RichEmbed } = require('discord.js');
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
-    settings = bot.sets || {};
+    settings = Mizu.sets || {};
 
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     if(!message.member.hasPermission('ADMINISTRATOR')) return;
 
@@ -38,5 +38,5 @@ module.exports.config = {
     name: 'addprefix',
     usage: "```.addprefix <prefix>```",
     note: 'Default prefix is "."',
-    desc: 'Adds the provided prefix to the list of bot prefixes.'
+    desc: 'Adds the provided prefix to the list of Mizu prefixes.'
 }

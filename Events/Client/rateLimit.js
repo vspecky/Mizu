@@ -1,4 +1,4 @@
-module.exports = async (bot, rateLimitInfo) => {
+module.exports = async (Mizu, rateLimitInfo) => {
 
     console.log('Rate Limit Reached:');
     console.log(rateLimitInfo);

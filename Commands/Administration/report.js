@@ -1,9 +1,9 @@
 const { RichEmbed } = require("discord.js");
 
 
-module.exports.run = async(bot, message, args) => {
+module.exports.run = async(Mizu, message, args) => {
 
-    const settings = bot.sets;
+    const settings = Mizu.sets;
 
     const rChannel = message.guild.channels.get(settings.logChannels.reportChannel);
 
@@ -18,7 +18,7 @@ module.exports.run = async(bot, message, args) => {
             description: "Please send your report here in a single message below 1000 characters in length. Provide the tag of the User, Reason and Evidence(optional). This instance shall expire in 120 seconds."
         })).then((rMsg) => {
             rMsg.channel.awaitMessages(res => {
-                if(res.author.id != bot.user.id){
+                if(res.author.id != Mizu.user.id){
                     
                 const dmrEmbed = new RichEmbed()
                 .setColor(settings.defaultEmbedColor)

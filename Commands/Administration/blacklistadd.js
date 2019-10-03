@@ -3,10 +3,10 @@ const { RichEmbed } = require('discord.js');
 const setschema = require('../../models/settingsSchema.js');
 const possArr = ['.blacklistadd', ' ']
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
-    settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     let blacklisted = message.content.split(' ').slice(1).join(' ');
 
@@ -16,7 +16,7 @@ module.exports.run = async (bot, message, args) => {
         useNewUrlParser: true
     });
 
-    setschema.findOne({ serverID: bot.sets.serverID }, (err, res) => {
+    setschema.findOne({ serverID: Mizu.sets.serverID }, (err, res) => {
         if(!res.blacklist) res.blacklist = [];
 
         if(res.blacklist.includes(blacklisted)) return message.channel.send(new RichEmbed({

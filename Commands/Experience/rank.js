@@ -1,14 +1,14 @@
 const { RichEmbed } = require("discord.js");
 const expdatagetter = require('../../Handlers/settings.js').experience;
 
-module.exports.run = async(bot,message,args) =>{
+module.exports.run = async(Mizu,message,args) =>{
 
     let xpUser;
 
     if(args.length){
         xpUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
         if(!xpUser) return message.channel.send(new RichEmbed({
-            color: bot.sets.defaultEmbedColor,
+            color: Mizu.sets.defaultEmbedColor,
             description: 'The user was not found.'
         }));
     }else{

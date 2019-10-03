@@ -2,11 +2,11 @@ const { RichEmbed } = require('discord.js');
 const ms = require('ms');
 let repeatmap = new Map();
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
     if(!message.member.hasPermission(['BAN_MEMBERS'])) return;
 
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name).setColor(bot.sets.defaultEmbedColor));
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name).setColor(Mizu.sets.defaultEmbedColor));
 
     if(!args.length || args.length < 2 || !ms(args[0]) || Array.from(repeatmap.keys()).includes(message.author.id)) return message.reply(usageEmbed);
 
@@ -25,7 +25,7 @@ module.exports.run = async (bot, message, args) => {
     });
 
     const confirmationEmbed = new RichEmbed()
-    .setColor(bot.sets.defaultEmbedColor)
+    .setColor(Mizu.sets.defaultEmbedColor)
     .setAuthor(`🔄Repeat Set`)
     .setTitle(`${message.author.tag}`)
     .addField('Content:', content)

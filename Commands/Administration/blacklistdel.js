@@ -3,10 +3,10 @@ const setschema = require('../../models/settingsSchema.js');
 const { RichEmbed } = require('discord.js');
 const possArr = ['.blacklistdel', ' ']; 
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (Mizu, message, args) => {
 
-    settings = bot.sets;
-    let usageEmbed = new RichEmbed(bot.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
+    settings = Mizu.sets;
+    let usageEmbed = new RichEmbed(Mizu.usages.get(exports.config.name)).setColor(settings.defaultEmbedColor);
 
     let blacklisted = message.content.split(/ +/)[1];
 
