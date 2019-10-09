@@ -1,1 +1,4 @@
-module.exports = async Mizu => console.log('Mizu has disconnected.');
+module.exports = async (Mizu, event) => {
+    console.error('WARNING: THE CLIENT HAS DISCONNECTED');
+    console.error(event);
+}

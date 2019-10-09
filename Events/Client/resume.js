@@ -1,0 +1,1 @@
+module.exports = async (Mizu, replayed) => console.warn(`The client has resumed. (Replayed Events: ${replayed})`);

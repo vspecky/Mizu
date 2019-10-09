@@ -6,11 +6,23 @@ const expschema = require('../models/expSchema.js');
 let exparr = [];
 let weeklyarr = [];
 let expswitch = 0;
-const serverid = JSON.parse(readFileSync('./Handlers/serverid.json', 'utf8'))["serverID"]
+const serverid = JSON.parse(readFileSync('./Handlers/serverid.json', 'utf8'))["serverID"];
+
+const setsObjs = {
+    antiSpamSettings: {}, 
+    logChannels: {},  
+    antiRaidSettings: {},
+    embCols: {},
+    modMailSettings: {},
+    expSettings: {},
+    warnPunishments: {},
+    commandSettings: {},
+    welcomeSettings: {}
+};
 
 module.exports = Mizu => {
 
-    Mizu.sets = { antiSpamSettings: {}, logChannels: {}, modBlockedChannels: {} };
+    Mizu.sets = setsObjs;
     
     setInterval(() => {
         connect('mongodb://localhost/RATHMABOT', {
@@ -29,6 +41,10 @@ module.exports = Mizu => {
                 newSets.save().catch(err => console.log(err));
             } else {
                 Mizu.sets = res;
+                const setsKeys = Object.keys(Mizu.sets)
+                Object.keys(setsObjs).forEach(field => {
+                    if(!setsKeys.includes(field)) Mizu.sets.field = {};
+                })
             }
         });
 

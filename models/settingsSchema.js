@@ -51,10 +51,17 @@ const settingsSchema = Schema({
         expMultiplier: Number,
         expCooldown: Number
     },
-    modBlockedChannels: {},
+    commandSettings: {
+        modBlockedChannels: {},
+        commandCooldown: Number,
+        roleRestrictedCommands: {}
+    },
+    welcomeSettings: {
+        welcomeChannel: String,
+        welcomeMsg: String
+    },
     warnPunishments: {},
     expMultiplier: Number,
-    welcomeChannel: String,
     modMailChannel: String,
     muteRole: String,
     eventsRole: String,

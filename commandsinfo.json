@@ -3,7 +3,7 @@
     "name": "addprefix",
     "usage": "```.addprefix <prefix>```",
     "note": "Default prefix is \".\"",
-    "desc": "Adds the provided prefix to the list of bot prefixes.",
+    "desc": "Adds the provided prefix to the list of Mizu prefixes.",
     "module": "Administration",
     "enabled": true
   },
@@ -45,7 +45,7 @@
     "name": "delprefix",
     "usage": "```.delprefix <prefix>```",
     "note": "Default prefix is \".\"",
-    "desc": "Removes the given prefix from the list of bot prefixes.",
+    "desc": "Removes the given prefix from the list of Mizu prefixes.",
     "module": "Administration",
     "enabled": true
   },
@@ -60,7 +60,8 @@
     "name": "help",
     "usage": "```.help <CommandName>```",
     "desc": "Shows the usage of the specified command.",
-    "module": "Administration",
+    "note": "None",
+    "module": "Utility",
     "enabled": true
   },
   "kick": {
@@ -75,6 +76,7 @@
     "name": "load",
     "usage": "```.load <CommandName>```",
     "desc": "Loads the specified command, making it usable again.",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
@@ -82,6 +84,7 @@
     "name": "modload",
     "usage": "```.modload <ModuleName>```",
     "desc": "Loads all commands in the specified module.",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
@@ -89,6 +92,7 @@
     "name": "modunload",
     "usage": "```.modunload <ModuleName>```",
     "desc": "Unloads all commands in the specified module.",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
@@ -121,13 +125,14 @@
     "name": "report",
     "usage": "```.report (Optional: <@User/UserID> <Reason>)```",
     "desc": "Reports the specified user for the specified reason or DMs the command user for the report.",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
   "setembcol": {
     "name": "setembcol",
     "usage": "```.defembedcolor <colorHex>```\n('colorHex = default' for the default color.)",
-    "desc": "Changes the default embed color for the bot.",
+    "desc": "Changes the default embed color for the Mizu.",
     "note": "Default color is grey",
     "module": "Administration",
     "enabled": true
@@ -136,6 +141,7 @@
     "name": "setexpmult",
     "usage": "```.setexpmult <Number>```",
     "desc": "Sets the guild exp multiplier. (Default: 1)",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
@@ -143,6 +149,7 @@
     "name": "setlogch",
     "usage": "```.setlogch <Type> <#Channel/ChannelID>```",
     "desc": "Sets the log channel for the specified event.\nEvents:\n1. mute\n2. kick\n3. ban\n4. warn\n5. reports\n6. msgdel\n7. userupdate\n8. suggest\n9. oofchest",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
@@ -150,6 +157,7 @@
     "name": "setmuterole",
     "usage": "```.setmuterole <channelID>```",
     "desc": "Sets the default mute role for the guild.",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
@@ -165,6 +173,7 @@
     "name": "spamsettings",
     "usage": "```.spamsettings <'general'/'similar'> <msgAmount> <bufferTime>```",
     "desc": "Changes the Anti-Spam settings (General or Similar) of the guild.",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
@@ -172,6 +181,7 @@
     "name": "unload",
     "usage": "```.unload <CommandName>```",
     "desc": "Unloads the specified command, making it unusable until loaded again.",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
@@ -229,6 +239,7 @@
     "name": "vcname",
     "usage": "```.vcname <NewName>```",
     "desc": "Changes the name of the command user's custom VC.",
+    "note": "None",
     "module": "CustomVoice",
     "enabled": true
   },
@@ -236,18 +247,21 @@
     "name": "vcnolimit",
     "usage": "```.vcnolimit```",
     "desc": "Removes the user limit on the command user's custom VC.",
+    "note": "None",
     "module": "CustomVoice",
     "enabled": true
   },
   "8ball": {
     "name": "8ball",
     "usage": "j!8ball question",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
   "asay": {
     "name": "asay",
     "usage": "j!asay #channel message",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -255,6 +269,7 @@
     "name": "baka",
     "usage": "```.baka <@User(optional)>```",
     "desc": "Posts a 'baka' themed image/gif",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -262,6 +277,7 @@
     "name": "doggo",
     "usage": "```.doggo```",
     "desc": "Posts a dog picture.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -269,6 +285,7 @@
     "name": "fact",
     "usage": "```.fact```",
     "desc": "Posts a random fact.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -276,6 +293,7 @@
     "name": "feed",
     "usage": "```.feed <@User(optional)>```",
     "desc": "Posts an image/gif about food.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -283,6 +301,7 @@
     "name": "foxgirl",
     "usage": "```.foxgirl```",
     "desc": "Posts an image/gif of a foxgirl.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -290,6 +309,7 @@
     "name": "hug",
     "usage": "```.hug <@User(optional)>```",
     "desc": "Posts a hug image/gif.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -297,6 +317,7 @@
     "name": "kemonomimi",
     "usage": "```.kemonomimi```",
     "desc": "Posts a kemonomimi image/gif.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -304,6 +325,7 @@
     "name": "kiss",
     "usage": "```.kiss <@User(optional)>```",
     "desc": "Posts a kiss image/gif.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -311,11 +333,13 @@
     "name": "kitty",
     "usage": "```.kitty```",
     "desc": "Posts an image of a cat.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
   "marriage": {
     "name": "marriage",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -323,6 +347,7 @@
     "name": "meme",
     "usage": "```.meme```",
     "desc": "Posts a dank meme.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -330,6 +355,7 @@
     "name": "nekog",
     "usage": "```.nekog```",
     "desc": "Posts a neko gif.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -337,6 +363,7 @@
     "name": "nekoi",
     "usage": "```.nekoi```",
     "desc": "Posts a cute neko image.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -344,12 +371,14 @@
     "name": "pat",
     "usage": "```.pat <@User(optional)>```",
     "desc": "Posts a patting image/gif.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
   "poke": {
     "name": "poke",
     "usage": "j!poke || j!poke @user",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -365,6 +394,7 @@
     "name": "slap",
     "usage": "```.slap <@User(optional)>```",
     "desc": "Posts a slap image/gif.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -372,12 +402,14 @@
     "name": "smug",
     "usage": "```.smug <@User(optional)>```",
     "desc": "Posts a smug image/gif.",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
   "tickle": {
     "name": "tickle",
     "usage": "j!tickle || j!tickle @user",
+    "note": "None",
     "module": "FunSFW",
     "enabled": true
   },
@@ -385,6 +417,7 @@
     "name": "boobs",
     "usage": "```.boobs```",
     "desc": "Posts an image with boobs.",
+    "note": "None",
     "module": "NSFW",
     "enabled": true
   },
@@ -392,6 +425,7 @@
     "name": "butt",
     "usage": "```.butt```",
     "desc": "Posts an image with a butt.",
+    "note": "None",
     "module": "NSFW",
     "enabled": true
   },
@@ -399,6 +433,7 @@
     "name": "hentai",
     "usage": "```.hentai```",
     "desc": "Posts a hentai image.",
+    "note": "None",
     "module": "NSFW",
     "enabled": true
   },
@@ -406,6 +441,7 @@
     "name": "nekoh",
     "usage": "```.nekoh```",
     "desc": "Posts a lewd nekomimi image.",
+    "note": "None",
     "module": "NSFW",
     "enabled": true
   },
@@ -413,6 +449,7 @@
     "name": "trap",
     "usage": "```.trap```",
     "desc": "Posts a lewd trap.",
+    "note": "None",
     "module": "NSFW",
     "enabled": true
   },
@@ -420,6 +457,7 @@
     "name": "yuri",
     "usage": "```.yuri```",
     "desc": "Posts a yuri image.",
+    "note": "None",
     "module": "NSFW",
     "enabled": true
   },
@@ -427,6 +465,7 @@
     "name": "anime",
     "usage": "```.anime <NameOfAnime>```",
     "desc": "Gets information about the specified anime.",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
@@ -434,18 +473,21 @@
     "name": "avatar",
     "usage": "```.avatar <@User(optional)>```",
     "desc": "Posts the avatar of the specified user or the command user.",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
-  "botinfo": {
-    "name": "botinfo",
-    "usage": "```.botinfo```",
+  "Mizuinfo": {
+    "name": "Mizuinfo",
+    "usage": "```.Mizuinfo```",
     "desc": "Displays info bout me!",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
   "eval": {
     "name": "eval",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
@@ -461,6 +503,7 @@
     "name": "inrole",
     "usage": "```.inrole <RoleName>```",
     "desc": "Displays members having the specified role.",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
@@ -468,6 +511,7 @@
     "name": "manga",
     "usage": "```.manga <NameOfMange>```",
     "desc": "Posts information about the specified manga.",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
@@ -475,11 +519,13 @@
     "name": "pokedex",
     "usage": "```.pokedex <NameOfPokemon>```",
     "desc": "Gets information about the specified pokemon.",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
   "serverinfo": {
     "name": "serverinfo",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
@@ -487,6 +533,7 @@
     "name": "suggest",
     "usage": "```.suggest <Suggestion>```",
     "desc": "Takes a suggestion from the user and posts it in a suggestions channel.",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
@@ -494,6 +541,7 @@
     "name": "test",
     "usage": "testUsage",
     "notes": "testNote",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
@@ -501,7 +549,7 @@
     "name": "leaderboard",
     "usage": "`.leaderboard <PageNumber(optional)>`",
     "desc": "Posts the <PageNumber>'th page of the server exp leaderboard. (Page 1 if page number is not provided)",
-    "note": "",
+    "note": "None",
     "module": "Experience",
     "aliases": [
       "lb"
@@ -512,6 +560,7 @@
     "name": "rank",
     "usage": "```.rank <@User(optional)>```",
     "desc": "Posts the guild exp and rank stats of the user.",
+    "note": "None",
     "module": "Experience",
     "enabled": true
   },
@@ -520,18 +569,22 @@
     "aliases": [
       "lbw"
     ],
+    "note": "None",
     "module": "Experience"
   },
   "moduleblock": {
     "name": "moduleblock",
     "usage": "```.moduleblock <ModuleName> <#Channel/ChannelID>```",
     "desc": "Blocks all the specified module commands in the specified channel.",
+    "note": "None",
     "module": "Administration",
     "enabled": true
   },
   "repeat": {
     "name": "repeat",
     "usage": "```.repeat <TimeInterval> <Content>```",
+    "desc": "Sets a message repeater over the specified interval",
+    "note": "None",
     "module": "Utility",
     "enabled": true
   },
@@ -539,7 +592,71 @@
     "name": "test2",
     "usage": "testUsage",
     "notes": "testNote",
+    "note": "None",
     "module": "Utility",
+    "enabled": true
+  },
+  "getrepeat": {
+    "name": "getrepeat",
+    "usage": "```.getreapeat```",
+    "desc": "Displays information about the user's repeater, if they have set one.",
+    "note": "None",
+    "module": "Utility",
+    "enabled": true
+  },
+  "stoprepeat": {
+    "name": "stoprepeat",
+    "usage": "```.stoprepeat```",
+    "desc": "Stops the user's repeater (if they have set any).",
+    "note": "None",
+    "module": "Utility",
+    "enabled": true
+  },
+  "modmailch": {
+    "name": "modmailch",
+    "usage": "```.modmailch <#Channel/ChannelID>",
+    "desc": "Sets the channel for modmail.",
+    "module": "Administration",
+    "enabled": true
+  },
+  "modmail": {
+    "name": "modmail",
+    "usage": "```.modmail <Option> <Argument>```",
+    "desc": "Sets the minimum word requirement for ModMail.\nOptions :\n1. **-ch** - Channel (Argument: <#Channel/ChannelID>)\n2. **-cd** - Cooldown (Argument: <Time>)\n3. **-ucd** - Undetailed Cooldown (Argument: <Time>)\n4. **-dl** - Detail Limit (Argument: <Number>)",
+    "note": "None",
+    "module": "Administration",
+    "enabled": true
+  },
+  "xpsettings": {
+    "name": "xpsettings",
+    "usage": "```.xpsettings <Option> <Value>```",
+    "desc": "Changes the Guild xp settings.\nOptions:\n1. Combo Increment Amount (-cia) <Number>\n2. Combo Interval (-ci) <Time>\n3. Max Combo (-mc) <Number>\n4. Lowest xp Amount (-lxp) <Number>\n5. Highest xp Amount (-hxp) <Number>\n6. xp Cooldown (-xpc) <Time>\n7. xp Multiplier (-xpm) <Number>",
+    "note": "None",
+    "module": "Administration",
+    "enabled": true
+  },
+  "addxp": {
+    "name": "addxp",
+    "usage": "```.addxp <@User/UserID> <Amount>```",
+    "desc": "Adds the designated amount of exp to the specified user.",
+    "note": "None",
+    "module": "Administration",
+    "enabled": true
+  },
+  "restrictcmd": {
+    "name": "restrictcmd",
+    "usage": "```.restrictcmd <CommandName> <RoleID>```",
+    "desc": "Blocks the specified command for those whose highest role is lower in the role hierarchy than the provided role.",
+    "note": "None",
+    "module": "Administration",
+    "enabled": true
+  },
+  "setxp": {
+    "name": "setxp",
+    "usage": "```.setxp <@User/UserID> <Amount>```",
+    "desc": "Sets the specified user's xp to the specified amount.",
+    "note": "None",
+    "module": "Administration",
     "enabled": true
   }
 }

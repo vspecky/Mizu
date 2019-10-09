@@ -236,7 +236,7 @@ module.exports = class MessageUtils {
      * @param {CommandPrefix} prefix
      * @returns
      */
-    Command(message, client, prefix) {
+    async Command(message, client, prefix) {
 
         const messageArray = message.content.split(/ +/g);
         const cmd = messageArray[0].slice(prefix.length).toLowerCase();
@@ -247,11 +247,22 @@ module.exports = class MessageUtils {
     
         if(!commandFile.config.enabled || !client.modules[commandFile.config.module]) return;
     
-        if(client.sets.modBlockedChannels) {
-            if(client.sets.modBlockedChannels[commandFile.config.module]) {
-                if(client.sets.modBlockedChannels[commandFile.config.module].includes(message.channel.id)) return;
+        if(client.sets.commandSettings.modBlockedChannels) {
+            if(client.sets.commandSettings.modBlockedChannels[commandFile.config.module]) {
+                if(client.sets.commandSettings.modBlockedChannels[commandFile.config.module].includes(message.channel.id)) return;
             }
         }
+
+        const member = await message.guild.fetchMember(message.author);
+
+
+        if(client.sets.commandSettings.roleRestrictedCommands) {
+            if(client.sets.commandSettings.roleRestrictedCommands[commandFile.config.module]) {
+                const id = client.sets.commandSettings.roleRestritedCommands[commandFile.config.module];
+                if(message.guild.roles.get(id).calculatedPosition > member.highestRole.calculatedPosition) return;
+            }
+        }
+
     
         if (commandFile && !commandcooldown.has(message.author.id)) {
             commandcooldown.add(message.author.id);

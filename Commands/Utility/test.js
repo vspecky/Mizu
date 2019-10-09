@@ -40,9 +40,8 @@ module.exports.run = async (Mizu, message, args) => {
     })
 
     */
-    
-    console.error('hello');
-    console.warn('Nello');
+    console.log(message.guild.roles.get('592281928170864660').calculatedPosition);
+    console.log(message.member.highestRole.calculatedPosition);
     
 }
 
