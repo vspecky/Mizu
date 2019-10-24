@@ -36,7 +36,7 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'addprefix',
-    usage: "```.addprefix <prefix>```",
+    usage: ".addprefix <prefix>",
     note: 'Default prefix is "."',
     desc: 'Adds the provided prefix to the list of Mizu prefixes.'
 }

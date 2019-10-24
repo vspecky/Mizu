@@ -24,7 +24,7 @@ module.exports.run = async (Mizu,message,args) =>{
 
 module.exports.config = {
     name: 'eventsping',
-    usage: "```.eventsping```",
+    usage: ".eventsping",
     desc: 'Mentions the events role.',
     note: 'Make sure an events role has been set for the guild.'
 }

@@ -30,6 +30,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'setexpmult',
-    usage: '```.setexpmult <Number>```',
+    usage: '.setexpmult <Number>',
     desc: 'Sets the guild exp multiplier. (Default: 1)'
 }

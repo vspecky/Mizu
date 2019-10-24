@@ -44,6 +44,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'spamsettings',
-    usage: "```.spamsettings <'general'/'similar'> <msgAmount> <bufferTime>```",
+    usage: ".spamsettings <'general'/'similar'> <msgAmount> <bufferTime>",
     desc: "Changes the Anti-Spam settings (General or Similar) of the guild."
 }

@@ -72,6 +72,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: "modmail",
-    usage: "```.modmail <Option> <Argument>```",
+    usage: ".modmail <Option> <Argument>",
     desc: "Sets the minimum word requirement for ModMail.\nOptions :\n1. **-ch** - Channel (Argument: <#Channel/ChannelID>)\n2. **-cd** - Cooldown (Argument: <Time>)\n3. **-ucd** - Undetailed Cooldown (Argument: <Time>)\n4. **-dl** - Detail Limit (Argument: <Number>)"
 }

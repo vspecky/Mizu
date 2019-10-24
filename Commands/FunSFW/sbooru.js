@@ -79,7 +79,7 @@ module.exports.run = async(Mizu,message,args) =>{
 
 module.exports.config = {
     name: "sbooru",
-    usage: "```.sbooru <Tag(s)>```",
+    usage: ".sbooru <Tag(s)>",
     desc: 'Returns a random image from safebooru based on the provided tags.',
     note: "Separate the tags with '+' and use '_' for spaces."
 }

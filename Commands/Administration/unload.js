@@ -27,6 +27,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'unload',
-    usage: "```.unload <CommandName>```",
+    usage: ".unload <CommandName>",
     desc: "Unloads the specified command, making it unusable until loaded again."
 }

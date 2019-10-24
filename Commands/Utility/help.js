@@ -20,6 +20,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'help',
-    usage: "```.help <CommandName>```",
+    usage: ".help <CommandName>",
     desc: "Shows the usage of the specified command."
 }

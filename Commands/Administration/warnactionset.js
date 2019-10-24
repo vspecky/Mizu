@@ -63,7 +63,7 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'warnactionset',
-    usage: "```.warnactionset <NoOfWarns> <Action> <Timeout(optional)>```",
+    usage: ".warnactionset <NoOfWarns> <Action> <Timeout(optional)>",
     desc: "Allows customization of actions taken at different warning levels.",
     note: "Valid actions: Kick, Mute, Ban"
 }

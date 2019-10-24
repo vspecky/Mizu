@@ -23,6 +23,6 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "hentai",
-    usage: "```.hentai```",
+    usage: ".hentai",
     desc: 'Posts a hentai image.'
 }

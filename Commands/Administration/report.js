@@ -91,6 +91,6 @@ module.exports.run = async(Mizu, message, args) => {
 
 module.exports.config = {
     name: "report",
-    usage: "```.report (Optional: <@User/UserID> <Reason>)```",
+    usage: ".report (Optional: <@User/UserID> <Reason>)",
     desc: 'Reports the specified user for the specified reason or DMs the command user for the report.'
 }

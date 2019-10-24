@@ -40,6 +40,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'addxp',
-    usage: "```.addxp <@User/UserID> <Amount>```",
+    usage: ".addxp <@User/UserID> <Amount>",
     desc: 'Adds the designated amount of exp to the specified user.'
 }

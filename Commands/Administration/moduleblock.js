@@ -44,6 +44,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: "moduleblock",
-    usage: "```.moduleblock <ModuleName> <#Channel/ChannelID>```",
+    usage: ".moduleblock <ModuleName> <#Channel/ChannelID>",
     desc: "Blocks all the specified module commands in the specified channel."
 }

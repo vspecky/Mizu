@@ -42,6 +42,6 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "unmute",
-    usage: "```.unmute <@User/UserID>```",
+    usage: ".unmute <@User/UserID>",
     desc: "Unmutes the specified user."
 }

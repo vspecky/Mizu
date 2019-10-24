@@ -20,6 +20,6 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "smug",
-    usage: "```.smug <@User(optional)>```",
+    usage: ".smug <@User(optional)>",
     desc: 'Posts a smug image/gif.'
 }

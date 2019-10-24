@@ -33,7 +33,7 @@ module.exports.run = async (Mizu, message, args) => {
 
 exports.config = {
     name: 'setembcol',
-    usage: "```.defembedcolor <colorHex>```\n('colorHex = default' for the default color.)",
+    usage: ".defembedcolor <colorHex>\n('colorHex = default' for the default color.)",
     desc: 'Changes the default embed color for the Mizu.',
     note: 'Default color is grey'
 }

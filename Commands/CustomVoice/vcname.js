@@ -31,6 +31,6 @@ module.exports.run = async (Mizu,message,args) =>{
 
 module.exports.config = {
     name: 'vcname',
-    usage: "```.vcname <NewName>```",
+    usage: ".vcname <NewName>",
     desc: 'Changes the name of the command user\'s custom VC.',
 }

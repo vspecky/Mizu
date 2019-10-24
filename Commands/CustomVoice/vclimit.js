@@ -31,7 +31,7 @@ module.exports.run = async (Mizu,message,args) =>{
 
 module.exports.config = {
     name: 'vclimit',
-    usage: "```.vclimit <Number>```",
+    usage: ".vclimit <Number>",
     desc: 'Sets a userlimit for a custom VC from 1-99 depending on the amount specified.',
     note: 'Limit argument should be in the range 1-99 (Including 1 and 99).'
 }

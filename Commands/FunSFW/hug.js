@@ -22,6 +22,6 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "hug",
-    usage: "```.hug <@User(optional)>```",
+    usage: ".hug <@User(optional)>",
     desc: "Posts a hug image/gif."
 }

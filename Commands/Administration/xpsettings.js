@@ -94,6 +94,6 @@ const keys = {
 
 module.exports.config = {
     name: 'xpsettings',
-    usage: "```.xpsettings <Option> <Value>```",
+    usage: ".xpsettings <Option> <Value>",
     desc: "Changes the Guild xp settings.\nOptions:\n1. Combo Increment Amount (-cia) <Number>\n2. Combo Interval (-ci) <Time>\n3. Max Combo (-mc) <Number>\n4. Lowest xp Amount (-lxp) <Number>\n5. Highest xp Amount (-hxp) <Number>\n6. xp Cooldown (-xpc) <Time>\n7. xp Multiplier (-xpm) <Number>"
 }

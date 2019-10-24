@@ -32,6 +32,6 @@ module.exports.run = async (Mizu,message,args) =>{
 
 module.exports.config = {
     name: 'vcnolimit',
-    usage: "```.vcnolimit```",
+    usage: ".vcnolimit",
     desc: 'Removes the user limit on the command user\'s custom VC.'
 }

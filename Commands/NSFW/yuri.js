@@ -23,6 +23,6 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "yuri",
-    usage: "```.yuri```",
+    usage: ".yuri",
     desc: 'Posts a yuri image.'
 }

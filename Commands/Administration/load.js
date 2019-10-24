@@ -27,6 +27,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'load',
-    usage: "```.load <CommandName>```",
+    usage: ".load <CommandName>",
     desc: "Loads the specified command, making it usable again."
 }

@@ -20,6 +20,6 @@ module.exports.run = async (Mizu, message, args) =>{
 
 module.exports.config = {
     name: "fact",
-    usage: "```.fact```",
+    usage: ".fact",
     desc: 'Posts a random fact.'
 }

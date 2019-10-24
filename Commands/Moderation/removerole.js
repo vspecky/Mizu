@@ -46,7 +46,7 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "removerole",
-    usage: "```.removerole <@User/UserID> <RoleName>```",
+    usage: ".removerole <@User/UserID> <RoleName>",
     desc: "Removes the specified role from the specified user.",
     aliases: ['rr']
 }

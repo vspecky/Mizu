@@ -29,7 +29,7 @@ module.exports.run = async (Mizu,message,args) =>{
 
 module.exports.config = {
     name: 'vclock',
-    usage: "```.vclock```",
+    usage: ".vclock",
     desc: "Locks the command user's custom VC.",
     note: "Locking = setting the userlimit to the current amount of people in the VC."
 }

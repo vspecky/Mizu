@@ -47,7 +47,7 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "ban",
-    usage: "```.ban <@User/UserID> <Reason>```",
+    usage: ".ban <@User/UserID> <Reason>",
     desc: "Bans a specified user for a specified reason.",
     note: 'Make sure a ban logs channel has been set to acquire the logs.'
 }

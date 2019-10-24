@@ -43,7 +43,7 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "kick",
-    usage: "```.kick <@User/UserID> <Reason>```",
+    usage: ".kick <@User/UserID> <Reason>",
     desc: 'Kicks the specified user for the specified reason.',
     note: 'Make sure a kick logs channel has been set to acquire the logs.'
 }

@@ -32,6 +32,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'stoprepeat',
-    usage: "```.stoprepeat```",
+    usage: ".stoprepeat",
     desc: "Stops the user's repeater (if they have set any)."
 }

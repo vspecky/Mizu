@@ -28,6 +28,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'suggest',
-    usage: "```.suggest <Suggestion>```",
+    usage: ".suggest <Suggestion>",
     desc: "Takes a suggestion from the user and posts it in a suggestions channel."
 }

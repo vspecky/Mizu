@@ -14,6 +14,6 @@ module.exports.run = async (Mizu, message, args) =>{
 
 module.exports.config = {
     name: "avatar",
-    usage: "```.avatar <@User(optional)>```",
+    usage: ".avatar <@User(optional)>",
     desc: 'Posts the avatar of the specified user or the command user.'
 }

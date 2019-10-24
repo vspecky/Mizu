@@ -63,7 +63,7 @@ module.exports.run = async(Mizu, message, args) => {
 
 module.exports.config = {
     name: "mute",
-    usage: "```.mute @User <time(optional)> <reason(optional)>```",
+    usage: ".mute @User <time(optional)> <reason(optional)>",
     note: 'Make sure a mute role has been set and it exists.',
     desc: 'Mutes the specified user with options.'
 }

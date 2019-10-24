@@ -23,6 +23,6 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "trap",
-    usage: "```.trap```",
+    usage: ".trap",
     desc: 'Posts a lewd trap.'
 }

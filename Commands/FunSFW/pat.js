@@ -22,6 +22,6 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "pat",
-    usage: "```.pat <@User(optional)>```",
+    usage: ".pat <@User(optional)>",
     desc: 'Posts a patting image/gif.'
 }

@@ -31,6 +31,6 @@ module.exports.run = async(Mizu,message,args) =>{
 
 module.exports.config = {
     name: "anime",
-    usage: "```.anime <NameOfAnime>```",
+    usage: ".anime <NameOfAnime>",
     desc: 'Gets information about the specified anime.'
 }

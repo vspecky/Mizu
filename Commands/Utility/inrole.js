@@ -77,6 +77,6 @@ const getRoleEmbed = (roleMembers, role, pageNumber) => {
 
 module.exports.config = {
     name: "inrole",
-    usage: "```.inrole <RoleName>```",
+    usage: ".inrole <RoleName>",
     desc: "Displays members having the specified role."
 }

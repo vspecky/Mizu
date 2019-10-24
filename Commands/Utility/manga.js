@@ -33,6 +33,6 @@ module.exports.run = async(Mizu,message,args) =>{
 
 module.exports.config = {
     name: "manga",
-    usage: "```.manga <NameOfMange>```",
+    usage: ".manga <NameOfMange>",
     desc: 'Posts information about the specified manga.'
 }

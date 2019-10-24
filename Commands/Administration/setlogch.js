@@ -36,7 +36,7 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'setlogch',
-    usage: "```.setlogch <Type> <#Channel/ChannelID>```",
+    usage: ".setlogch <Type> <#Channel/ChannelID>",
     desc: 'Sets the log channel for the specified event.\nEvents:\n1. mute\n2. kick\n3. ban\n4. warn\n5. reports\n6. msgdel\n7. userupdate\n8. suggest\n9. oofchest',
 
 }

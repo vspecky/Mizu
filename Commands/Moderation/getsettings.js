@@ -54,6 +54,6 @@ const setObject = {
 
 module.exports.config = {
     name: 'getsettings',
-    usage: "```.getsettings <Settings>```",
+    usage: ".getsettings <Settings>",
     desc: "Gets the specified settings for the Guild.\nSettings:\n1. general\n2. logchannels\n3. antispam\n4. warnactions"
 }

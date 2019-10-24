@@ -30,6 +30,6 @@ module.exports.run = async (Mizu,message,args) => {
 
 module.exports.config = {
     name: 'pokedex',
-    usage: "```.pokedex <NameOfPokemon>```",
+    usage: ".pokedex <NameOfPokemon>",
     desc: 'Gets information about the specified pokemon.'
 }

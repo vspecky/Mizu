@@ -43,6 +43,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: "restrictcmd",
-    usage: "```.restrictcmd <CommandName> <RoleID>```",
+    usage: ".restrictcmd <CommandName> <RoleID>",
     desc: "Blocks the specified command for those whose highest role is lower in the role hierarchy than the provided role."
 }

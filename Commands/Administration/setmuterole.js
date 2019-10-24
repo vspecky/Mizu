@@ -33,6 +33,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'setmuterole',
-    usage: '```.setmuterole <channelID>```',
+    usage: '.setmuterole <channelID>',
     desc: 'Sets the default mute role for the guild.'
 }

@@ -28,6 +28,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'getrepeat',
-    usage: "```.getreapeat```",
+    usage: ".getreapeat",
     desc: "Displays information about the user's repeater, if they have set one."
 }

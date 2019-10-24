@@ -62,6 +62,6 @@ module.exports.run = async (Mizu,message,args) => {
 
 module.exports.config = {
     name: 'warnlog',
-    usage: "```.warnlog <@User/UserID(optional)>```",
+    usage: ".warnlog <@User/UserID(optional)>",
     desc: 'Displays the warn logs of the specified user. (Command user if no specifications)'
 }

@@ -40,6 +40,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'setxp',
-    usage: "```.setxp <@User/UserID> <Amount>```",
+    usage: ".setxp <@User/UserID> <Amount>",
     desc: "Sets the specified user's xp to the specified amount."
 }

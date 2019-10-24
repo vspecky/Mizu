@@ -38,6 +38,6 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: "modunload",
-    usage: "```.modunload <ModuleName>```",
+    usage: ".modunload <ModuleName>",
     desc: "Unloads all commands in the specified module."
 }

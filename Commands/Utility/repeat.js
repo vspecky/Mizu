@@ -40,6 +40,6 @@ module.exports.intervals = () => repeatmap;
 
 module.exports.config = {
     name: 'repeat',
-    usage: "```.repeat <TimeInterval> <Content>```",
+    usage: ".repeat <TimeInterval> <Content>",
     desc: "Sets a message repeater over the specified interval"
 }

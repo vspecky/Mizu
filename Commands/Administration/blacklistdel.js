@@ -38,7 +38,7 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'blacklistdel',
-    usage: '```.blacklistdel <Word(s)>```',
+    usage: '.blacklistdel <Word(s)>',
     desc: "Removes a word or a string of words from the chat filter.",
     note: "There should only be one space between the command and the Word(s)"
 }

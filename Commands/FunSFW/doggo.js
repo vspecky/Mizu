@@ -21,6 +21,6 @@ module.exports.run = async(Mizu,message,args) =>{
 
 module.exports.config = {
     name: "doggo",
-    usage: '```.doggo```',
+    usage: '.doggo',
     desc: "Posts a dog picture."
 }

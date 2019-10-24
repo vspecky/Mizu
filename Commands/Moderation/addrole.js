@@ -40,6 +40,6 @@ module.exports.run = async(Mizu, message, args) =>{
 module.exports.config = {
     name: "addrole",
     aliases: ['ar'],
-    usage: "```.addrole <@User/UUID> <RoleName/ID>```",
+    usage: ".addrole <@User/UUID> <RoleName/ID>",
     desc: "Adds the specified role to the specified user."
 }

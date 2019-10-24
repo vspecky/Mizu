@@ -17,8 +17,3 @@ if(procargs[2] == 'boot') {
 } else {
     console.log('pls say boot');
 }
-
-
-
-
-

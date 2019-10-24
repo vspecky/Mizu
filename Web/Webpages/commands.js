@@ -1,4 +1,5 @@
 const commandDiv = document.getElementById('commands');
+const options = ['name', 'usage', 'desc', 'note'];
 
 const generateTable = (table, data) => {
 
@@ -6,15 +7,16 @@ const generateTable = (table, data) => {
 
     for(let elem of commands) {
 
-        let row = table.insertRow();
+        const row = table.insertRow();
 
-        for(key in data[elem]) {
+        for(let key of options) {
 
-            console.log(key);
+            if(data[elem][key]) {
+                const cell = row.insertCell();
+                const text = document.createTextNode(data[elem][key].replace(/\**/g, ''));
+                cell.appendChild(text);
 
-            let cell = row.insertCell();
-            let text = document.createTextNode(data[elem][key])//.replace(/(```)?(**)?/g, ''));
-            cell.appendChild(text);
+            }
 
         }
 
@@ -27,7 +29,7 @@ const generateTableHead = (table, data) => {
     const t_head = table.createTHead();
     const row = t_head.insertRow();
 
-    for(let key in data.addprefix) {
+    for(let key of options) {
 
         const th = document.createElement('th');
         const text = document.createTextNode(key);
@@ -47,9 +49,19 @@ const getCommands = async () => {
 
     resTable = resTable.commandTable[0];
 
-    const adminTable = document.getElementById('Administration');
+    const adminTable = document.querySelector('#admintable');
+    const cvTable = document.querySelector('#custvctable');
+    const sfwTable = document.querySelector('#funsfwtable');
+    const nsfwTable = document.querySelector('#nsfwtable');
+    const utilTable = document.querySelector('#utiltable');
+    const expTable = document.querySelector('#exptable')
 
     generateTableHead(adminTable, resTable.Administration);
+    generateTableHead(cvTable, resTable.CustomVoice);
+    generateTableHead(sfwTable, resTable.FunSFW);
+    generateTableHead(nsfwTable, resTable.NSFW);
+    generateTableHead(utilTable, resTable.Utility);
+    generateTableHead(expTable, resTable.Experience);
 
 }
 

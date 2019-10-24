@@ -12,9 +12,9 @@ module.exports = async bot => {
     app.use(express.static(path.join(__dirname, 'Webpages')));
     app.use(cors());
 
-    await app.get('/', (req, res) => res.send('Hello'));
-    await app.get('/views/tables/commands9913', (req, res) => routers.commandsTableEndpoint(req, res, null, bot));
-    await app.get('/commands', (req, res) => routers.commandsPage(req, res, null, bot));
+    app.get('/', (req, res) => res.send('Hello'));
+    app.get('/views/tables/commands9913', (req, res) => routers.commandsTableEndpoint(req, res));
+    app.get('/commands', (req, res) => routers.commandsPage(req, res));
 
     app.listen(3000);
 

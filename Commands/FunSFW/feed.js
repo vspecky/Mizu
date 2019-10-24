@@ -22,6 +22,6 @@ module.exports.run = async(Mizu, message, args) =>{
 
 module.exports.config = {
     name: "feed",
-    usage: "```.feed <@User(optional)>```",
+    usage: ".feed <@User(optional)>",
     desc: 'Posts an image/gif about food.'
 }

@@ -33,7 +33,7 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'delprefix',
-    usage: "```.delprefix <prefix>```",
+    usage: ".delprefix <prefix>",
     note: 'Default prefix is "."',
     desc: 'Removes the given prefix from the list of Mizu prefixes.'
 }

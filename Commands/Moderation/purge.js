@@ -21,6 +21,6 @@ module.exports.run = async(Mizu,message,args) =>{
 
 module.exports.config = {
     name: "purge",
-    usage:"```.purge <Number>```",
+    usage:".purge <Number>",
     desc: "Deletes the specified amount of messages from the chat."
 }

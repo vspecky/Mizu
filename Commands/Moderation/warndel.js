@@ -57,6 +57,6 @@ module.exports.run = async (Mizu,message,args) => {
 
 module.exports.config = {
     name: 'warndel',
-    usage: "```.warndel <@User/UserID> <Index>```",
+    usage: ".warndel <@User/UserID> <Index>",
     desc: "Clears a user's active warning corresponding to the specified index.",
 }

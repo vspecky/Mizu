@@ -47,6 +47,6 @@ module.exports.run = async(Mizu,message,args) =>{
 
 module.exports.config = {
     name: "rank",
-    usage: "```.rank <@User(optional)>```",
+    usage: ".rank <@User(optional)>",
     desc: 'Posts the guild exp and rank stats of the user.'
 }

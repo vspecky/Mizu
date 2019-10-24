@@ -35,7 +35,7 @@ module.exports.run = async (Mizu, message, args) => {
 
 module.exports.config = {
     name: 'spammutetime',
-    usage: '```.spammutetime <Number>```',
+    usage: '.spammutetime <Number>',
     desc: 'Sets the temporary mute time for spamming. (Default: 5 minutes)',
     note: 'Set to 0 to make the mute permanent.'
 }
